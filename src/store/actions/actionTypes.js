@@ -1,0 +1,4 @@
+export const Add_Name = "Add_Name";
+export const Delete_Name = "Delete_Name";
+export const Select_Name = "Select_Name";
+export const Deselect_Name = "Deselect_Name";

@@ -1,0 +1,3 @@
+rootProject.name = 'WaterApp'
+
+include ':app'
