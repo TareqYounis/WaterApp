@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {View, Text} from 'react-native';
 import { Navigation } from 'react-native-navigation';
+import { connect } from 'react-redux';
 
 class Enquiry extends Component{
     constructor(props){
@@ -28,4 +29,25 @@ class Enquiry extends Component{
     }
 }
 
-export default Enquiry;
+const mapStateToProps = state => {
+    return {
+      names: state.names.names
+    };
+  };
+  
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onAddName: (name,key) => dispatch(AddName(name,key))
+    };
+};
+  
+  
+export default connect(mapStateToProps,mapDispatchToProps,null, {"withRef" : true})(Enquiry);
+
+
+
+
+
+
+//export default Enquiry;

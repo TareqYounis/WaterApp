@@ -1,21 +1,26 @@
-import {Add_Name, Delete_Name, Select_Name, Deselect_Name} from '../actions/actionTypes';
+import {Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Sucess, Fetch_Failure} from '../actions/actionTypes';
 
 const initiaState ={
     names: [],
+    error: null,
+    items: null,
     selectedName: null
 }
+
+//reducer is the function that takes old state and the action and returns the new state.
 const reducer = (state = initiaState, action ) => {
+    console.log('im looking here', action.type)
     switch (action.type){
         case Add_Name:
         return{
             ...state,
             names: state.names.concat({
                 key: Math.random(),
-                name: action.name,
-                image: {  
-                  uri:
-                    "https://c1.staticflickr.com/5/4096/4744241983_34023bf303_b.jpg"
-                }
+                name: action.name
+                // image: {  
+                //   uri:
+                //     "https://c1.staticflickr.com/5/4096/4744241983_34023bf303_b.jpg"
+                // }
             })
         };
         case Delete_Name:
@@ -38,6 +43,16 @@ const reducer = (state = initiaState, action ) => {
           ...state,
           selectedName: null
         };
+        case  Fetch_Failure:
+        return{
+            ...state,
+            error: action.payload.error
+        };
+        case Fetch_Sucess:
+        return {
+            ...state,
+            items : action.payload.data
+        }
         default : 
             return state;
     }

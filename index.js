@@ -1,9 +1,11 @@
 import React from 'react';
 import {AppRegistry} from 'react-native';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import App from './App';
 import configureStore from './src/store/configureStore';
 
+// store is an object that brings actions and reducers toghter 
+// only single store should exist in the app.
 const store = configureStore();
 
 const RNRedux = () => (
@@ -12,4 +14,7 @@ const RNRedux = () => (
     </Provider>
 );
 
-AppRegistry.registerComponent('WaterApp', () => App);
+
+
+AppRegistry.registerComponent('WaterApp', () => RNRedux);
+

@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {View, Text} from 'react-native';
 import {Navigation} from 'react-native-navigation';
+import {connect} from 'react-redux';
 
 class Complaint extends Component{
     constructor(props){
@@ -19,12 +20,35 @@ class Complaint extends Component{
         });        
     }
     render(){
+        console.log("props are here",this.props.names)
         return (
             <View>
                 <Text>This is Complaint page</Text>
+                {/* <Text>Here are the names {this.props}</Text> */}
+                <Text>Here are the props</Text>
             </View>
         )
     }
 }
 
-export default Complaint;
+const mapStateToProps = state => {
+    return {
+      names: state.names.names
+    };
+  };
+  
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onAddName: (name,key) => dispatch(AddName(name,key))
+    };
+};
+  
+  
+export default connect(mapStateToProps,mapDispatchToProps,null, {"withRef" : true})(Complaint);
+
+
+
+
+
+//export default Complaint;

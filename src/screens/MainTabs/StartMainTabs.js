@@ -2,7 +2,7 @@ import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons'
 
 const StartMainTabs = () => {
-  //Icons returns a promise, we will need to wait before we load the tab, therefor we use promis  
+  //Icons returns a promise, we will need to wait before we load the tab, therefor we use promise  
   Promise.all([
     Icon.getImageSource("md-home",30),
     Icon.getImageSource("md-home",30),

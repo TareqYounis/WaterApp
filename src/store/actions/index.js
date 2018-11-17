@@ -1,1 +1,1 @@
-export {AddName, DeleteName, SelectName, DeselectName} from './names';
+export {AddName, DeleteName, SelectName, DeselectName, FetchFailure, FetchSuccess} from './names';
