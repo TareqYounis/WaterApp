@@ -44,10 +44,3 @@ const mapDispatchToProps = dispatch => {
   
   
 export default connect(mapStateToProps,mapDispatchToProps,null, {"withRef" : true})(Enquiry);
-
-
-
-
-
-
-//export default Enquiry;
