@@ -4,7 +4,7 @@ import { View, Text, Button, Dimensions } from 'react-native';
 import StartMainTabs from '../MainTabs/StartMainTabs';
 import NameInput from '../../Components/NameInput/NameInput';
 import {AddName} from '../../store/actions/index'
-import  {GetOrganizations, GetWaterRoles} from '../../store/actions/index';
+import  { GetOrganizations, GetWaterRoles} from '../../store/actions/index';
 
 class AuthScreen extends Component {
     constructor(props){
@@ -17,9 +17,9 @@ class AuthScreen extends Component {
         this.props.onAddName(name);
     };
 
-    componentWillMount() {
-        this.props.onGettingWaterRoles();
-    }
+    // componentWillMount() {
+    //     this.props.onDisplayOrganization();
+    // }
 
     render(){
         return (

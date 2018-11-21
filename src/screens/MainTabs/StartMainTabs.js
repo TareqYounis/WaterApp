@@ -32,7 +32,7 @@ const StartMainTabs = () => {
                       children: [
                         {
                           component: {
-                            name: 'water-app.ComplaintScreen',
+                            name: 'water-app.EnqiryHomeScreen',
                             options: {
                               topBar: {
                                 visible: true,
@@ -61,7 +61,7 @@ const StartMainTabs = () => {
                       children: [
                         {
                           component: {
-                            name: 'water-app.EnqiryScreen',
+                            name: 'water-app.EnqiryHomeScreen',
                             options: {
                               bottomTab: {
                                 badge: 'New',
@@ -90,7 +90,7 @@ const StartMainTabs = () => {
                       children: [
                         {
                           component: {
-                            name: 'water-app.EnqiryScreen',
+                            name: 'water-app.EnqiryHomeScreen',
                             options: {
                               bottomTab: {
                                 badge: '',
