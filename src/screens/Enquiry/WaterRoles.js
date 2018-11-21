@@ -2,10 +2,10 @@ import React,{Component} from 'react';
 import {View, Text} from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
-import WaterRoles from '../../Components/Enquiry/WaterRole'
+import WaterRole from '../../Components/Enquiry/WaterRole'
 import { GetOrganizations, GetWaterRoles } from '../../store/actions/index';
 
-class Enquiry extends Component{
+class WaterRoles extends Component{
     constructor(props){
         super(props);
         Navigation.events().bindComponent(this);
@@ -22,6 +22,7 @@ class Enquiry extends Component{
             },
         });        
     }
+    
     //load all water companies before rendering. 
     componentWillMount() {
         this.props.onGetOrganizations();
@@ -36,7 +37,7 @@ class Enquiry extends Component{
         return (
             <View>
                 <Text>This is Enquiry page</Text>
-                <WaterRoles organizations={this.props.data} onSubmission={this.handleWaterRoles}/>
+                <WaterRole organizations={this.props.data} onSubmission={this.handleWaterRoles}/>
                 <Text>{this.props.waterRole}</Text>
             </View>
         )
@@ -49,7 +50,7 @@ const mapStateToProps = state => {
       data : state.enquiry.data,
       waterRole : state.enquiry.waterRole 
     };
-  };
+};
   
 
 const mapDispatchToProps = dispatch => {
@@ -61,4 +62,4 @@ const mapDispatchToProps = dispatch => {
 };
   
   
-export default connect(mapStateToProps,mapDispatchToProps,null, {"withRef" : true})(Enquiry);
+export default connect(mapStateToProps,mapDispatchToProps,null, {"withRef" : true})(WaterRoles);
