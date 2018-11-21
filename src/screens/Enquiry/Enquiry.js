@@ -3,12 +3,13 @@ import {View, Text} from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import WaterRoles from '../../Components/Enquiry/WaterRoles'
-import  {GetOrganizations} from '../../store/actions/index';
+import { GetOrganizations, GetWaterRoles } from '../../store/actions/index';
 
 class Enquiry extends Component{
     constructor(props){
         super(props);
         Navigation.events().bindComponent(this);
+        this.handleWaterRoles = this.handleWaterRoles.bind(this);
     }
     
     //show sidemenu when menu button is clicked.
@@ -21,13 +22,14 @@ class Enquiry extends Component{
             },
         });        
     }
-
+    //load all water companies before rendering. 
     componentWillMount() {
         this.props.onGetOrganizations();
     }
 
-    handleWaterRoles(org,userAccount){
-        console.log('handling',org,userAccount)
+    //get water Roles according to user's input
+    handleWaterRoles(orgID,userAccount){
+        this.props.onGettingWaterRoles(orgID,userAccount);
     }
     
     render(){
@@ -35,6 +37,7 @@ class Enquiry extends Component{
             <View>
                 <Text>This is Enquiry page</Text>
                 <WaterRoles organizations={this.props.data} onSubmission={this.handleWaterRoles}/>
+                <Text>{this.props.waterRole}</Text>
             </View>
         )
     }
@@ -43,7 +46,8 @@ class Enquiry extends Component{
 const mapStateToProps = state => {
     return {
       names: state.names.names,
-      data : state.enquiry.data 
+      data : state.enquiry.data,
+      waterRole : state.enquiry.waterRole 
     };
   };
   
@@ -52,6 +56,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onAddName: (name,key) => dispatch(AddName(name,key)),
         onGetOrganizations: () => dispatch(GetOrganizations()),
+        onGettingWaterRoles: (userAccount , orgID) => dispatch(GetWaterRoles(userAccount,orgID))
     };
 };
   

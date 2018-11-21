@@ -1,5 +1,5 @@
 // Actions are payloads of information that send data from the application to the store
-import {Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Failure, Fetch_Sucess} from './actionTypes';
+import {Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Failure, Fetch_Sucess , Fetch_Sucess_Water_Role} from './actionTypes';
 
 export const AddName = (name,key) => {
     return {
@@ -28,9 +28,15 @@ export const DeselectName = () => {
 }
 
 export const FetchSuccess = data => {
-    console.log('here is fetch',data)
     return {
         type: Fetch_Sucess,
+        payload: { data }
+    }
+};
+
+export const FetchSuccessWaterRoles = data => {
+    return {
+        type: Fetch_Sucess_Water_Role,
         payload: { data }
     }
 };

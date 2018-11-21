@@ -1,7 +1,8 @@
-import {Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Sucess, Fetch_Failure} from '../actions/actionTypes';
+import {Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Sucess, Fetch_Failure, Fetch_Sucess_Water_Role} from '../actions/actionTypes';
 
 const initiaState ={
     names: [],
+    waterRole: "",
     error: null,
     data: [],
     selectedName: null
@@ -52,6 +53,11 @@ const reducer = (state = initiaState, action ) => {
         return {
             ...state,
             data : action.payload.data
+        };
+        case Fetch_Sucess_Water_Role:
+        return {
+            ...state,
+            waterRole: action.payload.data
         }
         default : 
             return state;
