@@ -4,6 +4,7 @@ import { View, Text, Button, Dimensions } from 'react-native';
 import StartMainTabs from '../MainTabs/StartMainTabs';
 import NameInput from '../../Components/NameInput/NameInput';
 import {AddName} from '../../store/actions/index'
+import  {GetOrganizations, GetWaterRoles} from '../../store/actions/index';
 
 class AuthScreen extends Component {
     constructor(props){
@@ -15,6 +16,10 @@ class AuthScreen extends Component {
     nameAddedHandler = name => {
         this.props.onAddName(name);
     };
+
+    componentWillMount() {
+        this.props.onGettingWaterRoles();
+    }
 
     render(){
         return (
@@ -30,14 +35,17 @@ class AuthScreen extends Component {
 
 const mapStateToProps = state => {
     return {
-      names: state.names.names
+      names: state.names.names,
+      data : state.enquiry.data 
     };
   };
   
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAddName: (name,key) => dispatch(AddName(name,key))
+        onAddName: (name,key) => dispatch(AddName(name,key)),
+        onDisplayOrganization: () => dispatch(GetOrganizations()),
+        onGettingWaterRoles: () => dispatch(GetWaterRoles(1,98310))
     };
 };
   

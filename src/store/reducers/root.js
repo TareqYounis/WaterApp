@@ -3,13 +3,13 @@ import {Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Sucess, Fetch_F
 const initiaState ={
     names: [],
     error: null,
-    items: null,
+    data: [],
     selectedName: null
 }
 
 //reducer is the function that takes old state and the action and returns the new state.
 const reducer = (state = initiaState, action ) => {
-    console.log('im looking here', action.type)
+    //console.log('im looking here', action.type)
     switch (action.type){
         case Add_Name:
         return{
@@ -51,7 +51,7 @@ const reducer = (state = initiaState, action ) => {
         case Fetch_Sucess:
         return {
             ...state,
-            items : action.payload.data
+            data : action.payload.data
         }
         default : 
             return state;

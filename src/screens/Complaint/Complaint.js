@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import {View, Text} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import {connect} from 'react-redux';
+import  {GetOrganizations} from '../../store/actions/index';
 
 class Complaint extends Component{
     constructor(props){
@@ -18,29 +19,50 @@ class Complaint extends Component{
               },
             },
         });        
+    }    
+
+    renderingArray() {
+        return this.props.data.map(function(element,key){
+            return (
+                <View key={key}>
+                    <Text>{element},{key}</Text>
+                </View>
+            )
+        })
+    }
+
+    renderingObject(){
+        return Object.keys(this.props.data).map(function(element,key){
+            return (
+                <View key={key}>
+                    <Text>{element},{key}</Text>
+                </View>
+            )
+        })
     }
     render(){
-        console.log("props are here",this.props.names)
         return (
             <View>
-                <Text>This is Complaint page</Text>
-                {/* <Text>Here are the names {this.props}</Text> */}
-                <Text>Here are the props</Text>
+                <Text>{this.props.data.data}</Text>
+                {/* {this.renderingArray()} */}
             </View>
+            
         )
     }
 }
 
 const mapStateToProps = state => {
     return {
-      names: state.names.names
+      names: state.names.names,
+      data : state.enquiry.data 
     };
   };
   
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAddName: (name,key) => dispatch(AddName(name,key))
+        onAddName: (name,key) => dispatch(AddName(name,key)),
+        onDisplayOrganization: () => dispatch(GetOrganizations())
     };
 };
   
