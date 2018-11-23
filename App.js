@@ -13,6 +13,7 @@ import WaterBill from './src/screens/Enquiry/WaterBill';
 import Complaint  from './src/screens/Complaint/Complaint';
 
 import Profile from './src/screens/Profile/Profile';
+import UserAccount from './src/screens/Profile/UserAccount';
 
 import configureStore from './src/store/configureStore';
 
@@ -68,6 +69,10 @@ Navigation.registerComponent('water-app.WaterBillScreen',
 Navigation.registerComponent('water-app.UserProfileScreen', 
   // () => Enquiry, store, Provider );
   reduxStoreWrapper(Profile, store))
+
+Navigation.registerComponent('water-app.UserAccountScreen', 
+  // () => Enquiry, store, Provider );
+  reduxStoreWrapper(UserAccount, store))
 
 //start a App 
 Navigation.setRoot({
