@@ -5,8 +5,9 @@ const StartMainTabs = () => {
   //Icons returns a promise, we will need to wait before we load the tab, therefor we use promise  
   Promise.all([
     Icon.getImageSource("md-home",30),
-    Icon.getImageSource("md-home",30),
-    Icon.getImageSource('ios-menu',30)
+    Icon.getImageSource("md-person",30),
+    Icon.getImageSource('md-information-circle-outline',30),
+    Icon.getImageSource('md-menu',30)
   ]).then(sources => {
       Navigation.setRoot({
         root: {
@@ -38,7 +39,7 @@ const StartMainTabs = () => {
                                 visible: true,
                                 leftButtons: [
                                   {
-                                    icon: sources[1],
+                                    icon: sources[3],
                                     id: 'buttonmenu22'
                                   }
                                 ],
@@ -46,8 +47,8 @@ const StartMainTabs = () => {
                               bottomTab: {
                                 badge: '2',
                                 fontSize: 12,
-                                text: 'Create Job',
-                                icon: sources[1]
+                                text: 'Enquiry',
+                                icon: sources[2]
                               }
                             }
                           },
@@ -65,7 +66,7 @@ const StartMainTabs = () => {
                             options: {
                               bottomTab: {
                                 badge: 'New',
-                                text: 'Credits',
+                                text: 'Home',
                                 fontSize: 12,
                                 icon: sources[0]
                               },
@@ -73,7 +74,7 @@ const StartMainTabs = () => {
                                 visible: true,
                                 leftButtons: [
                                   {
-                                    icon: sources[1],
+                                    icon: sources[3],
                                     id: 'buttonmenu22'
                                   }
                                 ],
@@ -90,7 +91,7 @@ const StartMainTabs = () => {
                       children: [
                         {
                           component: {
-                            name: 'water-app.EnqiryHomeScreen',
+                            name: 'water-app.UserProfileScreen',
                             options: {
                               bottomTab: {
                                 badge: '',
@@ -102,7 +103,7 @@ const StartMainTabs = () => {
                                 visible: true,
                                 leftButtons: [
                                   {
-                                    icon: sources[1],
+                                    icon: sources[3],
                                     id: 'buttonmenu22'
                                   }
                                 ],

@@ -5,11 +5,16 @@ import {Provider} from 'react-redux'
 import AuthScreen from './src/screens/Auth/Auth';
 import SideDrawer from './src/screens/SideDrawer/SideDrawer';
 import StartMainTabs from './src/screens/MainTabs/StartMainTabs';
+
 import EnquiryHome  from './src/screens/Enquiry/EnquiryHome';
 import WaterRoles from './src/screens/Enquiry/WaterRoles';
-import Complaint  from './src/screens/Complaint/Complaint';
-import configureStore from './src/store/configureStore';
 import WaterBill from './src/screens/Enquiry/WaterBill';
+
+import Complaint  from './src/screens/Complaint/Complaint';
+
+import Profile from './src/screens/Profile/Profile';
+
+import configureStore from './src/store/configureStore';
 
 const store = configureStore();
 
@@ -60,6 +65,9 @@ Navigation.registerComponent('water-app.WaterBillScreen',
   // () => Enquiry, store, Provider );
   reduxStoreWrapper(WaterBill, store))
 
+Navigation.registerComponent('water-app.UserProfileScreen', 
+  // () => Enquiry, store, Provider );
+  reduxStoreWrapper(Profile, store))
 
 //start a App 
 Navigation.setRoot({
