@@ -6,3 +6,4 @@ export const Fetch_Sucess = 'Fetch_Sucess';
 export const Fetch_Failure = 'Fetch_Failure';
 export const Fetch_Sucess_Water_Role = 'Fetch_Sucess_Water_Role';
 export const Fetch_Sucess_User_Register = 'Fetch_Sucess_User_Register';
+export const Fetch_Sucess_User_Login = 'Fetch_Sucess_User_Login';

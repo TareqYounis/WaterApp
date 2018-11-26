@@ -1,2 +1,2 @@
 export {AddName, DeleteName, SelectName, DeselectName, FetchFailure, FetchSuccess, FetchSuccessWaterRoles, FetchSuccessUserRegister} from './names';
-export {GetOrganizations, GetWaterRoles, RegisterUser, } from './enquiry';
+export {GetOrganizations, GetWaterRoles, RegisterUser, UserLogsIn } from './enquiry';
