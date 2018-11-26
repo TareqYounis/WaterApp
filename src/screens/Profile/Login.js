@@ -1,17 +1,17 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-class AddUserAccount extends React.Component {
+class Login extends React.Component {
     constructor(props){
         super(props);
     }
     render(){
         return(
             <View>
-                <Text>Add user account screen</Text>
+                <Text>Login screen</Text>
             </View>
         )
     }
 }
 
-export default AddUserAccount;
+export default Login;
