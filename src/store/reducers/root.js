@@ -1,8 +1,9 @@
-import {Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Sucess, Fetch_Failure, Fetch_Sucess_Water_Role} from '../actions/actionTypes';
+import {Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Sucess, Fetch_Failure, Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register} from '../actions/actionTypes';
 
 const initiaState ={
     names: [],
     waterRole: "",
+    user_id: "",
     error: null,
     data: [],
     selectedName: null
@@ -58,6 +59,12 @@ const reducer = (state = initiaState, action ) => {
         return {
             ...state,
             waterRole: action.payload.data
+        };
+        case Fetch_Sucess_User_Register:
+        console.log("Im in action payload",action.payload.data)
+        return {
+            ...state,
+            user_id : action.payload.data
         }
         default : 
             return state;

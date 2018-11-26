@@ -1,5 +1,5 @@
 import {Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Failure, Fetch_Sucess} from './actionTypes';
-import {FetchSuccess, FetchFailure, FetchSuccessWaterRoles} from './names';
+import {FetchSuccess, FetchFailure, FetchSuccessWaterRoles, FetchSuccessUserRegister} from './names';
 import { sha256 } from 'react-native-sha256';
 
 //asynchrounous calls are being handled in here
@@ -16,6 +16,7 @@ export const GetOrganizations = () => {
            })
             .then((response) => response.json())
             .then((responseJson) => {      
+              if(response)
               dispatch(FetchSuccess(responseJson));
             })
             .catch((error)=> {
@@ -40,8 +41,12 @@ export const GetWaterRoles = (companyID, userAccount) => {
               }
            })
             .then((response) => response.json())
-            .then((responseJson) => {      
-              dispatch(FetchSuccessWaterRoles(responseJson.data));
+            .then((responseJson) => {
+              if(responseJson.status === false){
+                dispatch(FetchFailure(responseJson.message));
+              }else{     
+                dispatch(FetchSuccessWaterRoles(responseJson.data));
+              }
             })
             .catch((error)=> {
               dispatch(FetchFailure(error));
@@ -51,4 +56,37 @@ export const GetWaterRoles = (companyID, userAccount) => {
             dispatch(FetchFailure(error));
         })
     }
+}
+
+//Register a new user (POST).
+export const RegisterUser = (userData) => {
+  console.log('they are calling me')
+  return dispatch => {
+    var ts = Math.round(new Date().getTime()/1000);
+    return sha256( ts + ':sK8DkvuyKGeb19b437g4Cv33GXV49c9Q:miyahunaAdmin!@#123').then( hash => {
+            hashValue= 'ts=' + ts + ',response=' + hash;
+            fetch('http://miyahunaportal.arabiacell.biz/api/user/register' ,{
+              method: 'POST',
+              headers: {
+                Authorization: 'ts=' + ts + ',response=' + hash
+              },
+              body: JSON.stringify (userData)
+           })
+            .then((response) => response.json())
+            .then((responseJson) => {      
+              console.log('holaaaaa',responseJson)
+              if(responseJson.status === false){
+                dispatch(FetchFailure(responseJson.data));
+              }else{
+                dispatch(FetchSuccessUserRegister(responseJson.data));
+              }
+            })
+            .catch((error)=> {
+              dispatch(FetchFailure(error));
+            })
+        })
+        .catch((error)=> {
+            dispatch(FetchFailure(error));
+        })
+  }
 }
