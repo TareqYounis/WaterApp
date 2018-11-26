@@ -1,5 +1,4 @@
-import {Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Failure, Fetch_Sucess} from './actionTypes';
-import {FetchSuccess, FetchFailure, FetchSuccessWaterRoles, FetchSuccessUserRegister, FetchSuccessUserLogin} from './names';
+import { FetchSuccess, FetchFailure, FetchSuccessWaterRoles, FetchSuccessUserRegister, FetchSuccessUserLogin } from './actions';
 import { sha256 } from 'react-native-sha256';
 
 //asynchrounous calls are being handled in here
@@ -16,8 +15,11 @@ export const GetOrganizations = () => {
            })
             .then((response) => response.json())
             .then((responseJson) => {      
-              if(response)
-              dispatch(FetchSuccess(responseJson));
+              if(responseJson.status === false){
+                dispatch(FetchFailure(responseJson.message));
+              }else{     
+                dispatch(FetchSuccess(responseJson));
+              }
             })
             .catch((error)=> {
               dispatch(FetchFailure(error));
