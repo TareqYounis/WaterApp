@@ -6,22 +6,21 @@ import Icon from 'react-native-vector-icons/Ionicons';
 class Profile extends React.Component {
     constructor(props){
         super(props);
-        this.addingUserAccount = this.addingUserAccount.bind(this);
+        this.addingUserProfile = this.addingUserProfile.bind(this);
     }
 
-    addingUserAccount () {
-        console.log('im being clicked')
+    addingUserProfile () {
         Navigation.push(this.props.componentId,{
             component:{
-                name: 'water-app.UserAccountScreen'
+                name: 'water-app.AddUserAccount'
             } 
         })
     }
     render(){
         return(
             <View>
-              <TouchableOpacity onPress={this.addingUserAccount}>
-                <Icon name="md-add-circle-outline" size={50}/>
+              <TouchableOpacity onPress={this.addingUserProfile}>
+                <Icon name="md-person-add" size={50}/>
               </TouchableOpacity>
               <Text>Its me texting over here</Text>
             </View>
