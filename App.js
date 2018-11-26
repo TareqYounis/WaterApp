@@ -13,7 +13,7 @@ import WaterBill from './src/screens/Enquiry/WaterBill';
 import Complaint  from './src/screens/Complaint/Complaint';
 
 import Profile from './src/screens/Profile/Profile';
-import UserAccount from './src/screens/Profile/UserAccount';
+import AddUserAccount from './src/screens/Profile/AddUserAccount';
 
 import configureStore from './src/store/configureStore';
 
@@ -70,9 +70,9 @@ Navigation.registerComponent('water-app.UserProfileScreen',
   // () => Enquiry, store, Provider );
   reduxStoreWrapper(Profile, store))
 
-Navigation.registerComponent('water-app.UserAccountScreen', 
+Navigation.registerComponent('water-app.AddUserAccount', 
   // () => Enquiry, store, Provider );
-  reduxStoreWrapper(UserAccount, store))
+  reduxStoreWrapper(AddUserAccount, store))
 
 //start a App 
 Navigation.setRoot({
