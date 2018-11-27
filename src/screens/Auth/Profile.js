@@ -10,8 +10,20 @@ class Profile extends React.Component {
         this.signingUp = this.signingUp.bind(this);
         this.loggingIn = this.loggingIn.bind(this);
         this.addingUserAccount = this.addingUserAccount.bind(this);
+        Navigation.events().bindComponent(this);
     }
-
+    
+    //show sidemenu when menu button is clicked.
+    navigationButtonPressed({ buttonId }) {
+        Navigation.mergeOptions(this.props.componentId, {
+            sideMenu: {
+              left: {
+                visible: true,
+              },
+            },
+        });        
+    } 
+    
     signingUp () {
         Navigation.push(this.props.componentId,{
             component:{
