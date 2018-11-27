@@ -1,4 +1,4 @@
-import {FetchFailure, FetchSuccessUserRegister, FetchSuccessUserLogin, FetchSuccessAddAccount } from './actions';
+import {FetchFailure, FetchSuccessUserRegister, FetchSuccessUserLogin, FetchSuccessAddAccount, SavingTabID } from './actions';
 import { sha256 } from 'react-native-sha256';
 
 //Register a new user (POST).
@@ -92,4 +92,10 @@ export const UserAddAccount = (userData) => {
             dispatch(FetchFailure(error));
         })
     }
+}
+
+export const SaveTabID = (tabID) => {
+  return dispatch => {
+    dispatch(SavingTabID(tabID));
+  }
 }

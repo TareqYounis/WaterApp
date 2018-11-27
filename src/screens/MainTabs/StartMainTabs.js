@@ -19,6 +19,15 @@ const StartMainTabs = () => {
               }
             },
             center: {
+              stack: {
+                id: "AppRoot",
+                children: [{
+                  component: {
+                    id: "App",
+                    name: "water-app.AuthScreen"
+                  }
+                }]
+              },
               bottomTabs: {
                 id: 'BottomTabsId',
                 options: {
@@ -98,6 +107,9 @@ const StartMainTabs = () => {
                                 text: 'Profile',
                                 fontSize: 12,
                                 icon: sources[1]
+                              },
+                              passProps: {
+                                text: 'This is tab 1'
                               },
                               topBar: {
                                 visible: true,
