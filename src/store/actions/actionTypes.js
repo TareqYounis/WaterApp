@@ -9,3 +9,4 @@ export const Fetch_Sucess_User_Register = 'Fetch_Sucess_User_Register';
 export const Fetch_Sucess_User_Login = 'Fetch_Sucess_User_Login';
 export const Fetch_Sucess_User_Add_Account = 'Fetch_Sucess_User_Add_Account';
 export const Fetch_Sucess_Invoice_Calculation = 'Fetch_Sucess_Invoice_Calculation';
+export const Fetch_Sucess_Usage_Type = 'Fetch_Sucess_Usage_Type';
