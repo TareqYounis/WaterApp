@@ -15,7 +15,7 @@ const StartMainTabs = () => {
             left: {
               width: 100,
               component: {
-                name: 'water-app.AuthScreen',
+                name: 'water-app.SideDrawerScreen',
               }
             },
             center: {
