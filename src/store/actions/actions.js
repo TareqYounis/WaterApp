@@ -32,6 +32,6 @@ export const FetchFailure = error => {
 export const FetchSuccessUserLogin = data => {
     return {
         type: Fetch_Sucess_User_Login,
-        payload: {data}
+        payload: { data }
     }
 }

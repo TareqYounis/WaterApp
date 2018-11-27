@@ -2,7 +2,7 @@ import {FetchFailure, FetchSuccessUserRegister, FetchSuccessUserLogin} from './a
 import { sha256 } from 'react-native-sha256';
 
 //Register a new user (POST).
-export const RegisterUser = (userData) => {
+export const UserSignsUp = (userData) => {
   return dispatch => {
     var ts = Math.round(new Date().getTime()/1000);
     return sha256( ts + ':sK8DkvuyKGeb19b437g4Cv33GXV49c9Q:miyahunaAdmin!@#123').then( hash => {
@@ -32,6 +32,7 @@ export const RegisterUser = (userData) => {
   }
 }
 
+//User Login (POST)
 export const UserLogsIn = (userData) => {
   return dispatch => {
     var ts = Math.round(new Date().getTime()/1000);

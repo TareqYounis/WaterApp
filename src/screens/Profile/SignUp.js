@@ -1,23 +1,23 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import AddUser from '../../Components/Auth/AddUser';
-import {RegisterUser} from '../../store/actions/index';
-import {connect} from 'react-redux';
+import { UserSignsUp } from '../../store/actions/index';
+import { connect } from 'react-redux';
 
 class SignUp extends React.Component {
     constructor(props){
         super(props);
-        this.handleAddingUser = this.handleAddingUser.bind(this);
+        this.handleSigningUp = this.handleSigningUp.bind(this);
     }
 
-    handleAddingUser(userData){
-        this.props.onAddingUser(userData)
+    handleSigningUp(userData){
+        this.props.onSigningUp(userData)
     }
 
     render() {
         return (
             <View>
-               <AddUser onAddingUser={this.handleAddingUser}/>
+               <AddUser onSignup={this.handleSigningUp}/>
                <Text>{this.props.data}</Text>
                <Text>{this.props.error}</Text>
             </View>
@@ -37,7 +37,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAddingUser: (userData) => dispatch(RegisterUser(userData))
+        onSigningUp: (userData) => dispatch(UserSignsUp(userData))
     };
 };
   

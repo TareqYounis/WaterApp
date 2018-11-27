@@ -12,10 +12,10 @@ class AddUser extends React.Component {
             pass_confirm: '',
             full_name: ''
         }
-        this.AdduserAccount = this.AdduserAccount.bind(this);
+        this.signingUp = this.signingUp.bind(this);
     }
-    AdduserAccount () {
-        this.props.onAddingUser(this.state);
+    signingUp () {
+        this.props.onSignup(this.state);
     }
 
     render(){
@@ -52,7 +52,7 @@ class AddUser extends React.Component {
                 onChangeText= {(pass_confirm) => this.setState({pass_confirm})}
                 />
                  
-                <Button title= "submit" onPress={this.AdduserAccount}/>
+                <Button title= "submit" onPress={this.signingUp}/>
             </View>
         )
     }
