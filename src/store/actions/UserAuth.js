@@ -1,4 +1,4 @@
-import {FetchFailure, FetchSuccessUserRegister, FetchSuccessUserLogin, FetchSuccessAddAccount} from './actions';
+import {FetchFailure, FetchSuccessUserRegister, FetchSuccessUserLogin, FetchSuccessAddAccount, FetchSucessInvoiceCalculation} from './actions';
 import { sha256 } from 'react-native-sha256';
 
 //Register a new user (POST).
@@ -81,7 +81,7 @@ export const UserAddAccount = (userData) => {
               if(responseJson.status === false){
                 dispatch(FetchFailure(responseJson.message));
               }else{
-                dispatch(FetchSuccessAddAccount(responseJson.message));
+                dispatch(FetchSucessInvoiceCalculation(responseJson.data));
               }
             })
             .catch((error)=> {

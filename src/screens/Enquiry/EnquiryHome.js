@@ -33,6 +33,7 @@ class EnquiryHome extends Component{
             <View>
                 <Button title="Water Roles" onPress= {() => this.handleScreenNavigation('water-app.WaterRolesScreen')}/>
                 <Button title="Water Bill" onPress={() => this.handleScreenNavigation('water-app.WaterBillScreen')}/>
+                <Button title="Calculate Water Invoice" onPress={() => this.handleScreenNavigation('water-app.CalculateWaterScreen')}/>
             </View>
         )
     }

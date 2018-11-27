@@ -9,6 +9,7 @@ import StartMainTabs from './src/screens/MainTabs/StartMainTabs';
 import EnquiryHome  from './src/screens/Enquiry/EnquiryHome';
 import WaterRoles from './src/screens/Enquiry/WaterRoles';
 import WaterBill from './src/screens/Enquiry/WaterBill';
+import CalculateWaterInvoice from './src/screens/Enquiry/CalculateWaterInvoice';
 
 import Complaint  from './src/screens/Complaint/Complaint';
 
@@ -68,6 +69,10 @@ Navigation.registerComponent('water-app.WaterBillScreen',
   // () => Enquiry, store, Provider );
   reduxStoreWrapper(WaterBill, store))
 
+Navigation.registerComponent('water-app.CalculateWaterScreen', 
+  // () => Enquiry, store, Provider );
+  reduxStoreWrapper(CalculateWaterInvoice, store))
+  
 Navigation.registerComponent('water-app.UserProfileScreen', 
   // () => Enquiry, store, Provider );
   reduxStoreWrapper(Profile, store))

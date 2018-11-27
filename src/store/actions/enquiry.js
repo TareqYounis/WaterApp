@@ -1,4 +1,4 @@
-import { FetchSuccess, FetchFailure, FetchSuccessWaterRoles, FetchSuccessUserRegister, FetchSuccessUserLogin } from './actions';
+import { FetchSuccess, FetchFailure, FetchSuccessWaterRoles, FetchSuccessUserRegister, FetchSuccessUserLogin, FetchSucessInvoiceCalculation } from './actions';
 import { sha256 } from 'react-native-sha256';
 
 //asynchrounous calls are being handled in here
@@ -91,6 +91,7 @@ export const RegisterUser = (userData) => {
   }
 }
 
+//Login (POST)
 export const UserLogsIn = (userData) => {
   return dispatch => {
     var ts = Math.round(new Date().getTime()/1000);
@@ -109,6 +110,36 @@ export const UserLogsIn = (userData) => {
                 dispatch(FetchFailure(responseJson.message));
               }else{
                 dispatch(FetchSuccessUserLogin(responseJson.data));
+              }
+            })
+            .catch((error)=> {
+              dispatch(FetchFailure(error));
+            })
+        })
+        .catch((error)=> {
+            dispatch(FetchFailure(error));
+        })
+  }
+}
+
+//Water Calculation Service (GET)
+export const invoiceCalculation = (userData) => {
+  return dispatch => {
+    var ts = Math.round(new Date().getTime()/1000);
+    return sha256( ts + ':sK8DkvuyKGeb19b437g4Cv33GXV49c9Q:miyahunaAdmin!@#123').then( hash => {
+            hashValue= 'ts=' + ts + ',response=' + hash;
+            fetch('http://miyahunaportal.arabiacell.biz/api/services/invoice_calculation_service?company_id='+ userData.company_id+'&usage_type='+ userData.usage_type +'&quantity='+ userData.quantity +'&sewage_served=' + userData.sewage_served ,{
+              method: 'GET',
+              headers: {
+                Authorization: 'ts=' + ts + ',response=' + hash
+              }
+           })
+            .then((response) => response.json())
+            .then((responseJson) => {      
+              if(responseJson.status === false){
+                dispatch(FetchFailure(responseJson.message));
+              }else{
+                dispatch(FetchSucessInvoiceCalculation(responseJson.data));
               }
             })
             .catch((error)=> {

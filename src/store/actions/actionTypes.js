@@ -8,3 +8,4 @@ export const Fetch_Sucess_Water_Role = 'Fetch_Sucess_Water_Role';
 export const Fetch_Sucess_User_Register = 'Fetch_Sucess_User_Register';
 export const Fetch_Sucess_User_Login = 'Fetch_Sucess_User_Login';
 export const Fetch_Sucess_User_Add_Account = 'Fetch_Sucess_User_Add_Account';
+export const Fetch_Sucess_Invoice_Calculation = 'Fetch_Sucess_Invoice_Calculation';

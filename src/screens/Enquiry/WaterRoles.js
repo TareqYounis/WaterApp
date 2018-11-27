@@ -57,7 +57,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onAddName: (name,key) => dispatch(AddName(name,key)),
         onGetOrganizations: () => dispatch(GetOrganizations()),
-        onGettingWaterRoles: (userAccount , orgID) => dispatch(GetWaterRoles(userAccount,orgID))
+        onGettingWaterRoles: (orgID, userAccount) => dispatch(GetWaterRoles(orgID, userAccount))
     };
 };
   

@@ -1,10 +1,11 @@
-import {Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Sucess, Fetch_Failure, Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Sucess_User_Login, Fetch_Sucess_User_Add_Account } from '../actions/actionTypes';
+import {Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Sucess, Fetch_Failure, Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Sucess_User_Login, Fetch_Sucess_User_Add_Account, Fetch_Sucess_Invoice_Calculation } from '../actions/actionTypes';
 
 const initiaState ={
     names: [],
     waterRole: '',
     user_id: null,
     messageAddAccount: '',
+    invoice_value : null,
     error: null,
     data: [],
     selectedName: null
@@ -78,6 +79,11 @@ const reducer = (state = initiaState, action ) => {
             ...state,
             messageAddAccount: action.payload.message
         };
+        case Fetch_Sucess_Invoice_Calculation:
+        return {
+            ...state,
+            invoice_value: action.payload.value
+        }
         default : 
             return state;
     }
