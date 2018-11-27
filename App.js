@@ -2,7 +2,7 @@
 import { Navigation } from 'react-native-navigation';
 import {Provider} from 'react-redux'
 
-import AuthScreen from './src/screens/Auth/Auth';
+import AuthScreen from './src/screens/AuthTest/Auth';
 import SideDrawer from './src/screens/SideDrawer/SideDrawer';
 import StartMainTabs from './src/screens/MainTabs/StartMainTabs';
 
@@ -12,10 +12,10 @@ import WaterBill from './src/screens/Enquiry/WaterBill';
 
 import Complaint  from './src/screens/Complaint/Complaint';
 
-import Profile from './src/screens/Profile/Profile';
-import SignUp from './src/screens/Profile/SignUp';
-import Login from './src/screens/Profile/Login';
-import AddUserAccount from './src/screens/Profile/AddUserAccount';
+import Profile from './src/screens/Auth/Profile';
+import SignUp from './src/screens/Auth/SignUp';
+import Login from './src/screens/Auth/Login';
+import AddUserAccount from './src/screens/Auth/AddUserAccount';
 
 import configureStore from './src/store/configureStore';
 

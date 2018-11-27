@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextInput, View, Button} from 'react-native';
 
-class AddUser extends React.Component {
+class UserSignUp extends React.Component {
     constructor(props){
         super(props);
         this.state= {
@@ -58,4 +58,4 @@ class AddUser extends React.Component {
     }
 }
 
-export default AddUser;
+export default UserSignUp;

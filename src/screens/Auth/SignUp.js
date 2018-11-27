@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import AddUser from '../../Components/Auth/AddUser';
+import UserSignUp from '../../Components/Auth/UserSignUp';
 import { UserSignsUp } from '../../store/actions/index';
 import { connect } from 'react-redux';
 
@@ -17,7 +17,7 @@ class SignUp extends React.Component {
     render() {
         return (
             <View>
-               <AddUser onSignup={this.handleSigningUp}/>
+               <UserSignUp onSignup={this.handleSigningUp}/>
                <Text>{this.props.data}</Text>
                <Text>{this.props.error}</Text>
             </View>
