@@ -35,3 +35,10 @@ export const FetchSuccessUserLogin = data => {
         payload: { data }
     }
 }
+
+export const FetchSuccessAddAccount = message => {
+    return {
+        type: Fetch_Sucess_User_Add_Account,
+        payload: { message }
+    }
+}

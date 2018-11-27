@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import {connect} from 'react-redux';
 import UserLogin from '../../Components/Auth/UserLogin';
-import {UserLogsIn} from '../../store/actions/index';
+import { UserLogsIn } from '../../store/actions/index';
 
 class Login extends React.Component {
     constructor(props){

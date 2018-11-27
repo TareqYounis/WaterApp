@@ -29,11 +29,20 @@ class Profile extends React.Component {
     }
 
     addingUserAccount () {
-        Navigation.push(this.props.componentId,{
-            component:{
-                name: 'water-app.AddUserAccountScreen'
-            }
-        })
+        if(!this.props.user_id){
+            alert('you need to signin first');
+            Navigation.push(this.props.componentId,{
+                component :{
+                    name: 'water-app.LoginScreen'
+                }
+            })
+        }else{
+            Navigation.push(this.props.componentId,{
+                component:{
+                    name: 'water-app.AddUserAccountScreen'
+                }
+            })
+        }
     }
     render(){
         return(
