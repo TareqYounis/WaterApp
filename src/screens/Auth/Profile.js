@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,TouchableOpacity, Text} from 'react-native';
+import {View,TouchableOpacity, StyleSheet, Text} from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -58,19 +58,38 @@ class Profile extends React.Component {
     }
     render(){
         return(
-            <View>
-              <TouchableOpacity onPress={this.signingUp}>
-                <Ionicon name="md-person-add" size={30}/>
+            <View style={styles.container}>
+              <TouchableOpacity onPress={this.signingUp} style={styles.Item}>
+                <Ionicon name="md-person-add" size={30}  style={styles.ItemIcon}/>
+                <Text>SignUp</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={this.loggingIn}>
-                <Ionicon name="md-log-in" size={30}/>
+              
+              <TouchableOpacity onPress={this.loggingIn} style={styles.Item}>
+                <Ionicon name="md-log-in" size={30} style={styles.ItemIcon}/>
+                <Text>LogIn</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={this.addingUserAccount}>
-                <AntDesign name="addfile" size={30}/>
+              
+              <TouchableOpacity onPress={this.addingUserAccount} style={styles.Item}>
+                <AntDesign name="addfile" size={30} style={styles.ItemIcon}/>
+                <Text>Add New Account</Text>
               </TouchableOpacity>
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        alignItems: "center",
+    },
+    Item: {
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 10,
+    },
+    ItemIcon: {
+        marginRight: 10
+    }
+});
 
 export default Profile;
