@@ -1,8 +1,6 @@
 import React from 'react';
 import {View,TouchableOpacity, Text} from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import { connect } from 'react-redux';
-import { SaveTabID } from './../../store/actions/index';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
@@ -25,11 +23,6 @@ class Profile extends React.Component {
             },
         });        
     } 
-    
-    // componentWillMount(){
-    //     console.log('called once')
-    //     this.props.onSavingTapID(this.props.componentId);
-    // }
     
     signingUp () {
         Navigation.push(this.props.componentId,{
@@ -75,22 +68,9 @@ class Profile extends React.Component {
               <TouchableOpacity onPress={this.addingUserAccount}>
                 <AntDesign name="addfile" size={30}/>
               </TouchableOpacity>
-              {/* <Text>{this.props.Tab_ID}</Text> */}
             </View>
         )
     }
 }
-const mapStateToProps = state => {
-    return {
-      Tab_ID : state.names.Tab_ID 
-    };
-};
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onSavingTapID: (tabId) => dispatch(SaveTabID(tabId))
-    };
-};
-  
-  
-export default connect(mapStateToProps,mapDispatchToProps,null, {"withRef" : true})(Profile);
+export default Profile;

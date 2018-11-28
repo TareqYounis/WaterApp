@@ -43,7 +43,7 @@ class Complaint extends Component{
     render(){
         return (
             <View>
-                <Text>{this.props.data.data}</Text>
+                <Text>This is Complaint page</Text>
                 {/* {this.renderingArray()} */}
             </View>
             
