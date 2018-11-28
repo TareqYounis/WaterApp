@@ -1,8 +1,9 @@
 import React,{Component} from 'react';
-import {View, Text} from 'react-native';
-import {Navigation} from 'react-native-navigation';
-import {connect} from 'react-redux';
-import  {GetOrganizations} from '../../store/actions/index';
+import { View, Text } from 'react-native';
+import { Navigation } from 'react-native-navigation';
+import { connect } from 'react-redux';
+import AddComplaint from './../../Components/Complaint/AddComplaint';
+import { GetComplaintTypes } from './../../store/actions/index';
 
 class Complaint extends Component{
     constructor(props){
@@ -19,32 +20,22 @@ class Complaint extends Component{
               },
             },
         });        
-    }    
-
-    renderingArray() {
-        return this.props.data.map(function(element,key){
-            return (
-                <View key={key}>
-                    <Text>{element},{key}</Text>
-                </View>
-            )
-        })
     }
 
-    renderingObject(){
-        return Object.keys(this.props.data).map(function(element,key){
-            return (
-                <View key={key}>
-                    <Text>{element},{key}</Text>
-                </View>
-            )
-        })
+    //load all complaint types before rendering.
+    componentWillMount(){
+        this.props.onGetComplaintTypes();
     }
+
+    handleComplaint(complaintData){
+        alert('Awaiting for ArabiaCell reply to submit');
+        //this.props.onUserComplaint(complaintData);
+    }
+
     render(){
         return (
             <View>
-                <Text>This is Complaint page</Text>
-                {/* {this.renderingArray()} */}
+                <AddComplaint complaintType={this.props.complaintType} complaint={this.handleComplaint}/>
             </View>
             
         )
@@ -53,16 +44,17 @@ class Complaint extends Component{
 
 const mapStateToProps = state => {
     return {
-      names: state.names.names,
-      data : state.enquiry.data 
+      names: state.enquiry.names,
+      data : state.enquiry.data,
+      complaintType : state.enquiry.complaintType 
     };
   };
   
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAddName: (name,key) => dispatch(AddName(name,key)),
-        onDisplayOrganization: () => dispatch(GetOrganizations())
+        onUserComplaint: (complaintData) => dispatch(UserComplaint(complaintData)),
+        onGetComplaintTypes : () => dispatch(GetComplaintTypes())
     };
 };
   

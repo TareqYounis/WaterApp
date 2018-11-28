@@ -1,5 +1,6 @@
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons'
+import IconOcticons from "react-native-vector-icons/Octicons";
 
 const StartMainTabs = () => {
   //Icons returns a promise, we will need to wait before we load the tab, therefor we use promise  
@@ -7,7 +8,8 @@ const StartMainTabs = () => {
     Icon.getImageSource("md-home",30),
     Icon.getImageSource("md-person",30),
     Icon.getImageSource('md-information-circle-outline',30),
-    Icon.getImageSource('md-menu',30)
+    Icon.getImageSource('md-menu',30),
+    IconOcticons.getImageSource('report',30)
   ]).then(sources => {
       Navigation.setRoot({
         root: {
@@ -76,13 +78,13 @@ const StartMainTabs = () => {
                       children: [
                         {
                           component: {
-                            name: 'water-app.EnqiryHomeScreen',
+                            name: 'water-app.ComplaintScreen',
                             options: {
                               bottomTab: {
                                 badge: 'New',
-                                text: 'Home',
+                                text: 'Complaint',
                                 fontSize: 12,
-                                icon: sources[0]
+                                icon: sources[4]
                               },
                               topBar: {
                                 visible: true,

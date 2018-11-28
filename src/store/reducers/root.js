@@ -1,4 +1,4 @@
-import {Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Sucess, Fetch_Failure, Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Sucess_User_Login, Fetch_Sucess_User_Add_Account, Fetch_Sucess_Invoice_Calculation, Fetch_Sucess_Usage_Type, Tab_ID } from '../actions/actionTypes';
+import {Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Sucess, Fetch_Failure, Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Sucess_User_Login, Fetch_Sucess_User_Add_Account, Fetch_Sucess_Invoice_Calculation, Fetch_Sucess_Usage_Type, Tab_ID, Fetch_Success_Complaint_Type } from '../actions/actionTypes';
 
 const initiaState ={
     names: [],
@@ -7,6 +7,7 @@ const initiaState ={
     messageAddAccount: '',
     invoice_value : null,
     usage_type: [],
+    complaintType: [],
     error: null,
     Tab_ID: '',
     data: [],
@@ -95,6 +96,11 @@ const reducer = (state = initiaState, action ) => {
         return {
             ...state,
             Tab_ID : action.payload.tabId
+        };
+        case Fetch_Success_Complaint_Type:
+        return {
+            ...state,
+            complaintType : action.payload.complaintType
         }
         default : 
             return state;

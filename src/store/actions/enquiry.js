@@ -1,4 +1,4 @@
-import { FetchSuccess, FetchFailure, FetchSuccessWaterRoles, FetchSucessInvoiceCalculation, FetchSuccessUsageType } from './actions';
+import { FetchSuccess, FetchFailure, FetchSuccessWaterRoles, FetchSucessInvoiceCalculation, FetchSuccessUsageType, FetchSuccessComplaintType } from './actions';
 import { sha256 } from 'react-native-sha256';
 
 //asynchrounous calls are being handled in here
@@ -104,6 +104,30 @@ export const invoiceCalculation = (userData) => {
               }else{
                 dispatch(FetchSucessInvoiceCalculation(responseJson.data));
               }
+            })
+            .catch((error)=> {
+              dispatch(FetchFailure(error));
+            })
+        })
+        .catch((error)=> {
+            dispatch(FetchFailure(error));
+        })
+    }
+}
+
+export const GetComplaintTypes = () => {
+  return dispatch => {
+    var ts = Math.round(new Date().getTime()/1000);
+    return sha256( ts + ':sK8DkvuyKGeb19b437g4Cv33GXV49c9Q:miyahunaAdmin!@#123').then( hash => {
+            hashValue= 'ts=' + ts + ',response=' + hash;
+            fetch('http://miyahunaportal.arabiacell.biz/api/info/complaint_type',{
+              headers: {
+                Authorization: 'ts=' + ts + ',response=' + hash
+              }
+           })
+            .then((response) => response.json())
+            .then((responseJson) => {          
+                dispatch(FetchSuccessComplaintType(responseJson));
             })
             .catch((error)=> {
               dispatch(FetchFailure(error));

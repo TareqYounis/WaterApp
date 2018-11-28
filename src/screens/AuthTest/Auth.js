@@ -21,6 +21,26 @@ class AuthScreen extends Component {
     //     this.props.onDisplayOrganization();
     // }
 
+    // renderingArray() {
+    //     return this.props.data.map(function(element,key){
+    //         return (
+    //             <View key={key}>
+    //                 <Text>{element},{key}</Text>
+    //             </View>
+    //         )
+    //     })
+    // }
+
+    // renderingObject(){
+    //     return Object.keys(this.props.data).map(function(element,key){
+    //         return (
+    //             <View key={key}>
+    //                 <Text>{element},{key}</Text>
+    //             </View>
+    //         )
+    //     })
+    // }
+
     render(){
         return (
             // set the width of the side drawer to open for a certain scale, works only for android

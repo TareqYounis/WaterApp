@@ -3,6 +3,7 @@ package com.waterapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.imagepicker.ImagePickerPackage;
 import com.sha256lib.Sha256Package;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
@@ -43,6 +44,7 @@ public class MainApplication extends NavigationApplication {
         return Arrays.<ReactPackage>asList(
             // eg. new VectorIconsPackage()
                   //new MainReactPackage(),
+            new ImagePickerPackage(),
                 new Sha256Package(),
                 new VectorIconsPackage()
         );
