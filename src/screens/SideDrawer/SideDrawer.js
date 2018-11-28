@@ -18,7 +18,7 @@ class SideDrawer extends Component {
         this.handleScreenNavigation = this.handleScreenNavigation.bind(this);
     }
     
-    handleScreenNavigation(){
+    handleScreenNavigation(screen){
         Navigation.mergeOptions(this.props.componentId, {
             sideMenu: {
               left: {
@@ -28,10 +28,11 @@ class SideDrawer extends Component {
         }); 
         Navigation.push(this.props.Tab_ID,{
             component:{
-                name: 'water-app.AuthScreen'
+                name: screen
             }
         })
     }
+    //water-app.ComplaintScreen
     render() {
         return (
         <View
@@ -64,7 +65,7 @@ class SideDrawer extends Component {
             </View>
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.handleScreenNavigation('water-app.ComplaintScreen')}>
             <View style={styles.drawerItem}>
                 <IconOcticons
                 name= "report"
@@ -76,7 +77,7 @@ class SideDrawer extends Component {
             </View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={this.handleScreenNavigation}>
+            <TouchableOpacity onPress={() => this.handleScreenNavigation('water-app.AuthScreen')}>
             <View style={styles.drawerItem}>
                 <IconFontAwsm
                 name= "file-text-o"

@@ -24,8 +24,12 @@ const StartMainTabs = () => {
                 children: [{
                   component: {
                     id: "App",
+                    name: "water-app.ComplaintScreen"
+                  },
+                  component: {
+                    id: "App",
                     name: "water-app.AuthScreen"
-                  }
+                  },                  
                 }]
               },
               bottomTabs: {
