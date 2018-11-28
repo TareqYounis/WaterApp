@@ -23,7 +23,6 @@ class CalculateWaterInvoice extends Component{
     render(){
         return (
             <View>
-                <Text>This is calculate water bill page</Text>
                 <CalculateWater organizations={this.props.data} usageTypes={this.props.usage_type} onCalculatingInvoice={this.handleInvoice}/>
                 <Text>{this.props.invoice_value}</Text>
             </View>

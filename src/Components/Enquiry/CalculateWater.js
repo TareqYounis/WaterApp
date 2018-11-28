@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TextInput,Picker, Button, CheckBox, Text} from 'react-native';
+import {View, TextInput,Picker, Button, CheckBox, Text, StyleSheet} from 'react-native';
 
 class CalculateWater extends React.Component {
     constructor(props){
@@ -19,7 +19,7 @@ class CalculateWater extends React.Component {
 
     render(){
         return (
-            <View>
+            <View style={styles.container}>
                 <TextInput
                 style= {{width: 300, height:40, borderColor: "blue", borderWidth: 2}}
                 placeholder="enter your quantity in meters"
@@ -53,5 +53,12 @@ class CalculateWater extends React.Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        marginTop: 20,
+        alignItems: "center",
+    }
+});
 
 export default CalculateWater;

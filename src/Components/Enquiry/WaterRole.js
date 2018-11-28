@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TextInput,Picker, Text, Button} from 'react-native';
+import {View, TextInput,Picker, Button, StyleSheet} from 'react-native';
 
 class WaterRole extends React.Component {
     constructor(props){
@@ -24,10 +24,10 @@ class WaterRole extends React.Component {
 
     render(){
         return (
-            <View>
+            <View style={styles.container}>
                 <TextInput
                 style= {{width: 300, height:40, borderColor: "blue", borderWidth: 2}}
-                placeholder="enter your account thing"
+                placeholder="enter your account number"
                 onChangeText={this.inputChangeHandler}
                 />
                 <Picker
@@ -43,5 +43,20 @@ class WaterRole extends React.Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        marginTop: 20,
+        alignItems: "center",
+    },
+    Item: {
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 10,
+    },
+    ItemIcon: {
+        marginRight: 10
+    }
+});
 
 export default WaterRole;

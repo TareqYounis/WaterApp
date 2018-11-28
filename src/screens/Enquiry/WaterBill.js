@@ -23,7 +23,7 @@ class WaterBill extends Component{
     render(){
         return (
             <View>
-                <Text>This is WAterBIll page</Text>
+                <Text>Waiting for ArabicCell Response</Text>
             </View>
         )
     }

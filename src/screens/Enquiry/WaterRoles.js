@@ -36,7 +36,6 @@ class WaterRoles extends Component{
     render(){
         return (
             <View>
-                <Text>This is Enquiry page</Text>
                 <WaterRole organizations={this.props.data} onSubmission={this.handleWaterRoles}/>
                 <Text>{this.props.waterRole}</Text>
             </View>
