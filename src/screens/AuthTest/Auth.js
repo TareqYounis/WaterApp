@@ -45,7 +45,6 @@ class AuthScreen extends Component {
         return (
             // set the width of the side drawer to open for a certain scale, works only for android
             <View style={{width: Dimensions.get("window").width * 0.8}}>
-                <Text>Auth AuthScreen</Text>
                 <NameInput onNameAdded={this.nameAddedHandler} />
                 <Button title="login" onPress={this.loginHandler}/>
             </View>

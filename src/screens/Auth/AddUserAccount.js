@@ -24,7 +24,6 @@ class AddUserAccount extends React.Component {
                 <AddAccount organizations={this.props.data} userID= {this.props.user_id} onAddingAccount={this.handleAddingAccount}/>
                 <Text>Add user account screen</Text>
                 <Text>{this.props.messageAddAccount}</Text>
-                <Text>{this.props.error}</Text>
             </View>
         )
     }

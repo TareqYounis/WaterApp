@@ -42,11 +42,11 @@ class AddComplaint extends React.Component{
             <View style={styles.container}>
                 <Text>Please fill the following form:</Text>
                 
-                <TextInput 
+                {/* <TextInput 
                     style= {{width: 200, height:40, borderWidth: 2}}
                     placeholder="enter your location"
                     onChangeText={(location) => this.setState({location})}
-                />
+                /> */}
                 
                 <TextInput 
                     style= {{width: 200, height:40, borderWidth: 2}}

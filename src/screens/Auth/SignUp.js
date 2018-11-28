@@ -18,7 +18,6 @@ class SignUp extends React.Component {
         return (
             <View>
                <UserSignUp onSignup={this.handleSigningUp}/>
-               <Text>{this.props.data}</Text>
                <Text>{this.props.error}</Text>
             </View>
         )

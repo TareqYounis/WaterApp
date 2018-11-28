@@ -16,9 +16,7 @@ class Login extends React.Component {
     render(){
         return(
             <View>
-                <Text>Login screen</Text>
                 <UserLogin onLoggingIn= {this.handleLoggingIn}/>
-                <Text>{this.props.error}</Text>
             </View>
         )
     }
