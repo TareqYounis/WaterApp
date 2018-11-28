@@ -77,7 +77,7 @@ class SideDrawer extends Component {
             </View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => this.handleScreenNavigation('water-app.AuthScreen')}>
+            <TouchableOpacity onPress={() => this.handleScreenNavigation('water-app.MainApplicationScreen')}>
             <View style={styles.drawerItem}>
                 <IconFontAwsm
                 name= "file-text-o"

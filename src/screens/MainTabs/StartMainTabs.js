@@ -19,16 +19,17 @@ const StartMainTabs = () => {
               }
             },
             center: {
+              // add all componenets in stack that we need to navigate to from the SideDrawer
               stack: {
-                id: "AppRoot",
+                id: "sideDrawerComponents",
                 children: [{
                   component: {
-                    id: "App",
+                    id: "complaintSD",
                     name: "water-app.ComplaintScreen"
                   },
                   component: {
-                    id: "App",
-                    name: "water-app.AuthScreen"
+                    id: "MainAppSD",
+                    name: "water-app.MainApplicationScreen"
                   },                  
                 }]
               },

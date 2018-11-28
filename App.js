@@ -18,6 +18,8 @@ import SignUp from './src/screens/Auth/SignUp';
 import Login from './src/screens/Auth/Login';
 import AddUserAccount from './src/screens/Auth/AddUserAccount';
 
+import MainApplication from './src/screens/Applications/MainApplication';
+
 import configureStore from './src/store/configureStore';
 
 const store = configureStore();
@@ -89,6 +91,11 @@ Navigation.registerComponent('water-app.AddUserAccountScreen',
   // () => Enquiry, store, Provider );
   reduxStoreWrapper(AddUserAccount, store))
 
+Navigation.registerComponent('water-app.MainApplicationScreen', 
+  // () => Enquiry, store, Provider );
+  reduxStoreWrapper(MainApplication, store))
+
+    
 //start a App 
 Navigation.setRoot({
   root: {
