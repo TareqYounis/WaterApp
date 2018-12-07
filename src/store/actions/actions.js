@@ -1,5 +1,5 @@
 // Actions are payloads of information that send data from the application to the store
-import { Fetch_Failure, Fetch_Sucess , Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Sucess_User_Login, Fetch_Sucess_Invoice_Calculation, Fetch_Sucess_Usage_Type, Tab_ID, Fetch_Success_Complaint_Type, Fetch_Sucess_Subscription_Type, Fetch_Success_Villages, Fetch_Success_Blooks } from './actionTypes';
+import { Fetch_Failure, Fetch_Sucess , Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Sucess_User_Login, Fetch_Sucess_Invoice_Calculation, Fetch_Sucess_Usage_Type, Tab_ID, Fetch_Success_Complaint_Type, Fetch_Sucess_Subscription_Type, Fetch_Success_Villages, Fetch_Success_Blooks, Fetch_Success_Sectors, Fetch_Success_Parcles } from './actionTypes';
 
 
 export const FetchFailure = error => {
@@ -86,9 +86,23 @@ export const FetchSuccessVillagesGIS = ( villagesGIS ) => {
     }
 }
 
-export const FetchSucessGetBlooksGIS = ( blooksGIS ) => {
+export const FetchSucessBlooksGIS = ( blooksGIS ) => {
     return {
         type: Fetch_Success_Blooks,
         payload : { blooksGIS }
+    }
+}
+
+export const FetchSuccessSectorsGIS = ( sectorsGIS ) => {
+    return {
+        type: Fetch_Success_Sectors,
+        payload : { sectorsGIS }
+    }
+}
+
+export const FetchSuccessParclesGIS = ( parclesGIS ) => {
+    return {
+        type: Fetch_Success_Parcles,
+        payload : { parclesGIS }
     }
 }

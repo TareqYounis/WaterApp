@@ -1,4 +1,4 @@
-import {Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Sucess, Fetch_Failure, Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Sucess_User_Login, Fetch_Sucess_User_Add_Account, Fetch_Sucess_Invoice_Calculation, Fetch_Sucess_Usage_Type, Tab_ID, Fetch_Success_Complaint_Type, Fetch_Sucess_Subscription_Type, Fetch_Success_Villages } from '../actions/actionTypes';
+import {Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Sucess, Fetch_Failure, Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Sucess_User_Login, Fetch_Sucess_User_Add_Account, Fetch_Sucess_Invoice_Calculation, Fetch_Sucess_Usage_Type, Tab_ID, Fetch_Success_Complaint_Type, Fetch_Sucess_Subscription_Type, Fetch_Success_Villages, Fetch_Success_Sectors, Fetch_Success_Parcles } from '../actions/actionTypes';
 
 const initiaState ={
     names: [],
@@ -11,6 +11,8 @@ const initiaState ={
     subscriptionType : [],
     villagesGIS: [],
     blooksGIS: [],
+    sectorsGIS : [],
+    parclesGIS : [],
     error: null,
     Tab_ID: '',
     data: [],
@@ -117,7 +119,17 @@ const reducer = (state = initiaState, action ) => {
         return {
             ...state,
             blooksGIS : action.payload.blooksGIS
-        }
+        };
+        case Fetch_Success_Sectors:
+        return {
+            ...state,
+            sectorsGIS: action.payload.sectorsGIS
+        };
+        case Fetch_Success_Parcles:
+        return {
+            ...state,
+            parclesGIS: action.payload.parclesGIS
+        };
         default : 
             return state;
     }
