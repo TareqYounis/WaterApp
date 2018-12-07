@@ -10,6 +10,7 @@ const initiaState ={
     complaintType: [],
     subscriptionType : [],
     villagesGIS: [],
+    blooksGIS: [],
     error: null,
     Tab_ID: '',
     data: [],
@@ -53,7 +54,6 @@ const reducer = (state = initiaState, action ) => {
           selectedName: null
         };
         case  Fetch_Failure:
-        console.log("Im in action payload",action.payload.error)
         return{
             ...state,
             error: action.payload.error
@@ -69,7 +69,6 @@ const reducer = (state = initiaState, action ) => {
             waterRole: action.payload.data
         };
         case Fetch_Sucess_User_Register:
-        console.log("Im in action payload",action.payload.data)
         return {
             ...state,
             user_id : action.payload.data
@@ -113,6 +112,11 @@ const reducer = (state = initiaState, action ) => {
         return {
             ...state,
             villagesGIS : action.payload.villagesGIS
+        };
+        case Fetch_Success_Blooks:
+        return {
+            ...state,
+            blooksGIS : action.payload.blooksGIS
         }
         default : 
             return state;

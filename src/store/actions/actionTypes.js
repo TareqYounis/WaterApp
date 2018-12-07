@@ -14,3 +14,4 @@ export const Tab_ID = 'Tab_ID';
 export const Fetch_Success_Complaint_Type = 'Fetch_Success_Complaint_Type';
 export const Fetch_Sucess_Subscription_Type = 'Fetch_Sucess_Subscription_Type';
 export const Fetch_Success_Villages = 'Fetch_Success_Villages'
+export const Fetch_Success_Blooks = 'Fetch_Success_Blooks';
