@@ -1,4 +1,4 @@
-import {Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Sucess, Fetch_Failure, Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Sucess_User_Login, Fetch_Sucess_User_Add_Account, Fetch_Sucess_Invoice_Calculation, Fetch_Sucess_Usage_Type, Tab_ID, Fetch_Success_Complaint_Type, Fetch_Sucess_Subscription_Type } from '../actions/actionTypes';
+import {Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Sucess, Fetch_Failure, Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Sucess_User_Login, Fetch_Sucess_User_Add_Account, Fetch_Sucess_Invoice_Calculation, Fetch_Sucess_Usage_Type, Tab_ID, Fetch_Success_Complaint_Type, Fetch_Sucess_Subscription_Type, Fetch_Success_Villages } from '../actions/actionTypes';
 
 const initiaState ={
     names: [],
@@ -9,6 +9,7 @@ const initiaState ={
     usage_type: [],
     complaintType: [],
     subscriptionType : [],
+    villagesGIS: [],
     error: null,
     Tab_ID: '',
     data: [],
@@ -106,7 +107,12 @@ const reducer = (state = initiaState, action ) => {
         case Fetch_Sucess_Subscription_Type:
         return {
             ...state,
-            subscriptionType : action.payload.SubscriptionType
+            subscriptionType : action.payload.subscriptionType
+        };
+        case Fetch_Success_Villages:
+        return {
+            ...state,
+            villagesGIS : action.payload.villagesGIS
         }
         default : 
             return state;
