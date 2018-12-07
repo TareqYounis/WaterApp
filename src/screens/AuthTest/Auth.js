@@ -2,7 +2,7 @@ import React, { Component} from 'react';
 import { connect } from 'react-redux';
 import { View, Text, Button, Dimensions } from 'react-native';
 import StartMainTabs from '../MainTabs/StartMainTabs';
-import NameInput from '../../Components/NameInput/NameInput';
+//import NameInput from '../../Components/NameInput/NameInput';
 import {AddName} from '../../store/actions/index'
 import  { GetOrganizations, GetWaterRoles} from '../../store/actions/index';
 
@@ -45,7 +45,7 @@ class AuthScreen extends Component {
         return (
             // set the width of the side drawer to open for a certain scale, works only for android
             <View style={{width: Dimensions.get("window").width * 0.8}}>
-                <NameInput onNameAdded={this.nameAddedHandler} />
+                {/* <NameInput onNameAdded={this.nameAddedHandler} /> */}
                 <Button title="login" onPress={this.loginHandler}/>
             </View>
         )
