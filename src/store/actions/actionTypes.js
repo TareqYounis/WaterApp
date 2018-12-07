@@ -12,3 +12,4 @@ export const Fetch_Sucess_Invoice_Calculation = 'Fetch_Sucess_Invoice_Calculatio
 export const Fetch_Sucess_Usage_Type = 'Fetch_Sucess_Usage_Type';
 export const Tab_ID = 'Tab_ID';
 export const Fetch_Success_Complaint_Type = 'Fetch_Success_Complaint_Type';
+export const Fetch_Sucess_Subscription_Type = 'Fetch_Sucess_Subscription_Type';

@@ -1,5 +1,13 @@
 // Actions are payloads of information that send data from the application to the store
-import {Fetch_Failure, Fetch_Sucess , Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Sucess_User_Login, Fetch_Sucess_Invoice_Calculation, Fetch_Sucess_Usage_Type, Tab_ID, Fetch_Success_Complaint_Type } from './actionTypes';
+import {Fetch_Failure, Fetch_Sucess , Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Sucess_User_Login, Fetch_Sucess_Invoice_Calculation, Fetch_Sucess_Usage_Type, Tab_ID, Fetch_Success_Complaint_Type, Fetch_Sucess_Subscription_Type } from './actionTypes';
+
+
+export const FetchFailure = error => {
+    return {
+        type: Fetch_Failure,
+        payload: { error }
+    }
+}
 
 export const FetchSuccess = data => {
     return {
@@ -19,13 +27,6 @@ export const FetchSuccessUserRegister = data =>{
     return {
         type : Fetch_Sucess_User_Register,
         payload: { data }
-    }
-}
-
-export const FetchFailure = error => {
-    return {
-        type: Fetch_Failure,
-        payload: { error }
     }
 }
 
@@ -68,5 +69,12 @@ export const FetchSuccessComplaintType = (complaintType) => {
     return {
         type: Fetch_Success_Complaint_Type,
         payload: { complaintType }
+    }
+}
+
+export const FetchSuccessSubscriptionType = ( SubscriptionType ) => {
+    return {
+        type: Fetch_Sucess_Subscription_Type,
+        payload : { SubscriptionType }
     }
 }
