@@ -17,3 +17,4 @@ export const Fetch_Success_Villages = 'Fetch_Success_Villages'
 export const Fetch_Success_Blooks = 'Fetch_Success_Blooks';
 export const Fetch_Success_Sectors = 'Fetch_Success_Sectors';
 export const Fetch_Success_Parcles = 'Fetch_Success_Parcles';
+export const Fetch_Success_Application_Request = 'Fetch_Success_Application_Request';

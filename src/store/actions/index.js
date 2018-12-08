@@ -1,4 +1,5 @@
 export { FetchFailure, FetchSuccess, FetchSuccessWaterRoles, FetchSuccessUserRegister} from './actions';
-export { GetOrganizations, GetWaterRoles, invoiceCalculation, GetUsageType, GetComplaintTypes } from './enquiry';
-export { UserSignsUp, UserLogsIn, UserAddAccount, SaveTabID } from './UserAuth';
-export { GetSubscriptionType, GetVillagesGIS, GetBlooksGIS, GetSectorsGIS, GetParcelsGIS } from './waterServices';
+export { GetWaterRoles, invoiceCalculation, GetComplaintTypes } from './enquiry';
+export { UserSignsUp, UserLogsIn, UserAddAccount, SaveTabID } from './userAuth';
+export { GetOrganizations, GetUsageType, GetSubscriptionType, GetVillagesGIS, GetBlooksGIS, GetSectorsGIS, GetParcelsGIS } from './waterServices';
+export { RequestApplication } from './applications';
