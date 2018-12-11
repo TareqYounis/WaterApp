@@ -32,6 +32,10 @@ const StartMainTabs = () => {
                   component: {
                     id: "MainAppSD",
                     name: "water-app.MainApplicationScreen"
+                  },
+                  component: {
+                    id: "ObjectionSD",
+                    name: "water-app.ObjectionService"
                   },                  
                 }]
               },
@@ -49,7 +53,7 @@ const StartMainTabs = () => {
                       children: [
                         {
                           component: {
-                            name: 'water-app.EnqiryHomeScreen',
+                            name: 'water-app.homeScreen',
                             options: {
                               topBar: {
                                 visible: true,
@@ -63,9 +67,9 @@ const StartMainTabs = () => {
                               bottomTab: {
                                 badge: '2',
                                 fontSize: 12,
-                                text: 'Enquiry',
-                                icon: sources[2]
-                              }
+                                text: 'Home',
+                                icon: sources[0]
+                              },
                             }
                           },
                         },
@@ -78,13 +82,13 @@ const StartMainTabs = () => {
                       children: [
                         {
                           component: {
-                            name: 'water-app.ComplaintScreen',
+                            name: 'water-app.EnqiryHomeScreen',
                             options: {
                               bottomTab: {
                                 badge: 'New',
-                                text: 'Complaint',
+                                text: 'Enquiry',
                                 fontSize: 12,
-                                icon: sources[4]
+                                icon: sources[2]
                               },
                               topBar: {
                                 visible: true,
