@@ -17,6 +17,7 @@ class AddAccount extends React.Component {
     handleAddAccount (){
         this.props.onAddingAccount(this.state);
     }
+    
     render(){
         return(
             <View>
