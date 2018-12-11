@@ -1,10 +1,11 @@
  import React from 'react';
 import { Navigation } from 'react-native-navigation';
-import {Provider} from 'react-redux'
+import { Provider } from 'react-redux'
 
 import AuthScreen from './src/screens/AuthTest/Auth';
 import SideDrawer from './src/screens/SideDrawer/SideDrawer';
 import StartMainTabs from './src/screens/MainTabs/StartMainTabs';
+import Home from './src/screens/Home/Home';
 
 import EnquiryHome  from './src/screens/Enquiry/EnquiryHome';
 import WaterRoles from './src/screens/Enquiry/WaterRoles';
@@ -54,6 +55,10 @@ Navigation.registerComponent("water-app.SideDrawerScreen",
 Navigation.registerComponent('water-app.startMainTapScreen', 
   //() => StartMainTabs, store, Provider);
   reduxStoreWrapper(StartMainTabs, store))
+
+Navigation.registerComponent('water-app.homeScreen', 
+  //() => StartMainTabs, store, Provider);
+  reduxStoreWrapper( Home, store))
 
 Navigation.registerComponent("water-app.ComplaintScreen", 
   //() => Complaint, store, Provider);

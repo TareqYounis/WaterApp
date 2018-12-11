@@ -11,7 +11,7 @@ class AddObjection extends React.Component {
             account : 0
         }
         this.handleObjection = this.handleObjection.bind(this);
-        this.renderingArray = this.renderingArray.bind(this);
+        this.renderingResults = this.renderingResults.bind(this);
     }
     
     handleObjection(){
