@@ -12,6 +12,7 @@ import WaterBill from './src/screens/Enquiry/WaterBill';
 import CalculateWaterInvoice from './src/screens/Enquiry/CalculateWaterInvoice';
 
 import Complaint  from './src/screens/Complaint/Complaint';
+import ObjectionService from './src/screens/Complaint/ObjectionService';
 
 import Profile from './src/screens/Auth/Profile';
 import SignUp from './src/screens/Auth/SignUp';
@@ -57,6 +58,10 @@ Navigation.registerComponent('water-app.startMainTapScreen',
 Navigation.registerComponent("water-app.ComplaintScreen", 
   //() => Complaint, store, Provider);
   reduxStoreWrapper(Complaint, store))
+
+Navigation.registerComponent('water-app.ObjectionService', 
+  // () => Enquiry, store, Provider );
+  reduxStoreWrapper( ObjectionService, store))
 
 
 Navigation.registerComponent('water-app.EnqiryHomeScreen', 

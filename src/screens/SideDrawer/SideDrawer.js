@@ -41,7 +41,7 @@ class SideDrawer extends Component {
             { width: Dimensions.get("window").width * 0.8 }
             ]}
         >
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => this.handleScreenNavigation('water-app.ObjectionService')}> 
             <View style={styles.drawerItem}>
                 <IconFontAwsm
                 name="hand-stop-o"

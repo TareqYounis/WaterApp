@@ -1,4 +1,4 @@
-import { Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Sucess, Fetch_Failure, Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Sucess_User_Login, Fetch_Sucess_User_Add_Account, Fetch_Sucess_Invoice_Calculation, Fetch_Sucess_Usage_Type, Tab_ID, Fetch_Success_Complaint_Type, Fetch_Sucess_Subscription_Type, Fetch_Success_Villages, Fetch_Success_Blooks, Fetch_Success_Sectors, Fetch_Success_Parcles, Fetch_Success_Application_Request } from '../actions/actionTypes';
+import { Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Sucess, Fetch_Failure, Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Sucess_User_Login, Fetch_Sucess_User_Add_Account, Fetch_Sucess_Invoice_Calculation, Fetch_Sucess_Usage_Type, Tab_ID, Fetch_Success_Complaint_Type, Fetch_Sucess_Subscription_Type, Fetch_Success_Villages, Fetch_Success_Blooks, Fetch_Success_Sectors, Fetch_Success_Parcles, Fetch_Success_Application_Request, Fetch_Success_Objection_Service } from '../actions/actionTypes';
 
 const initiaState ={
     names: [],
@@ -14,6 +14,7 @@ const initiaState ={
     sectorsGIS : [],
     parclesGIS : [],
     requestApplication : '',
+    objectionResults : [],
     error: null,
     Tab_ID: '',
     data: [],
@@ -135,6 +136,11 @@ const reducer = (state = initiaState, action ) => {
         return {
             ...state,
             requestApplication: action.payload.application
+        };
+        case Fetch_Success_Objection_Service:
+        return {
+            ...state,
+            objectionResults : action.payload.objection
         }
         default : 
             return state;
