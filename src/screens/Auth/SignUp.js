@@ -19,6 +19,7 @@ class SignUp extends React.Component {
             <View>
                <UserSignUp onSignup={this.handleSigningUp}/>
                <Text>{this.props.error}</Text>
+               <Text>{this.props.user_id}</Text>
             </View>
         )
     }
