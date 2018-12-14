@@ -2,17 +2,26 @@ import React from 'react';
 import {View,TouchableOpacity, Platform, Text, StyleSheet} from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import IconAnt from 'react-native-vector-icons/AntDesign';
+import { Navigation } from 'react-native-navigation';
 
 class MainApplication extends React.Component {
     constructor(props){
         super(props);
+        this.ApplyforApplication = this.ApplyforApplication.bind(this);
     }
     
+    ApplyforApplication (screen) {
+        Navigation.push(this.props.componentId,{
+            component:{
+                name: screen
+            } 
+        })
+    }    
     render(){
         return(
             <View style={styles.container}>
               
-              <TouchableOpacity style={styles.Item}>
+              <TouchableOpacity style={styles.Item} onPress={ () => this.ApplyforApplication('water-app.ApplyApplicationScreen')}>
                 <IconAnt name="addfile" size={30} style={styles.ItemIcon}/>
                 <Text>Apply for a new application</Text>
               </TouchableOpacity>

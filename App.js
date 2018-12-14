@@ -21,6 +21,7 @@ import Login from './src/screens/Auth/Login';
 import AddUserAccount from './src/screens/Auth/AddUserAccount';
 
 import MainApplication from './src/screens/Applications/MainApplication';
+import ApplyApplication from './src/screens/Applications/ApplyApplication';
 
 import configureStore from './src/store/configureStore';
 
@@ -104,6 +105,10 @@ Navigation.registerComponent('water-app.AddUserAccountScreen',
 Navigation.registerComponent('water-app.MainApplicationScreen', 
   // () => Enquiry, store, Provider );
   reduxStoreWrapper(MainApplication, store))
+
+Navigation.registerComponent('water-app.ApplyApplicationScreen', 
+  // () => Enquiry, store, Provider );
+  reduxStoreWrapper(ApplyApplication, store))
 
     
 //start a App 
