@@ -112,24 +112,26 @@ Navigation.registerComponent('water-app.ApplyApplicationScreen',
 
     
 //start a App 
-Navigation.setRoot({
-  root: {
-    stack: {
-      children: [{
-        component: {
-          name: 'water-app.AuthScreen',
-          passProps: {
-            text: 'stack with one child'
+Navigation.events().registerAppLaunchedListener(() => {
+  Navigation.setRoot({
+    root: {
+      stack: {
+        children: [{
+          component: {
+            name: 'water-app.AuthScreen',
+            passProps: {
+              text: 'stack with one child'
+            }
           }
-        }
-      }],
-      options: {
-        topBar: {
-          title: {
-            text: 'Welcome screen'
+        }],
+        options: {
+          topBar: {
+            title: {
+              text: 'Welcome screen'
+            }
           }
         }
       }
     }
-  }
-});
+  })
+})
