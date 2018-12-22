@@ -1,5 +1,5 @@
 // Actions are payloads of information that send data from the application to the store
-import { Fetch_Failure, Fetch_Sucess , Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Sucess_User_Login, Fetch_Sucess_Invoice_Calculation, Fetch_Sucess_Usage_Type, Tab_ID, Fetch_Success_Complaint_Type, Fetch_Sucess_Subscription_Type, Fetch_Success_Villages, Fetch_Success_Blooks, Fetch_Success_Sectors, Fetch_Success_Parcles, Fetch_Success_Application_Request, Fetch_Success_Objection_Service, Fetch_Success_Balance_History } from './actionTypes';
+import { Fetch_Failure, Fetch_Sucess , Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Sucess_User_Login, Fetch_Sucess_Invoice_Calculation, Fetch_Sucess_Usage_Type, Tab_ID, Fetch_Success_Complaint_Type, Fetch_Sucess_Subscription_Type, Fetch_Success_Villages, Fetch_Success_Blooks, Fetch_Success_Sectors, Fetch_Success_Parcles, Fetch_Success_Application_Request, Fetch_Success_Objection_Service, Fetch_Success_Balance_History, Fetch_Success_Return_Counter } from './actionTypes';
 
 
 export const FetchFailure = error => {
@@ -125,5 +125,12 @@ export const FetchSuccessBalanceHistory = ( history ) => {
     return {
         type : Fetch_Success_Balance_History,
         payload : { history }
+    }
+}
+
+export const FetchSuccessReturnCounter = ( returnCounter ) => {
+    return {
+        type: Fetch_Success_Return_Counter,
+        payload: { returnCounter }
     }
 }

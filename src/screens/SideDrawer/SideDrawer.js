@@ -56,7 +56,7 @@ class SideDrawer extends Component {
             </View>
             </TouchableOpacity>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => this.handleScreenNavigation('water-app.ReturnCounterScreen')}>
             <View style={styles.drawerItem}>
                 <IconFontAwsm
                 name="unlock-alt"

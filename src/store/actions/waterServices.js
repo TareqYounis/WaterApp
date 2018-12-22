@@ -81,7 +81,7 @@ export const GetSubscriptionType = ( companyId ) => {
 }
 
 //List Villages GIS (GET)
-export const GetVillagesGIS = ( companyId ) => {
+export const GetVillagesGIS = () => {
     return dispatch => {
     var ts = Math.round(new Date().getTime()/1000);
     return sha256( ts + ':sK8DkvuyKGeb19b437g4Cv33GXV49c9Q:miyahunaAdmin!@#123').then( hash => {
@@ -92,7 +92,7 @@ export const GetVillagesGIS = ( companyId ) => {
               }
            })
             .then((response) => response.json())
-            .then((responseJson) => {           
+            .then((responseJson) => { 
                 dispatch(FetchSuccessVillagesGIS(responseJson.data));
             })
             .catch((error)=> {
@@ -117,7 +117,7 @@ export const GetBlooksGIS = ( villageId ) => {
               }
            })
             .then((response) => response.json())
-            .then((responseJson) => {           
+            .then((responseJson) => {  
                 dispatch(FetchSucessBlooksGIS(responseJson.data));
             })
             .catch((error)=> {
@@ -142,8 +142,13 @@ export const GetSectorsGIS = ( blookId ) => {
               }
            })
             .then((response) => response.json())
-            .then((responseJson) => {           
-                dispatch(FetchSuccessSectorsGIS(responseJson.data));
+            .then((responseJson) => {  
+                if(responseJson.status){       
+                console.log('Im here for you',responseJson)
+                    dispatch(FetchSuccessSectorsGIS(responseJson.data));
+                }else{
+                    dispatch(FetchFailure(responseJson.message));
+                }
             })
             .catch((error)=> {
               dispatch(FetchFailure(error));

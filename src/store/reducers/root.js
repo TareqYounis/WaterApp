@@ -1,4 +1,4 @@
-import { Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Sucess, Fetch_Failure, Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Sucess_User_Login, Fetch_Sucess_User_Add_Account, Fetch_Sucess_Invoice_Calculation, Fetch_Sucess_Usage_Type, Tab_ID, Fetch_Success_Complaint_Type, Fetch_Sucess_Subscription_Type, Fetch_Success_Villages, Fetch_Success_Blooks, Fetch_Success_Sectors, Fetch_Success_Parcles, Fetch_Success_Application_Request, Fetch_Success_Objection_Service, Fetch_Success_Balance_History } from '../actions/actionTypes';
+import { Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Sucess, Fetch_Failure, Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Sucess_User_Login, Fetch_Sucess_User_Add_Account, Fetch_Sucess_Invoice_Calculation, Fetch_Sucess_Usage_Type, Tab_ID, Fetch_Success_Complaint_Type, Fetch_Sucess_Subscription_Type, Fetch_Success_Villages, Fetch_Success_Blooks, Fetch_Success_Sectors, Fetch_Success_Parcles, Fetch_Success_Application_Request, Fetch_Success_Objection_Service, Fetch_Success_Balance_History, Fetch_Success_Return_Counter } from '../actions/actionTypes';
 
 const initiaState ={
     names: [],
@@ -16,6 +16,7 @@ const initiaState ={
     requestApplication : '',
     objectionResults : [],
     balanceHistory: [],
+    returnCounter: [],
     error: null,
     Tab_ID: '',
     data: [],
@@ -64,6 +65,7 @@ const reducer = (state = initiaState, action ) => {
             error: action.payload.error
         };
         case Fetch_Sucess:
+        console.log('ehhh yu',action.payload.data)
         return {
             ...state,
             data : action.payload.data
@@ -147,6 +149,11 @@ const reducer = (state = initiaState, action ) => {
         return {
             ...state,
             balanceHistory: action.payload.history
+        };
+        case Fetch_Success_Return_Counter:
+        return {
+            ...state,
+            returnCounter : action.payload.returnCounter
         }
         default : 
             return state;

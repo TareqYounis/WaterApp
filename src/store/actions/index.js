@@ -2,5 +2,5 @@ export { FetchFailure, FetchSuccess, FetchSuccessWaterRoles, FetchSuccessUserReg
 export { GetWaterRoles, invoiceCalculation, GetComplaintTypes } from './enquiry';
 export { UserSignsUp, UserLogsIn, UserAddAccount, SaveTabID, UserBalanceHistory } from './userAuth';
 export { GetOrganizations, GetUsageType, GetSubscriptionType, GetVillagesGIS, GetBlooksGIS, GetSectorsGIS, GetParcelsGIS } from './waterServices';
-export { RequestApplication } from './applications';
+export { RequestApplication, ReturnBlockCounter } from './applications';
 export { Objection } from './complaints';
