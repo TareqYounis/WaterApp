@@ -11,13 +11,14 @@ class AddApplication extends React.Component {
         this.state = {
             user_id: 0,
             sut_types: 1,
+            org_id: 0,
             app_date: 0,
             subs_category: 0,
             subs_id_number: 0,
             subs_name : '',
             mobile: '',
             address : '',
-            vil_id: '825',
+            vil_id: 0,
             blk_id: 0,
             sec_id : 0,
             par_id: 0,
@@ -30,20 +31,39 @@ class AddApplication extends React.Component {
             street_name : '',
             bulding_no : ''
         }
+        this.showSubsType = this.showSubsType.bind(this);
         this.showBlocks = this.showBlocks.bind(this);
         this.showSectors = this.showSectors.bind(this);
-        console.log('this is the props',this.props)
+        this.showParcels = this.showParcels.bind(this);
     }
 
+    showSubsType(){
+        if(this.state.org_id !== 0){
+            this.props.onGetSubsType(this.state.org_id);
+            while (this.props.subscriptionType.length !== 0){
+                return <Picker
+                            selectedValue={this.state.subs_category}
+                            style={{ height: 50, width: 200, borderWidth: 2 }}
+                            onValueChange={( subs_category ) => {this.setState({ subs_category }); console.log('thosssg',subs_category)}}>
+                            <Picker.Item label='Please select an option...' value='0' />
+                            {this.props.subscriptionType.map((item, index) => {
+                                return (<Picker.Item label={item.name_ar} value={item.id} key={index}/>) 
+                            })}
+                        </Picker>
+            }
+            }else{
+               return null;
+           }
+    }
     showBlocks(){
        if(this.state.vil_id !== 0){
         this.props.onGetBlocksID(this.state.vil_id);
-        console.log('i tstgs',this.props.organization)
         while (this.props.blooksGIS.length !== 0){
             return <Picker
                         selectedValue={this.state.blk_id}
                         style={{ height: 50, width: 200, borderWidth: 2 }}
-                        onValueChange={( blk_id ) => this.setState({ blk_id })}>
+                        onValueChange={( blk_id ) => {this.setState({ blk_id }); console.log('thosssg',blk_id)}}>
+                        <Picker.Item label='Please select an option...' value='0' />
                         {this.props.blooksGIS.map((item, index) => {
                             return (<Picker.Item label={item.BLK_NAME_A} value={item.BLK_ID} key={index}/>) 
                         })}
@@ -55,25 +75,40 @@ class AddApplication extends React.Component {
     }
 
     showSectors(){
-        <Picker
-            selectedValue={this.state.sec_id}
-            style={{ height: 50, width: 200, borderWidth: 2 }}
-            onValueChange={( sec_id ) => this.setState({ sec_id })}>
-            {this.props.sectorsGIS.map((item, index) => {
-                return (<Picker.Item label={item.SEC_NAME_A} value={item.SEC_ID} key={index}/>) 
-            })}
-        </Picker>
+        if(this.state.blk_id !== 0){
+            this.props.onGetSectorsID(this.state.blk_id);
+            while (this.props.sectorsGIS.length !== 0){
+                return <Picker
+                    selectedValue={this.state.sec_id}
+                    style={{ height: 50, width: 200, borderWidth: 2 }}
+                    onValueChange={( sec_id ) =>  {this.setState({ sec_id }); console.log('thosssg',sec_id)}}>
+                    <Picker.Item label='Please select an option...' value='0' />
+                    {this.props.sectorsGIS.map((item, index) => {   
+                        return (<Picker.Item label={item.SEC_NAME_A} value={item.SEC_ID} key={index}/>) 
+                    })}
+                </Picker>
+            }
+        }else{
+            return null;    
+        }
     }
 
-    showPracles(){
-        <Picker
-            selectedValue={this.state.par_id}
-            style={{ height: 50, width: 200, borderWidth: 2 }}
-            onValueChange={( par_id ) => this.setState({ par_id })}>
-            {this.props.parclesGIS.map((item, index) => {
-                return (<Picker.Item label={item.PAR_ID} value={item.PAR_PUT_ID} key={index}/>) 
-            })}
-        </Picker>
+    showParcels(){
+        // console.log(this.state.sec_id)
+        if(this.state.sec_id !== 0){
+            this.props.onGetParclesID(this.state.sec_id);
+            while (this.props.parclesGIS.length !== 0){
+                return <Picker
+                            selectedValue={this.state.par_id}
+                            style={{ height: 50, width: 200, borderWidth: 2 }}
+                            onValueChange={( par_id ) => {this.setState({ par_id }); console.log('gsgs',par_id )}}>
+                            <Picker.Item label='Please select an option...' value='0' />
+                            {this.props.parclesGIS.map((item, index) => {
+                                return (<Picker.Item label={item.PAR_ID} value={item.PAR_PUT_ID} key={index}/>) 
+                        })}
+                    </Picker>
+            }
+        }
     }
     
     render (){
@@ -122,23 +157,28 @@ class AddApplication extends React.Component {
                 />
    
                  <Picker
-                    selectedValue={this.state.subs_category}
+                    selectedValue={this.state.org_id}
                     style={{ height: 50, width: 200, borderWidth: 2 }}
-                    onValueChange={( subs_category ) => this.setState({ subs_category })}>
+                    onValueChange={( org_id ) =>{ this.setState({ org_id }); console.log(org_id)}}>
+                     <Picker.Item label='Please select an option...' value='0' />
                     {this.props.organization.map((item, index) => {
                         return (<Picker.Item label={item.name_ar} value={item.id} key={index}/>) 
                     })}
                 </Picker>
 
-                {/* <Picker
+                <Picker
                     selectedValue={this.state.vil_id}
                     style={{ height: 50, width: 200, borderWidth: 2 }}
-                    onValueChange= {( vil_id ) => { this.setState({ vil_id }); this.showBlocks()}}>                   
+                    onValueChange= {( vil_id ) => this.setState({ vil_id })}>                   
+                     <Picker.Item label='Please select an option...' value='0' />
                     {this.props.villageId.map((item, index) => {
                         return (<Picker.Item label={item.VIL_NAME_A} value={item.VIL_ID} key={index}/>) 
                     })}
-                </Picker> */}
+                </Picker>
+                {this.showSubsType()}
                 {this.showBlocks()}
+                {this.showSectors()}
+                {this.showParcels()}
                 <TouchableOpacity onPress={this.handleImagePick} style={styles.Item}>
                     <Ionicon 
                         name={Platform.OS === "android" ? "md-images" : "ios-images"} 

@@ -65,7 +65,6 @@ const reducer = (state = initiaState, action ) => {
             error: action.payload.error
         };
         case Fetch_Sucess:
-        console.log('ehhh yu',action.payload.data)
         return {
             ...state,
             data : action.payload.data

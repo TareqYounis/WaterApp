@@ -144,7 +144,6 @@ export const GetSectorsGIS = ( blookId ) => {
             .then((response) => response.json())
             .then((responseJson) => {  
                 if(responseJson.status){       
-                console.log('Im here for you',responseJson)
                     dispatch(FetchSuccessSectorsGIS(responseJson.data));
                 }else{
                     dispatch(FetchFailure(responseJson.message));
@@ -166,14 +165,19 @@ export const GetParcelsGIS = ( sectoreId ) => {
     var ts = Math.round(new Date().getTime()/1000);
     return sha256( ts + ':sK8DkvuyKGeb19b437g4Cv33GXV49c9Q:miyahunaAdmin!@#123').then( hash => {
             hashValue= 'ts=' + ts + ',response=' + hash;
-            fetch('http://miyahunaportal.arabiacell.biz/api/info/parcels?sec_id={}' + sectoreId,{
+            fetch('http://miyahunaportal.arabiacell.biz/api/info/parcels?sec_id=' + sectoreId,{
               headers: {
                 Authorization: 'ts=' + ts + ',response=' + hash
               }
            })
             .then((response) => response.json())
-            .then((responseJson) => {           
-                dispatch(FetchSuccessParclesGIS(responseJson.data));
+            .then((responseJson) => { 
+                console.log('in parcles',responseJson, sectoreId)
+                if(responseJson.status){
+                    dispatch(FetchSuccessParclesGIS(responseJson.data));
+                }else{
+                    dispatch(FetchFailure(responseJson.message))
+                }
             })
             .catch((error)=> {
               dispatch(FetchFailure(error));

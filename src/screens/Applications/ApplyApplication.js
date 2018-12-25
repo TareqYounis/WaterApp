@@ -13,9 +13,6 @@ class ApplyApplication extends React.Component {
         this.props.onGetOrganizations();
         this.props.onGetSubsType(),
         this.props.onGetVillagesID();
-        this.props.onGetBlocksID();
-        this.props.onGetParclesID();
-        this.props.onGetSectorsID();
     }
 
     render(){
