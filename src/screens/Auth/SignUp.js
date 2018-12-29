@@ -21,6 +21,7 @@ class SignUp extends React.Component {
             })
         }
     }
+    
     handleSigningUp(userData){
         this.props.onSigningUp(userData)
     }

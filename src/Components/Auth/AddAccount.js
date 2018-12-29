@@ -5,16 +5,18 @@ class AddAccount extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            user_id: this.props.user_id,
             company_id: 1,
             account: 0,
-            iron_number: '',
+            iron_number: 0,
             account_name: ''
         }
         this.handleAddAccount = this.handleAddAccount.bind(this);
     }
 
     handleAddAccount (){
+        //convert string values to numbers
+        this.state.iron_number = parseInt(this.state.iron_number, 10)
+        this.state.account = parseInt(this.state.account, 10)
         this.props.onAddingAccount(this.state);
     }
     

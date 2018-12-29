@@ -10,20 +10,31 @@ class AddUserAccount extends React.Component {
         super(props);
         this.handleAddingAccount = this.handleAddingAccount.bind(this);
     }
-    handleAddingAccount(userAccount){
-        this.props.onAddingUserAccount(userAccount);
-    }
     //load all water companies before rendering. 
     componentWillMount() {
         this.props.onGetOrganizations();
     }
-    
+
+    componentWillReceiveProps(props){
+        if(props.messageAddAccount){
+            alert(props.messageAddAccount)
+            //Navigate to the user profile screen
+            Navigation.popToRoot(props.componentId);
+        }
+    }
+
+    handleAddingAccount(userAccount){
+        // send userID convery it to number
+        userAccount.user_id = parseInt(this.props.user_id, 10);
+        this.props.onAddingUserAccount(userAccount);
+    }
+
     render(){
         return(
             <View>
-                <AddAccount organizations={this.props.data} userID= {this.props.user_id} onAddingAccount={this.handleAddingAccount}/>
                 <Text>Add user account screen</Text>
-                <Text>{this.props.messageAddAccount}</Text>
+                <AddAccount organizations={this.props.data} onAddingAccount={this.handleAddingAccount}/>
+                <Text>{this.props.messageFailAddAccount}</Text>
             </View>
         )
     }
@@ -31,12 +42,10 @@ class AddUserAccount extends React.Component {
 
 const mapStateToProps = state => {
     return {
-      names: state.names.names,
       data : state.enquiry.data,
-      waterRole : state.enquiry.waterRole,
       user_id : state.names.user_id,
-      error : state.names.error,
-      messageAddAccount : state.names.messageAddAccount
+      messageAddAccount : state.names.messageAddAccount,
+      messageFailAddAccount : state.names.messageFailAddAccount
     };
   };
   

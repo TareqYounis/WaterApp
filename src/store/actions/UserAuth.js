@@ -1,4 +1,4 @@
-import {FetchFailure, FetchSuccessUserRegister, FetchFailureUserRegister, FetchSuccessUserLogin, FetchFailureUserLogin, FetchSuccessAddAccount, SavingTabID, FetchSuccessBalanceHistory, FetchSuccessRegisterConfirm, FetchFailureRegisterConfirm, FetchSuccessResendCode, FetchFailureResendCode } from './actions';
+import {FetchFailure, FetchSuccessUserRegister, FetchFailureUserRegister, FetchSuccessUserLogin, FetchFailureUserLogin, FetchSuccessAddAccount, FetchFailureAddAccount, SavingTabID, FetchSuccessBalanceHistory, FetchSuccessRegisterConfirm, FetchFailureRegisterConfirm, FetchSuccessResendCode, FetchFailureResendCode } from './actions';
 import { sha256 } from 'react-native-sha256';
 
 //Register a new user (POST).
@@ -77,23 +77,29 @@ export const UserLogsIn = (userData) => {
 
 //Add Account (POST)
 export const UserAddAccount = (userData) => {
+  // generate form data from an object
+  var userFormData = new FormData();
+  for ( var key in userData){
+    userFormData.append( key , userData[key] )
+  }
   return dispatch => {
     var ts = Math.round(new Date().getTime()/1000);
     return sha256( ts + ':sK8DkvuyKGeb19b437g4Cv33GXV49c9Q:miyahunaAdmin!@#123').then( hash => {
             hashValue= 'ts=' + ts + ',response=' + hash;
-            fetch('http://miyahunaportal.arabiacell.biz/api/user/login' ,{
+            fetch('http://miyahunaportal.arabiacell.biz/api/user/add_account' ,{
               method: 'POST',
               headers: {
                 Authorization: 'ts=' + ts + ',response=' + hash
               },
-              body: JSON.stringify (userData)
+              body: userFormData
            })
             .then((response) => response.json())
-            .then((responseJson) => {      
-              if(responseJson.status === false){
-                dispatch(FetchFailure(responseJson.message));
+            .then((responseJson) => {
+              console.log('in response',responseJson)      
+              if(!responseJson.status){
+                dispatch(FetchFailureAddAccount(responseJson.message));
               }else{
-                dispatch(FetchSuccessAddAccount(responseJson.data));
+                dispatch(FetchSuccessAddAccount(responseJson.message));
               }
             })
             .catch((error)=> {
