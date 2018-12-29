@@ -20,6 +20,7 @@ import Profile from './src/screens/Auth/Profile';
 import SignUp from './src/screens/Auth/SignUp';
 import Login from './src/screens/Auth/Login';
 import AddUserAccount from './src/screens/Auth/AddUserAccount';
+import ConfirmRegister from './src/screens/Auth/ConfirmRegister';
 
 import MainApplication from './src/screens/Applications/MainApplication';
 import ApplyApplication from './src/screens/Applications/ApplyApplication';
@@ -108,6 +109,12 @@ Navigation.registerComponent('water-app.AddUserAccountScreen',
   // () => Enquiry, store, Provider );
   reduxStoreWrapper(AddUserAccount, store))
 
+
+Navigation.registerComponent('water-app.ConfirmRegisterScreen', 
+  // () => Enquiry, store, Provider );
+  reduxStoreWrapper(ConfirmRegister, store))
+
+  
 Navigation.registerComponent('water-app.MainApplicationScreen', 
   // () => Enquiry, store, Provider );
   reduxStoreWrapper(MainApplication, store))

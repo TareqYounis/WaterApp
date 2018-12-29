@@ -1,4 +1,4 @@
-import {FetchFailure, FetchSuccessUserRegister, FetchSuccessUserLogin, FetchSuccessAddAccount, SavingTabID, FetchSuccessBalanceHistory } from './actions';
+import {FetchFailure, FetchSuccessUserRegister, FetchFailureUserRegister, FetchSuccessUserLogin, FetchSuccessAddAccount, SavingTabID, FetchSuccessBalanceHistory, FetchSuccessRegisterConfirm, FetchFailureRegisterConfirm, FetchSuccessResendCode, FetchFailureResendCode } from './actions';
 import { sha256 } from 'react-native-sha256';
 
 //Register a new user (POST).
@@ -8,7 +8,6 @@ export const UserSignsUp = (userData) => {
   for ( var key in userData){
     userFormData.append( key , userData[key] )
   }
-  console.log("here is after",userFormData);
   return dispatch => {
     var ts = Math.round(new Date().getTime()/1000);
     return sha256( ts + ':sK8DkvuyKGeb19b437g4Cv33GXV49c9Q:miyahunaAdmin!@#123').then( hash => {
@@ -23,8 +22,8 @@ export const UserSignsUp = (userData) => {
             .then((response) => response.json())
             .then((responseJson) => {      
               console.log('response',responseJson);
-              if(responseJson.status === false){
-                dispatch(FetchFailure(responseJson.data));
+              if(!responseJson.status){
+                dispatch(FetchFailureUserRegister(responseJson.message));
               }else{
                 dispatch(FetchSuccessUserRegister(responseJson.data));
               }
@@ -129,7 +128,82 @@ export const UserBalanceHistory = ( userData) => {
         })
     }
 }
- 
+
+//Register Confirm (POST):
+export const UserRegisterConfirm = ( userData ) => {
+  // generate form data from an object
+  var userFormData = new FormData();
+  for ( var key in userData){
+    userFormData.append( key , userData[key] )
+  }
+  return dispatch => {
+    var ts = Math.round(new Date().getTime()/1000);
+    return sha256( ts + ':sK8DkvuyKGeb19b437g4Cv33GXV49c9Q:miyahunaAdmin!@#123').then( hash => {
+            hashValue= 'ts=' + ts + ',response=' + hash;
+            fetch('http://miyahunaportal.arabiacell.biz/api/user/register_confirm',{
+              method: 'POST',
+              headers: {
+                Authorization: 'ts=' + ts + ',response=' + hash
+              },
+              body: userFormData
+           })
+            .then((response) => response.json())
+            .then((responseJson) => {      
+              console.log('im responssssing',responseJson)
+              if(!responseJson.status){
+                dispatch(FetchFailureRegisterConfirm(responseJson.msg));
+              }else{
+                dispatch(FetchSuccessRegisterConfirm(responseJson));
+              }
+            })
+            .catch((error)=> {
+              dispatch(FetchFailure(error));
+            })
+        })
+        .catch((error)=> {
+            dispatch(FetchFailure(error));
+        })
+    }
+}
+
+//Resend Pin Code (POST):
+export const UserResendCode = ( userData ) => {
+  // generate form data from an object
+  var userFormData = new FormData();
+  for ( var key in userData){
+    userFormData.append( key , userData[key] )
+  }
+  return dispatch => {
+    var ts = Math.round(new Date().getTime()/1000);
+    return sha256( ts + ':sK8DkvuyKGeb19b437g4Cv33GXV49c9Q:miyahunaAdmin!@#123').then( hash => {
+            hashValue= 'ts=' + ts + ',response=' + hash;
+            fetch('http://miyahunaportal.arabiacell.biz/api/user/resend_pin_code',{
+              method: 'POST',
+              headers: {
+                Authorization: 'ts=' + ts + ',response=' + hash
+              },
+              body: userFormData
+           })
+            .then((response) => response.json())
+            .then((responseJson) => {      
+              console.log('im responssssing',responseJson)
+              if(responseJson.status === false){
+                dispatch(FetchFailureResendCode(responseJson));
+              }else{
+                dispatch(FetchSuccessResendCode(responseJson));
+              }
+            })
+            .catch((error)=> {
+              dispatch(FetchFailure(error));
+            })
+        })
+        .catch((error)=> {
+            dispatch(FetchFailure(error));
+        })
+    }
+}
+
+// to keep track of sidedrawer components
 export const SaveTabID = (tabID) => {
   return dispatch => {
     dispatch(SavingTabID(tabID));

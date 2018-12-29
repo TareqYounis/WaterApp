@@ -1,5 +1,5 @@
 // Actions are payloads of information that send data from the application to the store
-import { Fetch_Failure, Fetch_Sucess , Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Sucess_User_Login, Fetch_Sucess_Invoice_Calculation, Fetch_Sucess_Usage_Type, Tab_ID, Fetch_Success_Complaint_Type, Fetch_Sucess_Subscription_Type, Fetch_Success_Villages, Fetch_Success_Blooks, Fetch_Success_Sectors, Fetch_Success_Parcles, Fetch_Success_Application_Request, Fetch_Success_Objection_Service, Fetch_Success_Balance_History, Fetch_Success_Return_Counter } from './actionTypes';
+import { Fetch_Failure, Fetch_Sucess , Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Failure_User_Register, Fetch_Sucess_User_Login, Fetch_Sucess_Invoice_Calculation, Fetch_Sucess_Usage_Type, Tab_ID, Fetch_Success_Complaint_Type, Fetch_Sucess_Subscription_Type, Fetch_Success_Villages, Fetch_Success_Blooks, Fetch_Success_Sectors, Fetch_Success_Parcles, Fetch_Success_Application_Request, Fetch_Success_Objection_Service, Fetch_Success_Balance_History, Fetch_Success_Return_Counter, Fetch_Success_Register_Confirm, Fetch_Failure_Register_Confirm, Fetch_Success_Resend_Code, Fetch_Failure_Resend_Code } from './actionTypes';
 
 
 export const FetchFailure = error => {
@@ -23,9 +23,16 @@ export const FetchSuccessWaterRoles = data => {
     }
 };
 
-export const FetchSuccessUserRegister = data =>{
+export const FetchSuccessUserRegister = data => {
     return {
         type : Fetch_Sucess_User_Register,
+        payload: { data }
+    }
+}
+
+export const FetchFailureUserRegister = data => {
+    return {
+        type: Fetch_Failure_User_Register,
         payload: { data }
     }
 }
@@ -132,5 +139,33 @@ export const FetchSuccessReturnCounter = ( returnCounter ) => {
     return {
         type: Fetch_Success_Return_Counter,
         payload: { returnCounter }
+    }
+}
+
+export const FetchSuccessRegisterConfirm = ( data ) => {
+    return {
+        type: Fetch_Success_Register_Confirm,
+        payload: { msg: data.msg , userID: data.data}
+    }
+}
+
+export const FetchFailureRegisterConfirm = ( msg ) => {
+    return {
+        type: Fetch_Failure_Register_Confirm,
+        payload : { msg }
+    }
+}
+
+export const FetchSuccessResendCode = ( data ) => {
+    return {
+        type: Fetch_Success_Resend_Code,
+        payload: { msg: data.msg , userID: data.data }
+    }
+}
+
+export const FetchFailureResendCode = ( data ) => {
+    return {
+        type: Fetch_Failure_Resend_Code,
+        payload : { msg: data.msg }
     }
 }

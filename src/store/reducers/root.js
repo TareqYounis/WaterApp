@@ -1,9 +1,10 @@
-import { Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Sucess, Fetch_Failure, Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Sucess_User_Login, Fetch_Sucess_User_Add_Account, Fetch_Sucess_Invoice_Calculation, Fetch_Sucess_Usage_Type, Tab_ID, Fetch_Success_Complaint_Type, Fetch_Sucess_Subscription_Type, Fetch_Success_Villages, Fetch_Success_Blooks, Fetch_Success_Sectors, Fetch_Success_Parcles, Fetch_Success_Application_Request, Fetch_Success_Objection_Service, Fetch_Success_Balance_History, Fetch_Success_Return_Counter } from '../actions/actionTypes';
+import { Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Sucess, Fetch_Failure, Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Failure_User_Register, Fetch_Sucess_User_Login, Fetch_Sucess_User_Add_Account, Fetch_Sucess_Invoice_Calculation, Fetch_Sucess_Usage_Type, Tab_ID, Fetch_Success_Complaint_Type, Fetch_Sucess_Subscription_Type, Fetch_Success_Villages, Fetch_Success_Blooks, Fetch_Success_Sectors, Fetch_Success_Parcles, Fetch_Success_Application_Request, Fetch_Success_Objection_Service, Fetch_Success_Balance_History, Fetch_Success_Return_Counter, Fetch_Success_Register_Confirm,  Fetch_Failure_Register_Confirm, Fetch_Success_Resend_Code, Fetch_Failure_Resend_Code  } from '../actions/actionTypes';
 
 const initiaState ={
     names: [],
     waterRole: '',
     user_id: null,
+    signupFailMsg: null,
     messageAddAccount: '',
     invoice_value : null,
     usage_type: [],
@@ -17,6 +18,10 @@ const initiaState ={
     objectionResults : [],
     balanceHistory: [],
     returnCounter: [],
+    resendCodeMsg: null,
+    registConfirmMsg: null,
+    registConfirmFailMsg: null,
+    resendCodeFailMsg: null,
     error: null,
     Tab_ID: '',
     data: [],
@@ -79,6 +84,11 @@ const reducer = (state = initiaState, action ) => {
             ...state,
             user_id : action.payload.data
         };
+        case Fetch_Failure_User_Register:
+        return {
+            ...state,
+            signupFailMsg: action.payload.data
+        }
         case Fetch_Sucess_User_Login:
         return {
             ...state,
@@ -153,7 +163,29 @@ const reducer = (state = initiaState, action ) => {
         return {
             ...state,
             returnCounter : action.payload.returnCounter
+        };
+        case Fetch_Success_Register_Confirm:
+        return {
+            ...state,
+            user_id: action.payload.userID,
+            registConfirmMsg : action.payload.msg
+        };
+        case Fetch_Failure_Register_Confirm:
+        return {
+            ...state,
+            registConfirmFailMsg : action.payload.msg
         }
+        case Fetch_Success_Resend_Code:
+        return {
+            ...state,
+            user_id : action.payload.userID,
+            resendCodeMsg : action.payload.msg            
+        };
+        case Fetch_Failure_Resend_Code :
+        return {
+            ...state,
+            resendCodeFailMsg: action.payload.msg
+        };
         default : 
             return state;
     }
