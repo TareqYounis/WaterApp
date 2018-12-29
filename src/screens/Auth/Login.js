@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import {connect} from 'react-redux';
 import UserLogin from '../../Components/Auth/UserLogin';
 import { UserLogsIn } from '../../store/actions/index';
+import { Navigation } from 'react-native-navigation';
 
 class Login extends React.Component {
     constructor(props){
@@ -10,6 +11,16 @@ class Login extends React.Component {
         this.handleLoggingIn = this.handleLoggingIn.bind(this);
     }
 
+    componentWillReceiveProps(props){
+        if(props.user_id){
+            alert('you have signed in Successfully')
+            Navigation.push(this.props.componentId,{
+                component:{
+                    name: 'water-app.homeScreen'
+                } 
+            })
+        }
+    }
     handleLoggingIn (data){
         this.props.onLoggingIn(data);
     }
@@ -17,9 +28,12 @@ class Login extends React.Component {
         return(
             <View>
                 <UserLogin onLoggingIn= {this.handleLoggingIn}/>
+                <Text>{this.props.loginFailMsg}</Text>
+                <Text>{this.props.user_id}</Text>
+               
             </View>
         )
-    }
+    }   
 }
 
 const mapStateToProps = state => {
@@ -28,7 +42,8 @@ const mapStateToProps = state => {
       data : state.enquiry.data,
       waterRole : state.enquiry.waterRole,
       user_id : state.names.user_id,
-      error : state.names.error 
+      loginFailMsg : state.names.loginFailMsg,
+      userProfile : state.names.userProfile 
     };
   };
   

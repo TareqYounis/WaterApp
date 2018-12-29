@@ -1,4 +1,4 @@
-import {FetchFailure, FetchSuccessUserRegister, FetchFailureUserRegister, FetchSuccessUserLogin, FetchSuccessAddAccount, SavingTabID, FetchSuccessBalanceHistory, FetchSuccessRegisterConfirm, FetchFailureRegisterConfirm, FetchSuccessResendCode, FetchFailureResendCode } from './actions';
+import {FetchFailure, FetchSuccessUserRegister, FetchFailureUserRegister, FetchSuccessUserLogin, FetchFailureUserLogin, FetchSuccessAddAccount, SavingTabID, FetchSuccessBalanceHistory, FetchSuccessRegisterConfirm, FetchFailureRegisterConfirm, FetchSuccessResendCode, FetchFailureResendCode } from './actions';
 import { sha256 } from 'react-native-sha256';
 
 //Register a new user (POST).
@@ -40,6 +40,11 @@ export const UserSignsUp = (userData) => {
 
 //User Login (POST)
 export const UserLogsIn = (userData) => {
+  // generate form data from an object
+  var userFormData = new FormData();
+  for ( var key in userData){
+    userFormData.append( key , userData[key] )
+  }
   return dispatch => {
     var ts = Math.round(new Date().getTime()/1000);
     return sha256( ts + ':sK8DkvuyKGeb19b437g4Cv33GXV49c9Q:miyahunaAdmin!@#123').then( hash => {
@@ -49,14 +54,15 @@ export const UserLogsIn = (userData) => {
               headers: {
                 Authorization: 'ts=' + ts + ',response=' + hash
               },
-              body: JSON.stringify (userData)
+              body: userFormData
            })
             .then((response) => response.json())
-            .then((responseJson) => {      
-              if(responseJson.status === false){
-                dispatch(FetchFailure(responseJson.message));
+            .then((responseJson) => {   
+              console.log(responseJson)   
+              if(responseJson.profile){
+                dispatch(FetchSuccessUserLogin(responseJson.profile));
               }else{
-                dispatch(FetchSuccessUserLogin(responseJson.data));
+                dispatch(FetchFailureUserLogin(responseJson.message));
               }
             })
             .catch((error)=> {
