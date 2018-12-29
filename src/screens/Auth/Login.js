@@ -14,11 +14,8 @@ class Login extends React.Component {
     componentWillReceiveProps(props){
         if(props.user_id){
             alert('you have signed in Successfully')
-            Navigation.push(this.props.componentId,{
-                component:{
-                    name: 'water-app.homeScreen'
-                } 
-            })
+            //navigate to the profile screen with the ID component10
+            Navigation.popTo('Component10');
         }
     }
     handleLoggingIn (data){
