@@ -45,7 +45,7 @@ const mapStateToProps = state => {
       loginFailMsg : state.names.loginFailMsg,
       userProfile : state.names.userProfile 
     };
-  };
+};
   
 
 const mapDispatchToProps = dispatch => {

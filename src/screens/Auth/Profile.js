@@ -3,6 +3,7 @@ import {View,TouchableOpacity, StyleSheet, Text} from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { connect } from 'react-redux';
 
 class Profile extends React.Component {
     constructor(props){
@@ -92,4 +93,11 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Profile;
+const mapStateToProps = state => {
+    return {
+      user_id : state.names.user_id,
+      userProfile : state.names.userProfile 
+    };
+};
+
+export default connect(mapStateToProps,null,null, {"withRef" : true})(Profile);
