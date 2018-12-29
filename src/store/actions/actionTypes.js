@@ -28,3 +28,5 @@ export const Fetch_Success_Register_Confirm = 'Fetch_Success_Register_Confirm';
 export const Fetch_Failure_Register_Confirm = 'Fetch_Failure_Register_Confirm';
 export const Fetch_Success_Resend_Code = 'Fetch_Success_Resend_Code';
 export const Fetch_Failure_Resend_Code = 'Fetch_Failure_Resend_Code';
+export const Fetch_Success_Participation_Info = 'Fetch_Success_Participation_Info';
+export const Fetch_Failure_Participation_Info = 'Fetch_Failure_Participation_Info';
