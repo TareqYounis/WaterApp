@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
-import { UserBalanceHistory } from './../../store/actions/index';
+import { UserBalanceHistory, UserParticipationInfo } from './../../store/actions/index';
 import { VictoryBar, VictoryChart, VictoryTheme, VictoryStack, VictoryAxis } from "victory-native"
 
 const data2012 = [
@@ -123,14 +123,16 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
       balanceHistory : state.enquiry.balanceHistory,
-      error : state.enquiry.error
+      error : state.enquiry.error,
+      particpationInfo : state.names.particpationInfo 
     };
   };
   
 
 const mapDispatchToProps = dispatch => {
     return {
-        onGetUserHistory : ( userData ) => dispatch(UserBalanceHistory(userData))
+        onGetUserHistory : ( userData ) => dispatch(UserBalanceHistory(userData)),
+        onGetParticipationInfo: (userID) => dispatch(UserParticipationInfo(userID))
     };
 };
   
