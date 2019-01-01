@@ -21,7 +21,6 @@ export const UserSignsUp = (userData) => {
            })
             .then((response) => response.json())
             .then((responseJson) => {      
-              console.log('response',responseJson);
               if(!responseJson.status){
                 dispatch(FetchFailureUserRegister(responseJson.message));
               }else{
@@ -58,7 +57,6 @@ export const UserLogsIn = (userData) => {
            })
             .then((response) => response.json())
             .then((responseJson) => {   
-              console.log(responseJson)   
               if(responseJson.profile){
                 dispatch(FetchSuccessUserLogin(responseJson.profile));
               }else{
@@ -95,7 +93,6 @@ export const UserAddAccount = (userData) => {
            })
             .then((response) => response.json())
             .then((responseJson) => {
-              console.log('in response',responseJson)      
               if(!responseJson.status){
                 dispatch(FetchFailureAddAccount(responseJson.message));
               }else{
@@ -132,7 +129,6 @@ export const UserRegisterConfirm = ( userData ) => {
            })
             .then((response) => response.json())
             .then((responseJson) => {      
-              console.log('im responssssing',responseJson)
               if(!responseJson.status){
                 dispatch(FetchFailureRegisterConfirm(responseJson.msg));
               }else{
@@ -169,7 +165,6 @@ export const UserResendCode = ( userData ) => {
            })
             .then((response) => response.json())
             .then((responseJson) => {      
-              console.log('im responssssing',responseJson)
               if(responseJson.status === false){
                 dispatch(FetchFailureResendCode(responseJson));
               }else{
@@ -229,7 +224,6 @@ export const UserParticipationInfo = ( userID ) => {
            })
             .then((response) => response.json())
             .then((responseJson) => {   
-              console.log('im in here',responseJson)   
               if(responseJson.status === false ){
                 dispatch(FetchFailureParticipationInfo(responseJson.message));
               }else{
