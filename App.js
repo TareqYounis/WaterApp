@@ -25,6 +25,9 @@ import ConfirmRegister from './src/screens/Auth/ConfirmRegister';
 import MainApplication from './src/screens/Applications/MainApplication';
 import ApplyApplication from './src/screens/Applications/ApplyApplication';
 
+import Language from './src/screens/StartUp/Language';
+import WaterCompany from './src/screens/StartUp/WaterCompany'
+
 import configureStore from './src/store/configureStore';
 
 const store = configureStore();
@@ -123,7 +126,16 @@ Navigation.registerComponent('water-app.ApplyApplicationScreen',
   // () => Enquiry, store, Provider );
   reduxStoreWrapper(ApplyApplication, store))
 
-    
+Navigation.registerComponent('water-app.LanguageScreen', 
+  // () => Enquiry, store, Provider );
+  reduxStoreWrapper(Language, store))
+
+Navigation.registerComponent('water-app.WaterCompanyScreen', 
+  // () => Enquiry, store, Provider );
+  reduxStoreWrapper(WaterCompany, store))
+
+
+
 //start a App 
 Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setRoot({
@@ -131,7 +143,7 @@ Navigation.events().registerAppLaunchedListener(() => {
       stack: {
         children: [{
           component: {
-            name: 'water-app.AuthScreen',
+            name: 'water-app.LanguageScreen',
             passProps: {
               text: 'stack with one child'
             }
@@ -141,7 +153,8 @@ Navigation.events().registerAppLaunchedListener(() => {
           topBar: {
             title: {
               text: 'Welcome screen'
-            }
+            },
+            visible: false,
           }
         }
       }

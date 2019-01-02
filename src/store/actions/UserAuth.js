@@ -22,7 +22,7 @@ export const UserSignsUp = (userData) => {
             .then((response) => response.json())
             .then((responseJson) => {      
               if(!responseJson.status){
-                dispatch(FetchFailureUserRegister(responseJson.message));
+                dispatch(FetchFailureUserRegister(responseJson.message || responseJson.data));
               }else{
                 dispatch(FetchSuccessUserRegister(responseJson.data));
               }
@@ -128,9 +128,10 @@ export const UserRegisterConfirm = ( userData ) => {
               body: userFormData
            })
             .then((response) => response.json())
-            .then((responseJson) => {      
+            .then((responseJson) => {  
+              console.log(responseJson)    
               if(!responseJson.status){
-                dispatch(FetchFailureRegisterConfirm(responseJson.msg));
+                dispatch(FetchFailureRegisterConfirm(responseJson.msg || responseJson.message));
               }else{
                 dispatch(FetchSuccessRegisterConfirm(responseJson));
               }
@@ -164,9 +165,10 @@ export const UserResendCode = ( userData ) => {
               body: userFormData
            })
             .then((response) => response.json())
-            .then((responseJson) => {      
-              if(responseJson.status === false){
-                dispatch(FetchFailureResendCode(responseJson));
+            .then((responseJson) => { 
+              console.log(responseJson)     
+              if(!responseJson.status){
+                dispatch(FetchFailureResendCode(responseJson.message));
               }else{
                 dispatch(FetchSuccessResendCode(responseJson));
               }
@@ -193,11 +195,11 @@ export const UserBalanceHistory = ( userData) => {
               }
            })
             .then((response) => response.json())
-            .then((responseJson) => {      
+            .then((responseJson) => { 
               if(responseJson.status === false){
                 dispatch(FetchFailure(responseJson.message));
               }else{
-                dispatch(FetchSuccessBalanceHistory(responseJson.data));
+                dispatch(FetchSuccessBalanceHistory(userData.account, responseJson.data));
               }
             })
             .catch((error)=> {
@@ -227,7 +229,12 @@ export const UserParticipationInfo = ( userID ) => {
               if(responseJson.status === false ){
                 dispatch(FetchFailureParticipationInfo(responseJson.message));
               }else{
-                dispatch(FetchSuccessParticipationInfo(responseJson));
+                // collect all user counter accounts and save it
+                const accounts= [];
+                responseJson.forEach(element => {
+                  accounts.push(element['account'])
+                });
+                dispatch(FetchSuccessParticipationInfo(responseJson, accounts));
               }
             })
             .catch((error)=> {

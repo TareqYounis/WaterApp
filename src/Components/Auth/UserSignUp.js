@@ -1,5 +1,7 @@
 import React from 'react';
-import { TextInput, View, Button} from 'react-native';
+import { StyleSheet, Image, Text, View, ScrollView} from 'react-native';
+import Input from '../Styles/Input'
+import Button from '../Styles/Button'
 
 class UserSignUp extends React.Component {
     constructor(props){
@@ -7,55 +9,124 @@ class UserSignUp extends React.Component {
         this.state= {
             username: '',
             email: '',
-            phone: 0,
+            phone: '',
             password: '',
             pass_confirm: '',
-            full_name: ''
+            full_name: '',
+            isAuthenticating: false
         }
         this.signingUp = this.signingUp.bind(this);
+        this.onChangeText = this.onChangeText.bind(this);
     }
     signingUp () {
+        this.setState({
+            isAuthenticating: !this.state.isAuthenticating
+        })
         this.props.onSignup(this.state);
+    }
+    
+    onChangeText = (key, value) => {
+        this.setState({
+          [key]: value
+        })
     }
 
     render(){
         return (
-            <View>
-                 <TextInput 
-                style={{height: 40, width:300}}
-                placeholder={"enter your Full name"}
-                onChangeText= {(full_name) => this.setState({full_name})}
-                />
-                <TextInput 
-                style={{height: 40, width:300}}
-                placeholder={"enter your username"}
-                onChangeText= {(username) => this.setState({username})}
-                />
-                <TextInput 
-                style={{height: 40, width:300}}
-                placeholder={"enter your email"}
-                onChangeText= {(email) => this.setState({email})}
-                />
-                <TextInput 
-                style={{height: 40, width:300}}
-                placeholder={"enter your phone number"}
-                onChangeText= {(phone) => this.setState({phone})}
-                />
-                <TextInput 
-                style={{height: 40, width:300}}
-                placeholder={"enter your password"}
-                onChangeText= {(password) => this.setState({password})}
-                />
-                <TextInput 
-                style={{height: 40, width:300}}
-                placeholder={"enter your password confirmation"}
-                onChangeText= {(pass_confirm) => this.setState({pass_confirm})}
-                />
-                 
-                <Button title= "submit" onPress={this.signingUp}/>
+            <ScrollView>
+            <View style={styles.container}>
+                    <View style={styles.heading}>
+                        <Image
+                            source={require('../../assets/miyahuna.png')}
+                            style={styles.headingImage}
+                            resizeMode="contain"
+                        />
+                    </View>
+                    <Text style={styles.greeting}>
+                    Welcome, Sign up to continue
+                    </Text>
+                    <View style={styles.inputContainer}>
+                    <Input
+                        value={this.state.full_name}
+                        placeholder="Full Name"
+                        type='full_name'
+                        onChangeText={this.onChangeText}
+                    />
+                    <Input
+                        value={this.state.username}
+                        placeholder="User Name"
+                        type='username'
+                        onChangeText={this.onChangeText}
+                    />
+                    <Input
+                        value={this.state.email}
+                        placeholder="Email"
+                        type='email'
+                        onChangeText={this.onChangeText}
+                    />
+                    <Input
+                        value={this.state.phone}
+                        placeholder="Phone Number"
+                        type='phone'
+                        keyboardType='numeric'
+                        onChangeText={this.onChangeText}
+                    />
+                    <Input
+                        value={this.state.password}
+                        placeholder="Password"
+                        secureTextEntry
+                        type='password'
+                        onChangeText={this.onChangeText}
+                    />
+                    <Input
+                        value={this.state.pass_confirm}
+                        placeholder="Confirm Password"
+                        secureTextEntry
+                        type='pass_confirm'
+                        onChangeText={this.onChangeText}
+                    />
+                    </View>
+                    <Button
+                        title='Sign Up'
+                        onPress={this.signingUp.bind(this)}
+                        isLoading={this.state.isAuthenticating}
+                    />
+                    {this.props.errorMsg && (
+                            <Text style={[styles.errorMessage,{ color: 'black' }]}>Error signing up in. Please try again.{"\n"} {this.props.errorMsg}</Text>
+                    )}
             </View>
+        </ScrollView>
         )
     }
 }
+const styles = StyleSheet.create({
+    inputContainer: {
+      marginTop: 20
+    },
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      paddingHorizontal: 40
+    },
+    greeting: {
+      fontFamily: fonts.light,
+      color: '#666',
+      fontSize: 24,
+      marginTop: 5
+    },
+    heading: {
+      flexDirection: 'row'
+    },
+    headingImage: {
+      width: 38,
+      height: 38
+    },
+    errorMessage: {
+        fontFamily: fonts.base,
+        fontSize: 12,
+        marginTop: 10,
+        color: 'transparent'
+  }
+});
 
 export default UserSignUp;

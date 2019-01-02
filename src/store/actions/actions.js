@@ -179,7 +179,7 @@ export const FetchSuccessResendCode = ( data ) => {
 export const FetchFailureResendCode = ( data ) => {
     return {
         type: Fetch_Failure_Resend_Code,
-        payload : { msg: data.msg }
+        payload : { data }
     }
 }
 

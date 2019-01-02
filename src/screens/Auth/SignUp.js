@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text } from 'react-native';
+import {View, Text, StyleSheet } from 'react-native';
 import UserSignUp from '../../Components/Auth/UserSignUp';
 import { UserSignsUp } from '../../store/actions/index';
 import { connect } from 'react-redux';
@@ -23,14 +23,14 @@ class SignUp extends React.Component {
     }
     
     handleSigningUp(userData){
+        console.log('test',userData)
         this.props.onSigningUp(userData)
     }
    
     render() {
         return (
             <View>
-               <UserSignUp onSignup={this.handleSigningUp}/>
-               <Text>{this.props.signupFailMsg}</Text>
+               <UserSignUp onSignup={this.handleSigningUp} errorMsg= {this.props.signupFailMsg}/>
             </View>
         )
     }
@@ -52,4 +52,12 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
+const styles = StyleSheet.create({
+    errorMessage: {
+        fontFamily: fonts.base,
+        fontSize: 12,
+        marginTop: 10,
+        color: 'transparent'
+    }
+})
 export default connect(mapStateToProps,mapDispatchToProps,null, {"withRef" : true})(SignUp);

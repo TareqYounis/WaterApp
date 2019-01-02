@@ -210,7 +210,7 @@ const reducer = (state = initiaState, action ) => {
         case Fetch_Failure_Resend_Code :
         return {
             ...state,
-            resendCodeFailMsg: action.payload.msg
+            resendCodeFailMsg: action.payload.data
         };
         case Fetch_Failure_Participation_Info: 
         return {
