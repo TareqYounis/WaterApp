@@ -141,10 +141,10 @@ export const FetchSuccessObjectionService = ( objection ) => {
     }
 }
 
-export const FetchSuccessBalanceHistory = ( history ) => {
+export const FetchSuccessBalanceHistory = ( account , history ) => {
     return {
         type : Fetch_Success_Balance_History,
-        payload : { history }
+        payload : { account : account, history : history }
     }
 }
 
@@ -190,9 +190,9 @@ export const FetchFailureParticipationInfo = ( message ) => {
     }
 }
 
-export const FetchSuccessParticipationInfo = ( userData ) => {
+export const FetchSuccessParticipationInfo = ( userData, accounts ) => {
     return {
         type: Fetch_Success_Participation_Info,
-        payload : { userData }
+        payload : { userData: userData, accounts: accounts }
     }
 }

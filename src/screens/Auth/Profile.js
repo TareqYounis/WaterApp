@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import { Table, TableWrapper, Row, Cell } from 'react-native-table-component';
 import { UserParticipationInfo } from '../../store/actions/index';
-
+import Ionicon from 'react-native-vector-icons/Ionicons';
 class Profile extends React.Component {
     constructor(props){
         super(props);
@@ -75,6 +75,9 @@ class Profile extends React.Component {
                     ))
                 }
                 </Table>
+                <TouchableOpacity onPress={this.loggingIn} style={styles.ItemIcon}>
+                    <Ionicon name="md-log-in" size={30} />
+                </TouchableOpacity>
             </ScrollView>
           </View>
         )
@@ -85,7 +88,7 @@ const styles = StyleSheet.create({
     container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
     head: { height: 40, backgroundColor: '#f1f8ff' },
     text: { margin: 6},
-    row: { flexDirection: 'row' }
+    row: { flexDirection: 'row' }    
 });
 
 const mapStateToProps = state => {

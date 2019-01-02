@@ -7,6 +7,7 @@ const initiaState ={
     signupFailMsg: null,
     loginFailMsg: null,
     userProfile: [],
+    userAccounts: [],
     messageAddAccount: null,
     messageFailAddAccount: null,
     invoice_value : null,
@@ -179,7 +180,10 @@ const reducer = (state = initiaState, action ) => {
         case Fetch_Success_Balance_History:
         return {
             ...state,
-            balanceHistory: action.payload.history
+            balanceHistory: state.balanceHistory.concat({
+                account : action.payload.account,
+                history : action.payload.history
+            })
         };
         case Fetch_Success_Return_Counter:
         return {
@@ -216,7 +220,8 @@ const reducer = (state = initiaState, action ) => {
         case Fetch_Success_Participation_Info:
         return {
             ...state,
-            particpationInfo : action.payload.userData
+            particpationInfo : action.payload.userData,
+            userAccounts : action.payload.accounts
         };
         default : 
             return state;
