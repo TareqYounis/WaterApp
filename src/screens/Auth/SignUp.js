@@ -52,12 +52,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-const styles = StyleSheet.create({
-    errorMessage: {
-        fontFamily: fonts.base,
-        fontSize: 12,
-        marginTop: 10,
-        color: 'transparent'
-    }
-})
 export default connect(mapStateToProps,mapDispatchToProps,null, {"withRef" : true})(SignUp);

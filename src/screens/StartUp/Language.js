@@ -12,6 +12,18 @@ import { Navigation } from 'react-native-navigation';
 import { colors, fonts } from '../../Components/Styles/Theme'
 // import Input from '../../Components/Styles/Input'
 import Button from '../../Components/Styles/Button'
+import {AsyncStorage} from 'react-native';
+
+const getUserId = async (key) => {
+  let userId = '';
+  try {
+    userId = await AsyncStorage.getItem(key) || 'none';
+  } catch (error) {
+    // Error retrieving data
+    console.log(error.message);
+  }
+  return userId;
+}
 
 class Language extends React.Component {
     constructor(props){
@@ -22,7 +34,12 @@ class Language extends React.Component {
         }
         this.selectLangague= this.selectLangague.bind(this);
     }
-    
+    componentWillMount(){
+       getUserId('userId')
+       .then(results => {
+           console.log(results)
+       })
+    }
     selectLangague(lang){
         this.setState({
             Language : lang

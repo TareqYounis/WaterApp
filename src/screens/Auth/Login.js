@@ -1,9 +1,18 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Alert, StyleSheet } from 'react-native';
 import {connect} from 'react-redux';
 import UserLogin from '../../Components/Auth/UserLogin';
 import { UserLogsIn } from '../../store/actions/index';
-import { Navigation } from 'react-native-navigation';
+import StartMainTabs from '../MainTabs/StartMainTabs';
+import {AsyncStorage} from 'react-native';
+
+const saveUserId = async userId => {
+    try {
+        await AsyncStorage.setItem('userId', userId);
+    } catch (error) {
+        console.log(error.message);
+    }
+};
 
 class Login extends React.Component {
     constructor(props){
@@ -11,23 +20,25 @@ class Login extends React.Component {
         this.handleLoggingIn = this.handleLoggingIn.bind(this);
     }
 
-    componentWillReceiveProps(props){
+    async componentWillReceiveProps(props){
         if(props.user_id){
-            alert('you have signed in Successfully')
-            //navigate to the profile screen with the ID component10
-            Navigation.popTo('Component10');
+            Alert.alert('you have signed in Successfully')
+            // save userID in the device data
+            saveUserId(props.user_id)
+            .then(results => {
+                console.log('my results are here', results)
+            })
+            StartMainTabs();
         }
+          
     }
     handleLoggingIn (data){
         this.props.onLoggingIn(data);
     }
     render(){
         return(
-            <View>
-                <UserLogin onLoggingIn= {this.handleLoggingIn}/>
-                <Text>{this.props.loginFailMsg}</Text>
-                <Text>{this.props.user_id}</Text>
-               
+            <View style={styles.container}>
+                <UserLogin onLoggingIn= {this.handleLoggingIn} {...this.props}/>     
             </View>
         )
     }   
@@ -50,6 +61,13 @@ const mapDispatchToProps = dispatch => {
         onLoggingIn: (userData) => dispatch(UserLogsIn(userData))
     };
 };
-  
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      paddingHorizontal: 40
+    },
+})
   
 export default connect(mapStateToProps,mapDispatchToProps,null, {"withRef" : true})(Login);

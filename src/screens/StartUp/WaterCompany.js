@@ -15,7 +15,7 @@ class WaterCompany extends React.Component {
     selectCompany(company) {
         Navigation.push(this.props.componentId,{
             component:{
-                name: 'water-app.SignUpScreen'
+                name: 'water-app.LoginScreen'
             } 
         })
     }

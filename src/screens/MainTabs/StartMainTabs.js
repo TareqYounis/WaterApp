@@ -1,8 +1,25 @@
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons'
 import IconOcticons from "react-native-vector-icons/Octicons";
+import {AsyncStorage} from 'react-native';
+
+const getUserId = async () => {
+  let userId = '';
+  try {
+    userId = await AsyncStorage.getItem('userId') || 'none';
+  } catch (error) {
+    // Error retrieving data
+    console.log(error.message);
+  }
+  return userId;
+}
 
 const StartMainTabs = () => {
+  // getuser Id from storage
+  getUserId('userId')
+  .then(results => {
+    console.log(results)
+  })
   //Icons returns a promise, we will need to wait before we load the tab, therefor we use promise  
   Promise.all([
     Icon.getImageSource("md-home",30),
