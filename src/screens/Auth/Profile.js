@@ -1,10 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, ScrollView, TouchableOpacity, Text} from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import { Table, TableWrapper, Row, Cell } from 'react-native-table-component';
 import { UserParticipationInfo } from '../../store/actions/index';
-import Ionicon from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import { getItem } from '../../StorageData';
 
 class Profile extends React.Component {
     constructor(props){
@@ -16,6 +17,7 @@ class Profile extends React.Component {
             isloggedIn : false
         }
         this.renderTableData = this.renderTableData.bind(this);
+        this.addingUserAccount = this.addingUserAccount.bind(this);
     }
     //show sidemenu when menu button is clicked.
     navigationButtonPressed({ buttonId }) {
@@ -27,15 +29,16 @@ class Profile extends React.Component {
             },
         });        
     } 
+    
     componentWillMount() {
-        this.props.onGetParticipationInfo(18);
+        getItem('userId')
+        .then(userID => {
+            console.log("test",userID)
+            this.props.onGetParticipationInfo(Number(userID));        
+        })
     }
     componentWillReceiveProps(props){
-        console.log(props);
         if(props.particpationInfo.length > 0){
-            this.setState({
-                isloggedIn : true
-            })
             this.renderTableData(props.particpationInfo);
         }
     }
@@ -56,6 +59,15 @@ class Profile extends React.Component {
             }   
         }
     }
+
+    addingUserAccount(){
+        Navigation.push(this.props.componentId,{
+            component:{
+                name: 'water-app.AddUserAccountScreen'
+            }
+        })
+    }
+
     render(){
         const state = this.state;
      
@@ -63,8 +75,9 @@ class Profile extends React.Component {
           <View style={styles.container}>
             <ScrollView>
                 <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
-                <Row data={state.tableHead} style={styles.head} textStyle={styles.text}/>
-                {
+                <Row data={state.tableHead} style={styles.head} textStyle={styles.text}/>                
+                
+                { 
                     state.tableData.map((rowData, index) => (
                     <TableWrapper key={index} style={styles.row} >
                         { 
@@ -76,8 +89,11 @@ class Profile extends React.Component {
                     ))
                 }
                 </Table>
-                <TouchableOpacity onPress={this.loggingIn} style={styles.ItemIcon}>
-                    <Ionicon name="md-log-in" size={30} />
+                {this.props.particpFailMsg && ( 
+                 <Text> Please Add an Account to view Data</Text>   
+                )}
+                <TouchableOpacity onPress={this.addingUserAccount} style={styles.ItemIcon}>                   
+                    <AntDesign name="addfile" size={30} style={styles.ItemIcon}/><Text>Add</Text>
                 </TouchableOpacity>
             </ScrollView>
           </View>
@@ -96,7 +112,8 @@ const mapStateToProps = state => {
     return {
       user_id : state.names.user_id,
       userProfile : state.names.userProfile,
-      particpationInfo : state.names.particpationInfo 
+      particpationInfo : state.names.particpationInfo,
+      particpFailMsg : state.names.particpFailMsg 
     };
 };
 
