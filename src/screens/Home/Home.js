@@ -1,10 +1,11 @@
 import React,{Component} from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import { UserBalanceHistory, UserParticipationInfo } from './../../store/actions/index';
 import { LineChart } from 'react-native-chart-kit'
 import { Dimensions } from 'react-native'
+import { getItem } from '../../StorageData';
 
 const screenWidth = Dimensions.get('window').width
 const chartConfig = {
@@ -14,16 +15,18 @@ const chartConfig = {
 }
 
 let data = []
+let userID = 0;
 
 class Home extends Component{
     constructor(props){
       super(props);
       Navigation.events().bindComponent(this);
       this.state = {
-          labels: [],
-          datasets: [],
+          gotData: true,
+          isLoading: true
       }
       this.renderChart = this.renderChart.bind(this);
+      this.getAccountsData = this.getAccountsData.bind(this);
     }
 
     //show sidemenu when menu button is clicked.
@@ -38,6 +41,30 @@ class Home extends Component{
     }    
     
     componentWillMount(){
+      getItem('userId').then(userid => {
+         userID = Number(userid)
+         this.props.onGetParticipationInfo(userID);
+      })
+    }
+   
+    async componentWillReceiveProps(props){
+      // make sure to bring data only once, therefor check the state
+      if(this.state.gotData){
+        for ( var i=0; i< props.userAccounts.length ; i++){
+          const userData = {
+            "user_id" : userID,
+            "account" : Number(props.userAccounts[i])
+          }
+          await this.props.onGetUserHistory(userData);   
+        }
+      }
+      this.getAccountsData();
+      this.setState({
+        gotData: false
+      })
+    }
+
+    getAccountsData() {
       // loop through userbalance history and extract all account number, dates, and amount values to render it
       if(this.props.balanceHistory.length > 0){
         for( var i=0 ; i< this.props.balanceHistory.length ; i++){
@@ -49,7 +76,7 @@ class Home extends Component{
             account: 0
           };
           innerData.account=this.props.balanceHistory[i]['account'];
-          // in order to view only the last 5 balance history
+          // view only the last 5 balance history
           for( var j=0 ; j< 5 ; j++ ){
             innerData.labels.push(this.props.balanceHistory[i]['history'][j]['DATCLC'].substring(3))
             innerData.datasets[0].data.push(this.props.balanceHistory[i]['history'][j]['SUMMOUNT'])
@@ -58,13 +85,16 @@ class Home extends Component{
             }
           }
         }
+        this.setState({
+          isLoading : !this.state.isLoading
+        })
       }
-      console.log(data)
+      console.log(this.props.balanceHistory.length, data.length)
+      this.renderChart();
 
     }
 
     renderChart(){
-      if(data.length > 0){
         return (
           data.map((rowData, index) => ([
               <Text>Account Number: {rowData['account']}</Text>,
@@ -78,22 +108,25 @@ class Home extends Component{
                 bezier
               />
           ]))
-        )
-      }else{
-        return (
-          <Text>Loading...</Text>
-        )
-      }
-      
+        )     
     }
 
     render(){
       return (
         <View>
           <ScrollView>
-             {
-              this.renderChart()
-             }
+            { this.props.balanceHistoryFailMsg && (
+                <Text>Please add an account to display data</Text>
+            )}
+            { this.props.particpFailMsg && (
+                <Text>Please add an account to display data</Text>
+            )}
+            { this.state.isLoading && (
+              <View style={styles.activityIndicator}>
+                  <ActivityIndicator color='#1493ff' />
+              </View>
+            )}
+            {this.renderChart()}
           </ScrollView>
         </View>
       )
@@ -103,9 +136,10 @@ class Home extends Component{
 const mapStateToProps = state => {
     return {
       balanceHistory : state.enquiry.balanceHistory,
-      error : state.enquiry.error,
+      balanceHistoryFailMsg : state.names.balanceHistoryFailMsg,
       particpationInfo : state.names.particpationInfo,
-      userAccounts : state.names.userAccounts 
+      userAccounts : state.names.userAccounts,
+      particpFailMsg : state.names.particpFailMsg
     };
   };
   
@@ -117,5 +151,12 @@ const mapDispatchToProps = dispatch => {
     };
 };
   
+const styles = StyleSheet.create({
+  activityIndicator: {
+    transform: [{scale: 1.00}],
+    marginTop: 3.5,
+    marginLeft: 5
+  }
+})
   
 export default connect(mapStateToProps,mapDispatchToProps,null, {"withRef" : true})(Home);
