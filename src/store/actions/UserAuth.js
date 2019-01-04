@@ -94,7 +94,7 @@ export const UserAddAccount = (userData) => {
             .then((response) => response.json())
             .then((responseJson) => {
               if(!responseJson.status){
-                dispatch(FetchFailureAddAccount(responseJson.message));
+                dispatch(FetchFailureAddAccount(responseJson.message || responseJson.data));
               }else{
                 dispatch(FetchSuccessAddAccount(responseJson.message));
               }
