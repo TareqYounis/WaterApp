@@ -184,7 +184,6 @@ export const UserResendCode = ( userData ) => {
 }
 
 export const UserBalanceHistory = ( userData) => {
-console.log(userData)
   return dispatch => {
     var ts = Math.round(new Date().getTime()/1000);
     return sha256( ts + ':sK8DkvuyKGeb19b437g4Cv33GXV49c9Q:miyahunaAdmin!@#123').then( hash => {
@@ -197,7 +196,6 @@ console.log(userData)
            })
             .then((response) => response.json())
             .then((responseJson) => { 
-              console.log(responseJson);
               if(!responseJson.status){
                 dispatch(FetchFailureBalanceHistory(responseJson.message));
               }else{
@@ -228,7 +226,6 @@ export const UserParticipationInfo = ( userID ) => {
            })
             .then((response) => response.json())
             .then((responseJson) => {   
-              console.log(responseJson)
               if(responseJson.status === false ){
                 dispatch(FetchFailureParticipationInfo(responseJson.message));
               }else{
