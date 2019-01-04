@@ -9,9 +9,12 @@ import { getItem } from '../../StorageData';
 
 const screenWidth = Dimensions.get('window').width
 const chartConfig = {
-  backgroundGradientFrom: '#1E2923',
+  backgroundGradientFrom: '#1493ff',
   backgroundGradientTo: '#08130D',
-  color: (opacity = 1) => `rgba(30, 146, 255, ${opacity})`
+  color: (opacity = 1) => `rgba( 255, 255,255, ${opacity})`,
+  style: {
+    borderRadius: 16
+  }
 }
 
 let data = []
@@ -42,6 +45,7 @@ class Home extends Component{
     
     componentWillMount(){
       getItem('userId').then(userid => {
+         console.log("rest2",userid)
          userID = Number(userid)
          this.props.onGetParticipationInfo(userID);
       })
@@ -91,7 +95,6 @@ class Home extends Component{
       }
       console.log(this.props.balanceHistory.length, data.length)
       this.renderChart();
-
     }
 
     renderChart(){
@@ -106,6 +109,10 @@ class Home extends Component{
                 backgroundColor="transparent"
                 key={index}
                 bezier
+                style={{
+                  marginVertical: 8,
+                  borderRadius: 16
+                }}
               />
           ]))
         )     
