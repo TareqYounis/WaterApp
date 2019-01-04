@@ -93,7 +93,6 @@ class Home extends Component{
           isLoading : !this.state.isLoading
         })
       }
-      console.log(this.props.balanceHistory.length, data.length)
       this.renderChart();
     }
 
