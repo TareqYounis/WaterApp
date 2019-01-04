@@ -1,4 +1,4 @@
-import {FetchFailure, FetchSuccessUserRegister, FetchFailureUserRegister, FetchSuccessUserLogin, FetchFailureUserLogin, FetchSuccessAddAccount, FetchFailureAddAccount, SavingTabID, FetchSuccessBalanceHistory, FetchSuccessRegisterConfirm, FetchFailureRegisterConfirm, FetchSuccessResendCode, FetchFailureResendCode, FetchSuccessParticipationInfo, FetchFailureParticipationInfo } from './actions';
+import {FetchFailure, FetchSuccessUserRegister, FetchFailureUserRegister, FetchSuccessUserLogin, FetchFailureUserLogin, FetchSuccessAddAccount, FetchFailureAddAccount, SavingTabID, FetchSuccessBalanceHistory, FetchFailureBalanceHistory, FetchSuccessRegisterConfirm, FetchFailureRegisterConfirm, FetchSuccessResendCode, FetchFailureResendCode, FetchSuccessParticipationInfo, FetchFailureParticipationInfo } from './actions';
 import { sha256 } from 'react-native-sha256';
 
 //Register a new user (POST).
@@ -184,6 +184,7 @@ export const UserResendCode = ( userData ) => {
 }
 
 export const UserBalanceHistory = ( userData) => {
+console.log(userData)
   return dispatch => {
     var ts = Math.round(new Date().getTime()/1000);
     return sha256( ts + ':sK8DkvuyKGeb19b437g4Cv33GXV49c9Q:miyahunaAdmin!@#123').then( hash => {
@@ -196,8 +197,9 @@ export const UserBalanceHistory = ( userData) => {
            })
             .then((response) => response.json())
             .then((responseJson) => { 
-              if(responseJson.status === false){
-                dispatch(FetchFailure(responseJson.message));
+              console.log(responseJson);
+              if(!responseJson.status){
+                dispatch(FetchFailureBalanceHistory(responseJson.message));
               }else{
                 dispatch(FetchSuccessBalanceHistory(userData.account, responseJson.data));
               }
@@ -226,6 +228,7 @@ export const UserParticipationInfo = ( userID ) => {
            })
             .then((response) => response.json())
             .then((responseJson) => {   
+              console.log(responseJson)
               if(responseJson.status === false ){
                 dispatch(FetchFailureParticipationInfo(responseJson.message));
               }else{
