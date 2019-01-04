@@ -1,29 +1,8 @@
 import React from 'react';
-import {
-    View,
-    Text,
-    StyleSheet,
-    Image,
-    Animated,
-    Dimensions
-  } from 'react-native';
-  
+import { View, StyleSheet } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import { colors, fonts } from '../../Components/Styles/Theme'
-// import Input from '../../Components/Styles/Input'
 import Button from '../../Components/Styles/Button'
-import {AsyncStorage} from 'react-native';
-
-const getUserId = async (key) => {
-  let userId = '';
-  try {
-    userId = await AsyncStorage.getItem(key) || 'none';
-  } catch (error) {
-    // Error retrieving data
-    console.log(error.message);
-  }
-  return userId;
-}
+import { getItem } from '../../StorageData';
 
 class Language extends React.Component {
     constructor(props){
@@ -35,7 +14,7 @@ class Language extends React.Component {
         this.selectLangague= this.selectLangague.bind(this);
     }
     componentWillMount(){
-       getUserId('userId')
+        getItem('userId')
        .then(results => {
            console.log(results)
        })

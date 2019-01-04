@@ -4,15 +4,7 @@ import {connect} from 'react-redux';
 import UserLogin from '../../Components/Auth/UserLogin';
 import { UserLogsIn } from '../../store/actions/index';
 import StartMainTabs from '../MainTabs/StartMainTabs';
-import {AsyncStorage} from 'react-native';
-
-const saveUserId = async userId => {
-    try {
-        await AsyncStorage.setItem('userId', userId);
-    } catch (error) {
-        console.log(error.message);
-    }
-};
+import { saveUserId } from '../../StorageData';
 
 class Login extends React.Component {
     constructor(props){
@@ -24,10 +16,7 @@ class Login extends React.Component {
         if(props.user_id){
             Alert.alert('you have signed in Successfully')
             // save userID in the device data
-            saveUserId(props.user_id)
-            .then(results => {
-                console.log('my results are here', results)
-            })
+            saveUserId(props.user_id);
             StartMainTabs();
         }
           
