@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import UserSignUp from '../../Components/Auth/UserSignUp';
 import { UserSignsUp } from '../../store/actions/index';
 import { connect } from 'react-redux';

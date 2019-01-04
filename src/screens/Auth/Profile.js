@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Table, TableWrapper, Row, Cell } from 'react-native-table-component';
 import { UserParticipationInfo } from '../../store/actions/index';
 import Ionicon from 'react-native-vector-icons/Ionicons';
+
 class Profile extends React.Component {
     constructor(props){
         super(props);
