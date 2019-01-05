@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 40
     },
     greeting2: {
-      fontFamily: fonts.light,
+      fontFamily: 'Lato-Light',
       color: '#666',
       fontSize: 24,
       marginTop: 5
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
       height: 38
     },
     errorMessage: {
-      fontFamily: fonts.base,
+      fontFamily: 'Lato-Regular',
       fontSize: 12,
       marginTop: 10,
       color: 'transparent'
