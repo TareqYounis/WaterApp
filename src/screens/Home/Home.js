@@ -44,6 +44,7 @@ class Home extends Component{
     }    
     
     componentWillMount(){
+      console.log(this.props.balanceHistoryFailMsg, this.props.particpFailMsg)
       getItem('userId').then(userid => {
          console.log("rest2",userid)
          userID = Number(userid)
@@ -52,6 +53,7 @@ class Home extends Component{
     }
    
     async componentWillReceiveProps(props){
+      console.log(props.balanceHistoryFailMsg, props.particpFailMsg)
       // make sure to bring data only once, therefor check the state
       if(this.state.gotData){
         for ( var i=0; i< props.userAccounts.length ; i++){
@@ -90,23 +92,21 @@ class Home extends Component{
           }
         }
         this.setState({
-          isLoading : !this.state.isLoading
+          isLoading : false
         })
       }
-      this.renderChart();
     }
 
     renderChart(){
         return (
           data.map((rowData, index) => ([
-              <Text>Account Number: {rowData['account']}</Text>,
+              <Text key={index}>Account Number: {rowData['account']}</Text>,
               <LineChart
                 data={rowData}
                 width={screenWidth}
                 height={220}
                 chartConfig={chartConfig}
-                backgroundColor="transparent"
-                key={index}
+                backgroundColor="transparent"                
                 bezier
                 style={{
                   marginVertical: 8,
@@ -119,22 +119,20 @@ class Home extends Component{
 
     render(){
       return (
-        <View>
-          <ScrollView>
-            { this.props.balanceHistoryFailMsg && (
+        <ScrollView>
+          <View>
+            { this.props.balanceHistoryFailMsg !== null && (
                 <Text>Please add an account to display data</Text>
             )}
-            { this.props.particpFailMsg && (
+            { this.props.particpFailMsg !== null && (
                 <Text>Please add an account to display data</Text>
             )}
-            { this.state.isLoading && (
-              <View style={styles.activityIndicator}>
-                  <ActivityIndicator color='#1493ff' />
-              </View>
+            { this.state.isLoading !== false && (
+              <View style={styles.activityIndicator}><ActivityIndicator color='#1493ff' /></View>
             )}
-            {this.renderChart()}
-          </ScrollView>
+            {/* {this.renderChart()} */}
         </View>
+      </ScrollView>
       )
     }
 }
