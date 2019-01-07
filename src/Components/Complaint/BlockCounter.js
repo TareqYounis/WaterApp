@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, TextInput, Button, Picker, StyleSheet } from 'react-native';
+import { View, Text, Picker, StyleSheet } from 'react-native';
+import Input from '../Styles/Input'
+import Button from '../Styles/Button'
 
 
 class BlockCounter extends React.Component {
@@ -7,77 +9,115 @@ class BlockCounter extends React.Component {
         super(props);
         this.state = {
             company_id: 1,
-            account : 0
+            account : '',
+            isLoading: false
         }
+        this.onChangeText = this.onChangeText.bind(this);        
         this.handleReturnCounter = this.handleReturnCounter.bind(this);
         this.renderingResults = this.renderingResults.bind(this);
+        this.renderError = this.renderError.bind(this);
     }
     
     handleReturnCounter(){
-        this.props.returnBlockCounter(this.state);
-        this.renderingResults();
+        // convert the value to a number
+        this.setState({
+            account: Number(this.state.account),
+            isLoading: true
+        })
+        this.props.onReturnBlockCounter(this.state);
     }
 
+    onChangeText = (key, value) => {
+        this.setState({
+          [key]: value
+        })
+    }
+ 
+    componentWillReceiveProps(props){
+        //stop running activity indicator in case of results back
+        this.setState({
+            isLoading: false
+        })
+    }
+    
     renderingResults() {
         // check if there is a returned value from the API.
-        if(this.props.blockResutls.length > 0){
-            return this.props.blockResutls.map(function(element,key){
+            return this.props.returnCounter.map(function(element,key){
                 return (
                     <View key={key}>
-                        <Text>{element},{key}</Text>
+                        <Text>{element}</Text>
                     </View>
                 )
             })
-        }else{
-            return (
-                <View>
-                    <Text>Null</Text>
-                </View>
-            )
-        }
     }
+
+    renderError(){
+        return (
+            <Text style={[styles.errorMessage,{ color: 'black'}]}>Error Returning Counter, please try again.{"\n"} {this.props.failReturnCounter}</Text>
+        )
+    }
+
     render(){
         return (
-            <View style={styles.container}>
-                <Text>Please fill the following form:</Text>
-                
-                <Picker
-                    selectedValue={this.state.company_id}
-                    style={{ height: 50, width: 200, borderWidth: 2 }}
-                    onValueChange={( company_id ) => this.setState({ company_id })}>
-                    {this.props.organizations.map((item, index) => {
-                        return (<Picker.Item label={item.name_ar} value={item.id} key={index}/>) 
-                    })}
-                </Picker>
-
-                <TextInput 
-                    style= {{width: 200, height:40, borderWidth: 2}}
-                    placeholder="enter your account number"
-                    onChangeText={( account ) => this.setState({ account })}
+            <View>
+                <Text style={styles.greeting}>
+                    Please fill the following
+                </Text>
+                <View style={styles.inputContainer}>
+                    <Picker
+                        selectedValue={this.state.company_id}
+                        itemStyle={styles.picker}
+                        onValueChange={(company_id) => this.setState({company_id})}>
+                        <Picker.Item label='Please select an option...' value='0' color="#1493ff" />
+                            {this.props.data.map((item, index) => {
+                                return (<Picker.Item label={item.name_en} value={item.id} key={index} color="#1493ff"/>) 
+                            })}
+                    </Picker>
+                    <Input
+                        value={this.state.account}
+                        placeholder="Account Number"
+                        type='account'
+                        keyboardType='numeric'
+                        onChangeText={this.onChangeText}
+                    />
+                </View>
+                <Button
+                    title='Return Counter'
+                    onPress={this.handleReturnCounter.bind(this)}
+                    isLoading={this.state.isLoading}
                 />
-                           
-                <Button title="Return Blocked Counter" onPress={this.handleReturnCounter}/>
-        
-              {this.renderingResults()}
+                {this.props.failReturnCounter !== null && (this.renderError())}
+                {this.props.returnCounter && (this.renderingResults())}
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        marginTop: 20,
-        alignItems: "center",
+    inputContainer: {
+      marginTop: 20
     },
-    Item: {
-        flexDirection: "row",
-        alignItems: "center",
-        padding: 10,
+    greeting: {
+      fontFamily: 'Lato-Light',
+      color: '#666',
+      fontSize: 20,
+      marginTop: 5
     },
-    ItemIcon: {
-        marginRight: 10
+    picker: {
+        height: 45,
+        width: 150,
+        marginBottom: 15,
+        borderBottomWidth: 1.5,
+        fontSize: 16,
+        borderBottomColor: '#1493ff',
+        fontFamily: 'Lato-Light'
+    },
+    errorMessage: {
+        fontFamily: 'Lato-Regular',
+        fontSize: 14,
+        marginTop: 10,
+        color: 'transparent'
     }
 });
-
 
 export default BlockCounter;
