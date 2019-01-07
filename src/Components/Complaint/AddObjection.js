@@ -108,6 +108,15 @@ const styles = StyleSheet.create({
       fontSize: 20,
       marginTop: 5
     },
+    picker: {
+        height: 45,
+        width: 150,
+        marginBottom: 15,
+        borderBottomWidth: 1.5,
+        fontSize: 16,
+        borderBottomColor: '#1493ff',
+        fontFamily: 'Lato-Light'
+    },
     errorMessage: {
         fontFamily: 'Lato-Regular',
         fontSize: 14,
