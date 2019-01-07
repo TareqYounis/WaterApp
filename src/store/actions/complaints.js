@@ -1,4 +1,4 @@
-import { FetchFailure, FetchSuccessObjectionService } from './actions';
+import { FetchFailure, FetchFailureObjectionService, FetchSuccessObjectionService } from './actions';
 import { sha256 } from 'react-native-sha256';
 
 // Objection Service on a waterBill (GET):
@@ -14,8 +14,9 @@ export const Objection = ( objectionData ) => {
                })
                 .then((response) => response.json())
                 .then((responseJson) => {
+                  console.log(responseJson)
                   if(responseJson.status === false){
-                    dispatch(FetchFailure(responseJson.message));
+                    dispatch(FetchFailureObjectionService(responseJson.message || responseJson.data));
                   }else{     
                     dispatch(FetchSuccessObjectionService(responseJson.data));
                   }
