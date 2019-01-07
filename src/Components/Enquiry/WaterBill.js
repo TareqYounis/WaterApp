@@ -64,7 +64,7 @@ class WaterBill extends React.Component {
                     </Text>
                     <View style={styles.inputContainer}>
                         <Input
-                            value={this.state.phone}
+                            value={this.state.account}
                             placeholder="Account Number"
                             type='account'
                             keyboardType='numeric'

@@ -18,8 +18,10 @@ class AddAccount extends React.Component {
 
     handleAddAccount (){
         //convert string values to numbers
-        this.state.iron_number = parseInt(this.state.iron_number, 10)
-        this.state.account = parseInt(this.state.account, 10)
+        this.setState({
+            iron_number: Number(this.state.iron_number),
+            account : Number(this.state.account)
+        })
         this.props.onAddingAccount(this.state);
     }
     
