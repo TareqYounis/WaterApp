@@ -1,12 +1,14 @@
 import React,{Component} from 'react';
-import {View, Button, StyleSheet, TouchableOpacity, Platform, Text} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import IconFont from 'react-native-vector-icons/FontAwesome5';
-import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
+import Button from '../../Components/Styles/Button'
 
 class EnquiryHome extends Component{
     constructor(props){
         super(props);
+        this.state= {
+            isLoading: false
+        }
         Navigation.events().bindComponent(this);        
         this.handleScreenNavigation = this.handleScreenNavigation.bind(this);
     }
@@ -33,49 +35,41 @@ class EnquiryHome extends Component{
     render(){
         return (
             <View style={styles.container}>
-                <TouchableOpacity onPress={() => this.handleScreenNavigation('water-app.WaterRolesScreen')} style={styles.Item}>
-                    <IconMaterial 
-                        name="water"
-                        size={30} style={styles.ItemIcon}
-                    />
-                    <Text>Get Water Role</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={() => this.handleScreenNavigation('water-app.WaterBillScreen')} style={styles.Item}>
-                    <IconFont 
-                        name="file-invoice-dollar"
-                        size={30} style={styles.ItemIcon}
-                    />
-                    <Text>Get Water Bill</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={() => this.handleScreenNavigation('water-app.CalculateWaterScreen')} style={styles.Item}>
-                    <IconMaterial 
-                        name="water-percent"
-                        size={30} style={styles.ItemIcon}
-                    />
-                    <Text>Calculate Water Cost</Text>
-                </TouchableOpacity>
-
+                <Text style={styles.greeting2}>
+                Please choose one of the following services:
+                </Text>
+                <Button
+                    title='Get Water Role'
+                    onPress={this.handleScreenNavigation.bind(this, 'water-app.WaterRolesScreen')}
+                    isLoading={this.state.isLoading}
+                />
+                <Button
+                    title='Get Water Bill'
+                    onPress={this.handleScreenNavigation.bind(this, 'water-app.WaterBillScreen')}
+                    isLoading={this.state.isLoading}
+                />
+                <Button
+                    title='Calculate Water Cost'
+                    onPress={this.handleScreenNavigation.bind(this, 'water-app.CalculateWaterScreen')}
+                    isLoading={this.state.isLoading}
+                />
             </View>
         )
     }
 }
-     
+   
 const styles = StyleSheet.create({
     container: {
-        marginTop: 20,
-        alignItems: "center",
+      flex: 1,
+      justifyContent: 'center',
+      paddingHorizontal: 40
     },
-    Item: {
-        flexDirection: "row",
-        alignItems: "center",
-        padding: 10,
-    },
-    ItemIcon: {
-        marginRight: 10
+    greeting2: {
+        fontFamily: fonts.light,
+        color: '#666',
+        fontSize: 24,
+        marginTop: 5
     }
-});
-
+})
 
 export default EnquiryHome;
