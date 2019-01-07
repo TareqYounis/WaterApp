@@ -1,4 +1,4 @@
-import {FetchFailure, FetchSuccessRequestApplication, FetchSuccessReturnCounter } from './actions';
+import {FetchFailure, FetchSuccessRequestApplication, FetchSuccessReturnCounter, FetchFailureReturnCounter } from './actions';
 import { sha256 } from 'react-native-sha256';
 
 export const RequestApplication = ( application ) => {
@@ -40,11 +40,11 @@ export const ReturnBlockCounter = ( userData ) => {
                   }
                })
                 .then((response) => response.json())
-                .then((responseJson) => {           
+                .then((responseJson) => { 
                     if(responseJson.status){
                         dispatch(FetchSuccessReturnCounter(responseJson.data));
                     }else{
-                        dispatch(FetchFailure(responseJson.message))
+                        dispatch(FetchFailureReturnCounter(responseJson.message || responseJson.data))
                     }
                 })
                 .catch((error)=> {

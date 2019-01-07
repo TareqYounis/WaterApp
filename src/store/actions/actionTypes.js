@@ -22,6 +22,7 @@ export const Fetch_Success_Sectors = 'Fetch_Success_Sectors';
 export const Fetch_Success_Parcles = 'Fetch_Success_Parcles';
 export const Fetch_Success_Application_Request = 'Fetch_Success_Application_Request';
 export const Fetch_Success_Objection_Service = 'Fetch_Success_Objection_Service';
+export const Fetch_Failure_Return_Counter = 'Fetch_Failure_Return_Counter';
 export const Fetch_Failure_Objection_Service = 'Fetch_Failure_Objection_Service';
 export const Fetch_Success_Balance_History = 'Fetch_Success_Balance_History';
 export const Fetch_Failure_Balance_History = 'Fetch_Failure_Balance_History';
