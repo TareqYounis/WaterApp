@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: colors.primary,
     fontFamily: fonts.light,
-    fontSize: 25,
+    fontSize: 15,
     letterSpacing: 0.5,
     marginRight:40,
     marginLeft:40,
