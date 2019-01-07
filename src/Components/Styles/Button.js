@@ -13,13 +13,13 @@ export default ({ title, onPress, isLoading }) => (
   <TouchableOpacity onPress={onPress}>
     <View style={styles.button}>
       <Text style={[styles.buttonText]}>{title}</Text>
-      {/* {
+      {
         isLoading && (
           <View style={styles.activityIndicator}>
             <ActivityIndicator color={colors.primary} />
           </View>
         )
-      } */}
+      }
     </View>
   </TouchableOpacity>
 )
