@@ -9,7 +9,7 @@ import Home from './src/screens/Home/Home';
 
 import EnquiryHome  from './src/screens/Enquiry/EnquiryHome';
 import WaterRoles from './src/screens/Enquiry/WaterRoles';
-import WaterBill from './src/screens/Enquiry/WaterBill';
+import WaterBill from './src/screens/Enquiry/WaterBills';
 import CalculateWaterInvoice from './src/screens/Enquiry/CalculateWaterInvoice';
 
 import Complaint  from './src/screens/Complaint/Complaint';
