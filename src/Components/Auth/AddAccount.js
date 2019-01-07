@@ -8,8 +8,8 @@ class AddAccount extends React.Component {
         super(props);
         this.state = {
             company_id: 1,
-            account: 0,
-            iron_number: 0,
+            account: '',
+            iron_number: '',
             account_name: ''
         }
         this.handleAddAccount = this.handleAddAccount.bind(this);
