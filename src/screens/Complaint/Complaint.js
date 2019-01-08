@@ -1,9 +1,9 @@
 import React,{Component} from 'react';
-import { View, Text } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import AddComplaint from './../../Components/Complaint/AddComplaint';
-import { GetComplaintTypes } from './../../store/actions/index';
+import { GetComplaintTypes, Complain } from './../../store/actions/index';
 
 class Complaint extends Component{
     constructor(props){
@@ -27,33 +27,39 @@ class Complaint extends Component{
         this.props.onGetComplaintTypes();
     }
 
-    handleComplaint(complaintData){
-        alert('Awaiting for ArabiaCell reply to submit');
-        //this.props.onUserComplaint(complaintData);
-    }
-
     render(){
         return (
-            <View>
-                <AddComplaint complaintType={this.props.complaintType} complaint={this.handleComplaint}/>
-            </View>
+            <ScrollView>
+                <View style={styles.container}>
+                    <AddComplaint {...this.props}/>
+                </View>
+            </ScrollView>
             
         )
     }
 }
 
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      paddingHorizontal: 40
+    },
+})
+
 const mapStateToProps = state => {
     return {
-      names: state.enquiry.names,
       data : state.enquiry.data,
-      complaintType : state.enquiry.complaintType 
+      complaintType : state.enquiry.complaintType,
+      complaintFailMsg : state.enquiry.complaintFailMsg,
+      complaint : state.enquiry.complaint 
     };
   };
   
 
 const mapDispatchToProps = dispatch => {
     return {
-        onUserComplaint: (complaintData) => dispatch(UserComplaint(complaintData)),
+        onUserComplaint: (complaintData) => dispatch(Complain(complaintData)),
         onGetComplaintTypes : () => dispatch(GetComplaintTypes())
     };
 };

@@ -1,67 +1,132 @@
 import React from 'react';
-import { View, Text, TextInput,Button, Picker, Platform, TouchableOpacity, StyleSheet } from 'react-native';
-import Ionicon from 'react-native-vector-icons/Ionicons';
-import DatePicker from 'react-native-datepicker'
+import { View, Text, StyleSheet, Picker, Image, Platform, TouchableOpacity,  } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
+import DatePicker from 'react-native-datepicker';
+import Ionicon from 'react-native-vector-icons/Ionicons';
+import Input from '../Styles/Input'
+import Button from '../Styles/Button'
+import { getItem } from '../../StorageData';
 
 class AddComplaint extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             complaint_type : 0,
-            location: 0,
-            date: "2018-11-28",
-            remark : '',
+            location: "",
+            date: "2019-01-01",
+            remark : "",
             phone : 0,
-            image : 0
+            image : '',
+            isLoading: false
         }
         this.handleImagePick = this.handleImagePick.bind(this);
         this.handleComplaint = this.handleComplaint.bind(this);
+        this.onChangeText = this.onChangeText.bind(this);
+        this.renderError = this.renderError.bind(this);
     }
 
     handleImagePick(){
-        const options = {
-            title: 'Select Avatar',
-            customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
-            storageOptions: {
-              skipBackup: true,
-              path: 'images',
-            },
-          };
-        ImagePicker.launchImageLibrary(options, (response) => {
-            //handle user image;
-        });
+        ImagePicker.showImagePicker({title: "Pick an Image"}, res => {
+            if(res.didCancel){
+                console.log("user canceld");
+            }else if(res.error){
+                console.log("error", res.error)
+            }else{
+                this.setState({
+                    image: {
+                        uri: res.uri,
+                        type: res.type,
+                        data: res.data
+                    }
+                })
+            }
+        })
+    }
+    
+    onChangeText = (key, value) => {
+        this.setState({
+          [key]: value
+        })
+    }
+
+    renderError (){ 
+        // check the returned value from the API, if its an obj or a string, and render accordingly
+        if(typeof (this.props.complaintFailMsg) === 'object' ){
+            const obj= this.props.complaintFailMsg;      
+            return Object.keys(obj).map(function(element,key){
+                return (
+                    <View key={key}>
+                        <Text>{element}, {obj[element]}</Text>
+                    </View>
+                )
+            })
+        }else{
+            return (
+                <Text>{this.props.complaintFailMsg}</Text>
+            )
+        }
     }
     
     handleComplaint(){
-        this.props.complaint(this.state);
+        //send userId if he was signed in
+        getItem('userId')
+        .then(results => {
+            if(results !== 'none'){
+                this.setState({
+                    user_id : Number(results)
+                })
+            }
+        })
+        this.setState({
+            complaint_type: Number(this.state.complaint_type),
+            isLoading: true
+        })
+        this.props.onUserComplaint(this.state);
+    }
+    
+    componentWillReceiveProps(props){
+        this.setState({
+            isLoading: false
+        })
     }
 
     render(){
         return (
-            <View style={styles.container}>
-                <Text>Please fill the following form:</Text>
-                
-                {/* <TextInput 
-                    style= {{width: 200, height:40, borderWidth: 2}}
-                    placeholder="enter your location"
-                    onChangeText={(location) => this.setState({location})}
-                /> */}
-                
-                <TextInput 
-                    style= {{width: 200, height:40, borderWidth: 2}}
-                    placeholder="enter your phone number"
-                    onChangeText={(phone) => this.setState({phone})}
+            <View>
+            <Text style={styles.greeting}>
+                Please fill the following
+            </Text>
+            <View style={styles.inputContainer}>
+                <Picker
+                    selectedValue={this.state.complaint_type}
+                    itemStyle={styles.picker}
+                    onValueChange={(complaint_type) => this.setState({complaint_type})}>
+                    <Picker.Item label='Please select an option...' value='0' color="#1493ff" />
+                        {this.props.complaintType.map((item, index) => {
+                            return (<Picker.Item label={item.name_en} value={item.id} key={index} color="#1493ff"/>) 
+                        })}
+                </Picker>
+                <Input
+                    value={this.state.location}
+                    placeholder="Your location?"
+                    type='location'
+                    onChangeText={this.onChangeText}
                 />
-                
-                <TextInput 
-                    style= {{width: 200, height:40, borderWidth: 2}}
-                    placeholder="enter your remark"
-                    onChangeText={(remark) => this.setState({remark})}
+                <Input
+                    value={this.state.remark}
+                    placeholder="Complain Description"
+                    type='remark'
+                    onChangeText={this.onChangeText}
                 />
-                
-                <DatePicker 
-                    style={{width: 200}}
+               <Input
+                    value={this.state.phone}
+                    placeholder="Phone Number"
+                    type='phone'
+                    keyboardType='numeric'
+                    onChangeText={this.onChangeText}
+                />
+                 <DatePicker 
+                    style={{width: 250}}
                     date={this.state.date}
                     mode="date"
                     placeholder="select date"
@@ -69,43 +134,62 @@ class AddComplaint extends React.Component{
                     minDate="2015-05-01"
                     onDateChange={(date) => {this.setState({date: date})}}
                 />
-
-                <Picker
-                    selectedValue={this.state.complaint_type}
-                    style={{ height: 50, width: 200, borderWidth: 2 }}
-                    onValueChange={(complaint_type) => this.setState({complaint_type})}>
-                    {this.props.complaintType.map((item, index) => {
-                        return (<Picker.Item label={item.name_ar} value={item.id} key={index}/>) 
-                    })}
-                </Picker>
-                
-                <TouchableOpacity onPress={this.handleImagePick} style={styles.Item}>
+                <View style={{flexDirection: 'row'}}>
+                    <TouchableOpacity onPress={this.handleImagePick}>
                         <Ionicon 
                         name={Platform.OS === "android" ? "md-images" : "ios-images"} 
-                        size={30} style={styles.ItemIcon}
+                        size={30} color='#1493ff'
                         />
-                        <Text>Pick an image </Text>
-                </TouchableOpacity>
-               
-
-                <Button title="complain" onPress={this.handleComplaint}/>
+                    </TouchableOpacity>
+                    <Text style={styles.greeting}>   Pick an image </Text>
+                </View>
+                { this.state.image.uri && (
+                    <Image source={{uri : this.state.image.uri}} style={{width: 66, height: 58}}/>
+                )}
             </View>
+            <Button
+                title='Complain'
+                onPress={this.handleComplaint.bind(this)}
+                isLoading={this.state.isLoading}
+            />
+            {this.props.complaintFailMsg !== null && this.props.complaint === null && (
+                <View>
+                    <Text style={[styles.errorMessage,{ color: 'black'}]}>Error Complaining, please try again with correct information.</Text>
+                    {this.renderError()}
+                </View>
+            )}
+            {this.props.complaint && (
+                <Text style={[styles.greeting]}>{this.props.complaint}</Text>
+            )}
+        </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        marginTop: 20,
-        alignItems: "center",
+    inputContainer: {
+      marginTop: 20
     },
-    Item: {
-        flexDirection: "row",
-        alignItems: "center",
-        padding: 10,
+    greeting: {
+      fontFamily: 'Lato-Light',
+      color: '#666',
+      fontSize: 20,
+      marginTop: 5
     },
-    ItemIcon: {
-        marginRight: 10
+    picker: {
+        height: 45,
+        width: 150,
+        marginBottom: 15,
+        borderBottomWidth: 1.5,
+        fontSize: 16,
+        borderBottomColor: '#1493ff',
+        fontFamily: 'Lato-Light'
+    },
+    errorMessage: {
+        fontFamily: 'Lato-Regular',
+        fontSize: 14,
+        marginTop: 10,
+        color: 'transparent'
     }
 });
 
