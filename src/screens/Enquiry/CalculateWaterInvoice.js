@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import { connect } from  'react-redux';
 import CalculateWater from '../../Components/Enquiry/CalculateWater';
 import { GetOrganizations, GetUsageType, invoiceCalculation } from './../../store/actions/index';
@@ -7,7 +7,6 @@ import { GetOrganizations, GetUsageType, invoiceCalculation } from './../../stor
 class CalculateWaterInvoice extends Component{
     constructor(props){
         super(props);
-        this.handleInvoice = this.handleInvoice.bind(this);
     }    
    
     //load all water companies and usage types before rendering. 
@@ -16,27 +15,29 @@ class CalculateWaterInvoice extends Component{
         this.props.onGetUsageType();
     }
 
-    handleInvoice(invoiceData) {
-        this.props.onCalculatingInvoice(invoiceData)
-    }
-
     render(){
         return (
-            <View>
-                <CalculateWater organizations={this.props.data} usageTypes={this.props.usage_type} onCalculatingInvoice={this.handleInvoice}/>
-                <Text>{this.props.invoice_value}</Text>
+            <View style={styles.container}>
+                <CalculateWater {...this.props}/>
             </View>
         )
     }
 }
 
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      paddingHorizontal: 30
+    },
+})
+
 const mapStateToProps = state => {
     return {
       data : state.enquiry.data,
-      user_id : state.names.user_id,
       invoice_value : state.names.invoice_value,
       usage_type: state.names.usage_type,
-      error : state.names.error
+      invoiceFailMsg : state.names.invoiceFailMsg
     };
 };
   
