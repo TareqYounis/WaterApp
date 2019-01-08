@@ -51,3 +51,16 @@ const styles = StyleSheet.create({
     marginLeft: 5
   }
 })
+
+//really cool style
+// button: {
+//   backgroundColor: 'white',
+//   padding: 20,
+//   borderRadius: 50,
+//   borderColor: colors.primary,
+//   borderWidth: 0.5,
+//    },
+//    buttonText: {
+//      color: colors.primary,
+//      fontSize: 20
+//    },

@@ -5,11 +5,12 @@ import { connect } from 'react-redux';
 import WaterBill from '../../Components/Enquiry/WaterBill';
 import { UserParticipationInfo } from '../../store/actions/index';
 import { getItem } from '../../StorageData';
+import Button from '../../Components/Styles/Button';
 
 class WaterBills extends Component{
     constructor(props){
         super(props);
-        state= {
+        this.state= {
             isLoading: false
         }
         Navigation.events().bindComponent(this);
@@ -55,7 +56,7 @@ class WaterBills extends Component{
                 }
                 { this.props.particpFailMsg !== null && (
                     <View>
-                        <Text style={[styles.greeting]}>You don't have any regested account, please add one firts, please add it first, click below</Text>
+                        <Text style={[styles.greeting]}>You don't have any regested account, please add one firt, click below</Text>
                             <Button
                             title='Add Account'
                             onPress={this.handleAddAccount.bind(this)}

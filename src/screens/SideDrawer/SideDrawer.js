@@ -14,9 +14,10 @@ class SideDrawer extends Component {
         // get current componentID and save it in store in order to navigate from sidemenu to screens
         Navigation.events().registerComponentDidAppearListener((componentId) => {
             // component 6 is sidedrawer ID, need not to regester its ID since its causing a navigation problem when navigating from sidemenu of ios.
-            if(componentId.componentId !== 'Component6'){
+            if(componentId.componentId !== 'Component8'){
                 this.props.onSavingTapID(componentId.componentId);
             }
+            console.log('id',componentId.componentId)
         });
         this.handleScreenNavigation = this.handleScreenNavigation.bind(this);
     }
