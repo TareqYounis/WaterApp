@@ -1,29 +1,19 @@
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons'
 import IconOcticons from "react-native-vector-icons/Octicons";
-import {AsyncStorage} from 'react-native';
-
-const getUserId = async () => {
-  let userId = '';
-  try {
-    userId = await AsyncStorage.getItem('userId') || 'none';
-  } catch (error) {
-    // Error retrieving data
-    console.log(error.message);
-  }
-  return userId;
-}
+import IconMaterial from "react-native-vector-icons/MaterialCommunityIcons";
+import { getItem } from '../../StorageData';
 
 const StartMainTabs = () => {
   // getuser Id from storage
-  getUserId('userId')
-  .then(results => {
-    console.log(results)
-  })
+    getItem('userId')
+    .then(results => {
+      console.log(results);
+    })
   //Icons returns a promise, we will need to wait before we load the tab, therefor we use promise  
   Promise.all([
     Icon.getImageSource("md-home",30),
-    Icon.getImageSource("md-person",30),
+    IconMaterial.getImageSource("water",30),
     Icon.getImageSource('md-information-circle-outline',30),
     Icon.getImageSource('md-menu',30),
     IconOcticons.getImageSource('report',30)
@@ -132,7 +122,7 @@ const StartMainTabs = () => {
                             options: {
                               bottomTab: {
                                 badge: '',
-                                text: 'Profile',
+                                text: 'Water Accounts',
                                 fontSize: 12,
                                 icon: sources[1]
                               },
