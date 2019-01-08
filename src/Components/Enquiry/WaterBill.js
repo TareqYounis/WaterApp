@@ -20,7 +20,7 @@ class WaterBill extends React.Component {
 
     handleCheckBill(){
         this.setState({
-            isLoading: !this.state.isLoading,
+            isLoading: true,
             accountFailMsg : false
         })
         const index =this.props.accounts.indexOf(this.state.account);
@@ -30,7 +30,7 @@ class WaterBill extends React.Component {
                 if(element['account'] === this.state.account){
                     this.setState({
                         balance: element['info']['balance'],
-                        isLoading : !this.state.isLoading
+                        isLoading : false
                     })
                 }
             })
@@ -38,7 +38,7 @@ class WaterBill extends React.Component {
             // if the account doesnt exist, ask the user to add a new one
             this.setState({
                 accountFailMsg: true,
-                isLoading : !this.state.isLoading
+                isLoading : false
             })
         }
     }
