@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView, TouchableOpacity, Text} from 'react-native';
+import {View, StyleSheet, ScrollView, TouchableOpacity, Text, Platform} from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import { Table, TableWrapper, Row, Cell } from 'react-native-table-component';
 import { UserParticipationInfo } from '../../store/actions/index';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { getItem } from '../../StorageData';
 
 class Profile extends React.Component {
@@ -72,9 +72,9 @@ class Profile extends React.Component {
         const state = this.state;
      
         return (
-          <View style={styles.container}>
+            <View style={styles.container}>
             <ScrollView>
-                <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+                <Table borderStyle={{borderWidth: 2}}>
                 <Row data={state.tableHead} style={styles.head} textStyle={styles.text}/>                
                 
                 { 
@@ -92,20 +92,29 @@ class Profile extends React.Component {
                 {this.props.particpFailMsg && ( 
                  <Text> Please Add an Account to view Data</Text>   
                 )}
-                <TouchableOpacity onPress={this.addingUserAccount} style={styles.ItemIcon}>                   
-                    <AntDesign name="addfile" size={30} style={styles.ItemIcon}/><Text>Add</Text>
+             
+        </ScrollView>
+               <TouchableOpacity onPress={this.addingUserAccount} style={styles.TouchableOpacityStyle}>                   
+                        <Icon name={Platform.OS === "android" ? "md-add-circle-outline" : "ios-add-circle-outline"} size={40}/>
                 </TouchableOpacity>
-            </ScrollView>
-          </View>
+        </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
     container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-    head: { height: 40, backgroundColor: '#f1f8ff' },
-    text: { margin: 6},
-    row: { flexDirection: 'row' }    
+    head: { height: 40, backgroundColor: '#f1f8ff'},
+    text: { margin: 6, fontFamily :'Lato-Light'},
+    row: { flexDirection: 'row' },
+    TouchableOpacityStyle: {
+        position:'absolute',
+        alignSelf:'flex-end',
+        width: 50,
+        height: 50,
+        right: 30,
+        bottom: 30,
+      }
 });
 
 const mapStateToProps = state => {
