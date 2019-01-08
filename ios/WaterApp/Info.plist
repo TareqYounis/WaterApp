@@ -40,7 +40,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>would like to use your camera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>would like to save photos to your photo gallery</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -62,6 +62,10 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>Lato-Bold.ttf</string>
+		<string>Lato-Hairline.ttf</string>
+		<string>Lato-Light.ttf</string>
+		<string>Lato-Regular.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

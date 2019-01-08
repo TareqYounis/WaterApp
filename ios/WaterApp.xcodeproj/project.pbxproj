@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -75,6 +74,10 @@
 		BFDF357CB0A141E5B91B5359 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4DA15377131A4387BC8384EB /* AntDesign.ttf */; };
 		D4F2B639694A4E98BC71D978 /* libRNSVG-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC5F90B022BB472A89A69667 /* libRNSVG-tvOS.a */; };
 		FB2451519FF749389B994431 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFDF48B547EF4390BBF026BD /* libRNSVG.a */; };
+		7EC440617BCD4A4780F6F533 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4396F088B6464593A8AD0EC0 /* Lato-Bold.ttf */; };
+		32E2EA6CF6794F3B8863695A /* Lato-Hairline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8B976AF57C224AB48A8C7A14 /* Lato-Hairline.ttf */; };
+		A13CE63D6DD7470EAF301618 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 141B09B9F9A64C6DAA76CA50 /* Lato-Light.ttf */; };
+		60007F09B54440F9B2618238 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64162DCF47644F099837052F /* Lato-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -490,6 +493,10 @@
 		ED76053E800F4854ABA94FC2 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		F8325E8B69454641A29313E4 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		FA395DACFAC24143B6F68082 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
+		4396F088B6464593A8AD0EC0 /* Lato-Bold.ttf */ = {isa = PBXFileReference; name = "Lato-Bold.ttf"; path = "../src/assets/fonts/Lato-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8B976AF57C224AB48A8C7A14 /* Lato-Hairline.ttf */ = {isa = PBXFileReference; name = "Lato-Hairline.ttf"; path = "../src/assets/fonts/Lato-Hairline.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		141B09B9F9A64C6DAA76CA50 /* Lato-Light.ttf */ = {isa = PBXFileReference; name = "Lato-Light.ttf"; path = "../src/assets/fonts/Lato-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		64162DCF47644F099837052F /* Lato-Regular.ttf */ = {isa = PBXFileReference; name = "Lato-Regular.ttf"; path = "../src/assets/fonts/Lato-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -781,6 +788,10 @@
 				53B076FD925A4F2ABBC968FB /* Octicons.ttf */,
 				ED76053E800F4854ABA94FC2 /* SimpleLineIcons.ttf */,
 				19615ECF52694DA29CB153DD /* Zocial.ttf */,
+				4396F088B6464593A8AD0EC0 /* Lato-Bold.ttf */,
+				8B976AF57C224AB48A8C7A14 /* Lato-Hairline.ttf */,
+				141B09B9F9A64C6DAA76CA50 /* Lato-Light.ttf */,
+				64162DCF47644F099837052F /* Lato-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1448,6 +1459,10 @@
 				32263C7716AE4048958F4964 /* Octicons.ttf in Resources */,
 				0622CB93D7C14F0CA03038EC /* SimpleLineIcons.ttf in Resources */,
 				59252D9F14E74F7D8A36E1CB /* Zocial.ttf in Resources */,
+				7EC440617BCD4A4780F6F533 /* Lato-Bold.ttf in Resources */,
+				32E2EA6CF6794F3B8863695A /* Lato-Hairline.ttf in Resources */,
+				A13CE63D6DD7470EAF301618 /* Lato-Light.ttf in Resources */,
+				60007F09B54440F9B2618238 /* Lato-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
