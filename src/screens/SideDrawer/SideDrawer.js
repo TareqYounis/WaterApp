@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { View, Text, Dimensions, StyleSheet, TouchableOpacity, Platform } from "react-native";
+import { View, Text, Dimensions, StyleSheet, TouchableOpacity, Platform, Modal } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import IconFontAwsm from "react-native-vector-icons/FontAwesome";
 import IconOcticons from "react-native-vector-icons/Octicons";
 import { Navigation } from "react-native-navigation";
 import { connect } from 'react-redux';
 import { SaveTabID } from './../../store/actions/index';
+import Button from '../../Components/Styles/Button'
 
 class SideDrawer extends Component {
     constructor(props){
@@ -18,10 +19,33 @@ class SideDrawer extends Component {
                 this.props.onSavingTapID(componentId.componentId);
             }
         });
+        this.state={
+            modalVisible: false,
+            isAuthenticating: false
+        }
         this.handleScreenNavigation = this.handleScreenNavigation.bind(this);
+        this.closeSideDrawer = this.closeSideDrawer.bind(this);
+        this.loggingOut = this.loggingOut.bind(this);
+        this.closeModel = this.closeModel.bind(this);
     }
     
     handleScreenNavigation(screen){
+        this.closeSideDrawer();        
+        Navigation.push(this.props.Tab_ID,{
+            component:{
+                name: screen
+            }
+        })
+    }
+
+    closeModel(){
+        // close the Model
+        this.setState({
+            modalVisible : false
+        })
+    }
+
+    closeSideDrawer(){
         Navigation.mergeOptions(this.props.componentId, {
             sideMenu: {
               left: {
@@ -29,13 +53,13 @@ class SideDrawer extends Component {
               },
             },
         }); 
-        Navigation.push(this.props.Tab_ID,{
-            component:{
-                name: screen
-            }
-        })
     }
-    //water-app.ComplaintScreen
+
+    loggingOut(){
+        this.closeModel();
+        this.handleScreenNavigation('water-app.LoginScreen');
+    } 
+
     render() {
         return (
         <View
@@ -92,7 +116,7 @@ class SideDrawer extends Component {
             </View>
             </TouchableOpacity>
             
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.setState({ modalVisible: true})}>
             <View style={styles.drawerItem}>
                 <Icon
                 name={Platform.OS === "android" ? "md-log-out" : "ios-log-out"}
@@ -115,6 +139,29 @@ class SideDrawer extends Component {
                 <Text>Settings</Text>
             </View>
             </TouchableOpacity>
+            <Modal
+                animationType="slide"
+                transparent={false}
+                visible={this.state.modalVisible}
+                onRequestClose={() => {
+                    Alert.alert('Modal has been closed.');
+                }}>
+                 <View style={styles.modal}>
+                    <Text style={styles.greeting}>
+                     Are you sure you want to log out?
+                    </Text>
+                        <Button
+                            title='LogOut'
+                            onPress= {this.loggingOut.bind(this)}
+                            isLoading={this.state.isAuthenticating}
+                        />
+                        <Button
+                            title='Cancel'
+                            onPress= {this.closeModel.bind(this)}
+                            isLoading={this.state.isAuthenticating}
+                        />
+                </View>
+            </Modal>
         </View>
         );
     }
@@ -134,7 +181,18 @@ const styles = StyleSheet.create({
     },
     drawerItemIcon: {
         marginRight: 10
-    }
+    },
+    modal: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    greeting: {
+        fontFamily: 'Lato-Light',
+        color: '#666',
+        fontSize: 24,
+        marginTop: 5
+    },
 });
 
 const mapStateToProps = state => {
