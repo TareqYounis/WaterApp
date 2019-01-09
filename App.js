@@ -28,6 +28,8 @@ import ApplyApplication from './src/screens/Applications/ApplyApplication';
 import Language from './src/screens/StartUp/Language';
 import WaterCompany from './src/screens/StartUp/WaterCompany'
 
+import Settings from './src/screens/Settings/Settings';
+
 import configureStore from './src/store/configureStore';
 
 const store = configureStore();
@@ -134,7 +136,11 @@ Navigation.registerComponent('water-app.WaterCompanyScreen',
   // () => Enquiry, store, Provider );
   reduxStoreWrapper(WaterCompany, store))
 
+Navigation.registerComponent('water-app.SettingsScreen', 
+  // () => Enquiry, store, Provider );
+  reduxStoreWrapper(Settings, store))
 
+  
 
 //start a App 
 Navigation.events().registerAppLaunchedListener(() => {
