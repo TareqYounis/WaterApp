@@ -17,7 +17,6 @@ class SideDrawer extends Component {
             if(componentId.componentId !== 'Component8'){
                 this.props.onSavingTapID(componentId.componentId);
             }
-            console.log('id',componentId.componentId)
         });
         this.handleScreenNavigation = this.handleScreenNavigation.bind(this);
     }
@@ -105,7 +104,7 @@ class SideDrawer extends Component {
             </View>
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.handleScreenNavigation('water-app.SettingsScreen')}>
             <View style={styles.drawerItem}>
                 <Icon
                 name={Platform.OS === "android" ? "md-settings" : "ios-settings"}
