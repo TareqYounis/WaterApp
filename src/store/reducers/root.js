@@ -110,7 +110,9 @@ const reducer = (state = initiaState, action ) => {
                 email: action.payload.email,
                 phone: action.payload.phone,
                 role_name: action.payload.role_name,
-                username:  action.payload.username
+                username:  action.payload.username,
+                language : action.payload.language,
+                display_name: action.payload.display_name
             })
         };
         case Fetch_Failure_User_Login:

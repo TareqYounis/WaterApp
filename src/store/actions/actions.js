@@ -40,7 +40,7 @@ export const FetchFailureUserRegister = data => {
 export const FetchSuccessUserLogin = data => {
     return {
         type: Fetch_Sucess_User_Login,
-        payload: { userID : data.id , email: data.email, username: data.username, phone:data.phone, role_name : data.role_name }
+        payload: { userID : data.id , email: data.email, username: data.username, phone:data.phone, role_name : data.role_name, language: data.language, display_name: data.display_name }
     }
 }
 
