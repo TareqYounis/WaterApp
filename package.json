@@ -11,7 +11,7 @@
     "assets": [
       "src/assets/fonts"
     ]
-  }, 
+  },
   "dependencies": {
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.4",
@@ -20,6 +20,9 @@
     "react-native-image-picker": "^0.27.1",
     "react-native-modal": "^7.0.2",
     "react-native-navigation": "^2.1.2",
+    "react-native-settings-components": "0.0.2",
+    "react-native-settings-list": "^1.8.0",
+    "react-native-settings-screen": "^2.1.2",
     "react-native-sha256": "^1.1.1",
     "react-native-svg": "^8.0.10",
     "react-native-table-component": "^1.2.0",
