@@ -53,7 +53,6 @@ class Home extends Component{
     }
    
     async componentWillReceiveProps(props){
-      console.log(props.balanceHistoryFailMsg, props.particpFailMsg)
       // make sure to bring data only once, therefor check the state
       if(this.state.gotData){
         for ( var i=0; i< props.userAccounts.length ; i++){
@@ -64,7 +63,7 @@ class Home extends Component{
           await this.props.onGetUserHistory(userData);   
         }
       }
-      this.getAccountsData();
+      // this.getAccountsData();
       this.setState({
         gotData: false
       })

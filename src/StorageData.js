@@ -19,3 +19,23 @@ export const saveUserId = async userId => {
     }
     return test
 };
+
+export const saveLangauge = async lang  => {
+    await AsyncStorage.setItem('language', lang )
+    .then(()=>{
+        console.log("It was saved successfully")
+    })
+    .catch(()=>{
+        console.log("There was an error saving")
+    })
+};
+
+export const saveUserData = async info  => {
+    await AsyncStorage.setItem('userData', JSON.stringify(info) )
+    .then(()=>{
+        console.log("It was saved successfully")
+    })
+    .catch(()=>{
+        console.log("There was an error saving")
+    })
+};
