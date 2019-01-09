@@ -2,14 +2,13 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Button from '../../Components/Styles/Button'
-import { getItem } from '../../StorageData';
+import { getItem, saveLangauge } from '../../StorageData';
 
 class Language extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            isAuthenticating: false,
-            Language: 'English'
+            isAuthenticating: false
         }
         this.selectLangague= this.selectLangague.bind(this);
     }
@@ -20,9 +19,8 @@ class Language extends React.Component {
        })
     }
     selectLangague(lang){
-        this.setState({
-            Language : lang
-        })
+        // save the user option in the local storage.
+        saveLangauge(lang);
         Navigation.push(this.props.componentId,{
             component:{
                 name: 'water-app.WaterCompanyScreen'
@@ -39,7 +37,7 @@ class Language extends React.Component {
                     />
                 <Button
                     title='English'
-                    onPress = {this.selectLangague.bind(this,'Arabic')}
+                    onPress = {this.selectLangague.bind(this,'English')}
                     isLoading={this.state.isAuthenticating}
                 />
           </View>
