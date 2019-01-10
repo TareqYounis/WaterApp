@@ -3,12 +3,12 @@ import { sha256 } from 'react-native-sha256';
 
 //asynchrounous calls are being handled in here
 //Water Roles Service (GET)
-export const GetWaterRoles = (companyID, userAccount) => {
+export const GetWaterRoles = ( data ) => {
   return dispatch => {
     var ts = Math.round(new Date().getTime()/1000);
     return sha256( ts + ':sK8DkvuyKGeb19b437g4Cv33GXV49c9Q:miyahunaAdmin!@#123').then( hash => {
             hashValue= 'ts=' + ts + ',response=' + hash;
-            fetch('http://miyahunaportal.arabiacell.biz/api/services/water_role/?company_id='+ companyID +'&account='+ userAccount,{
+            fetch('http://miyahunaportal.arabiacell.biz/api/services/water_role/?company_id='+ data.organizationID +'&account='+ data.userAccount,{
               headers: {
                 Authorization: 'ts=' + ts + ',response=' + hash
               }
