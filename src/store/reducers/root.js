@@ -2,7 +2,7 @@ import { Add_Name, Delete_Name, Select_Name, Deselect_Name, Fetch_Sucess, Fetch_
 
 const initiaState ={
     names: [],
-    waterRole: '',
+    waterRole: null,
     user_id: null,
     signupFailMsg: null,
     loginFailMsg: null,

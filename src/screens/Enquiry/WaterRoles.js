@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import WaterRole from '../../Components/Enquiry/WaterRole'
@@ -9,7 +9,6 @@ class WaterRoles extends Component{
     constructor(props){
         super(props);
         Navigation.events().bindComponent(this);
-        this.handleWaterRoles = this.handleWaterRoles.bind(this);
     }
     
     //show sidemenu when menu button is clicked.
@@ -27,21 +26,22 @@ class WaterRoles extends Component{
     componentWillMount() {
         this.props.onGetOrganizations();
     }
-
-    //get water Roles according to user's input
-    handleWaterRoles(orgID,userAccount){
-        this.props.onGettingWaterRoles(orgID,userAccount);
-    }
     
     render(){
         return (
-            <View>
-                <WaterRole organizations={this.props.data} onSubmission={this.handleWaterRoles}/>
-                <Text>{this.props.waterRole}</Text>
+            <View style={styles.container}>
+                <WaterRole {...this.props}/>
             </View>
         )
     }
 }
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      paddingHorizontal: 30
+    },
+})
 
 const mapStateToProps = state => {
     return {
@@ -56,7 +56,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onAddName: (name,key) => dispatch(AddName(name,key)),
         onGetOrganizations: () => dispatch(GetOrganizations()),
-        onGettingWaterRoles: (orgID, userAccount) => dispatch(GetWaterRoles(orgID, userAccount))
+        onGettingWaterRoles: ( data ) => dispatch(GetWaterRoles(data))
     };
 };
   
