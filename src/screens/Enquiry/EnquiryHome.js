@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 40
     },
     greeting2: {
-        fontFamily: fonts.light,
+        fontFamily: 'Lato-Light',
         color: '#666',
         fontSize: 24,
         marginTop: 5

@@ -21,7 +21,7 @@ class Settings extends React.Component{
           getItem('userData')
           .then(results => {
               this.setState({
-                  userProfile: JSON.parse(results)
+                  userProfile: JSON.parse(results)[0]
               })
           })
 
@@ -61,7 +61,7 @@ class Settings extends React.Component{
                 headerStyle={{color:'black', fontSize: 20}} />
                 <SettingsList.Item titleInfo={this.state.userProfile['username']} hasNavArrow={false} title='User Name' icon={this.renderIcon('user','user')}/>
                 <SettingsList.Item titleInfo={this.state.userProfile['phone']} hasNavArrow={false} title='Phone #'  icon={this.renderIcon('phone','phone')}/>
-                <SettingsList.Item titleInfo={this.state.userProfile['email']} hasNavArrow={false} title='Email Address'  icon={this.renderIcon('mail','mail')}/>
+                <SettingsList.Item titleInfo={this.state.userProfile['email']} hasNavArrow={false} title='Email'  icon={this.renderIcon('mail','mail')}/>
                 <SettingsList.Item titleInfo={this.state.userProfile['role_name']} hasNavArrow={false} title='Role'  icon={this.renderIcon('solution1','solution1')}/>
                 <SettingsList.Item titleInfo={this.state.userProfile['language']} hasNavArrow={false} title='Profile Langague'  icon={this.renderIcon('zhihu','zhihu')}/>
               </SettingsList>

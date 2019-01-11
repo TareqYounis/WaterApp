@@ -12,7 +12,7 @@ const StartMainTabs = () => {
     })
   //Icons returns a promise, we will need to wait before we load the tab, therefor we use promise  
   Promise.all([
-    Icon.getImageSource("md-home",30),
+    Icon.getImageSource("md-stats",30),
     IconMaterial.getImageSource("water",30),
     Icon.getImageSource('md-information-circle-outline',30),
     Icon.getImageSource('md-menu',30),
@@ -74,7 +74,7 @@ const StartMainTabs = () => {
                               bottomTab: {
                                 badge: '2',
                                 fontSize: 12,
-                                text: 'Home',
+                                text: 'Statistics',
                                 icon: sources[0]
                               },
                             }

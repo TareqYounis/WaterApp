@@ -31,7 +31,7 @@ class Language extends React.Component {
         return (
             <View style={styles.container}>
                 <Button
-                    title='Arabic'
+                    title='العربية'
                     onPress = {this.selectLangague.bind(this,'Arabic')}
                     isLoading={this.state.isAuthenticating}
                     />

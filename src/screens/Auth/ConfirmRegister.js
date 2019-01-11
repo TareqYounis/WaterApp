@@ -3,7 +3,8 @@ import { View, StyleSheet, Alert } from 'react-native'
 import ConfirmSignUp from '../../Components/Auth/ConfirmSignUp';
 import { connect } from 'react-redux';
 import { UserRegisterConfirm, UserResendCode } from '../../store/actions/index';
-import StartMainTabs from '../MainTabs/StartMainTabs';
+import { Navigation } from 'react-native-navigation';
+// import StartMainTabs from '../MainTabs/StartMainTabs';
 
 class ConfirmRegister extends React.Component {
     constructor(props){
@@ -15,7 +16,12 @@ class ConfirmRegister extends React.Component {
     componentWillReceiveProps(props){
         if( (props.user_id !== "" || props.user_id !== "undefined" ) && props.registConfirmMsg ){
                 Alert.alert("Your account been create successfully")
-                StartMainTabs();
+                    Navigation.push(this.props.componentId,{
+                        component:{
+                            name: 'water-app.LoginScreen'
+                        } 
+                    })
+                // StartMainTabs();
         }
     }
 

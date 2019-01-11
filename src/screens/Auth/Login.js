@@ -16,7 +16,7 @@ class Login extends React.Component {
             Alert.alert('you have signed in Successfully')
             // save userID and detailes in the device storage
             saveUserId(props.user_id);
-            saveUserData(props.userProfile[0]); 
+            saveUserData(props.userProfile); 
             console.log('test',props.userProfile)
             StartMainTabs();
         }
