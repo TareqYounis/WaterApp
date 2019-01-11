@@ -27,6 +27,7 @@ import ApplyApplication from './src/screens/Applications/ApplyApplication';
 
 import Language from './src/screens/StartUp/Language';
 import WaterCompany from './src/screens/StartUp/WaterCompany'
+import Splach from './src/screens/StartUp/Splach';
 
 import Settings from './src/screens/Settings/Settings';
 
@@ -136,6 +137,11 @@ Navigation.registerComponent('water-app.WaterCompanyScreen',
   // () => Enquiry, store, Provider );
   reduxStoreWrapper(WaterCompany, store))
 
+Navigation.registerComponent('water-app.SplachScreen', 
+  // () => Enquiry, store, Provider );
+  reduxStoreWrapper(Splach, store))
+  
+  
 Navigation.registerComponent('water-app.SettingsScreen', 
   // () => Enquiry, store, Provider );
   reduxStoreWrapper(Settings, store))
@@ -149,7 +155,7 @@ Navigation.events().registerAppLaunchedListener(() => {
       stack: {
         children: [{
           component: {
-            name: 'water-app.LanguageScreen',
+            name: 'water-app.SplachScreen',
             passProps: {
               text: 'stack with one child'
             }

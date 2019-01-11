@@ -3,6 +3,7 @@ package com.waterapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.horcrux.svg.SvgPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.sha256lib.Sha256Package;
@@ -45,6 +46,7 @@ public class MainApplication extends NavigationApplication {
         return Arrays.<ReactPackage>asList(
             // eg. new VectorIconsPackage()
                   //new MainReactPackage(),
+            new SplashScreenReactPackage(),
             new SvgPackage(),
             new ImagePickerPackage(),
                 new Sha256Package(),
