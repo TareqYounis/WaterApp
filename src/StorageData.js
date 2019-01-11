@@ -39,3 +39,14 @@ export const saveUserData = async info  => {
         console.log("There was an error saving")
     })
 };
+
+
+export const saveUserAccounts = async info  => {
+    await AsyncStorage.setItem('userAccounts', JSON.stringify(info) )
+    .then(()=>{
+        console.log("It was saved successfully")
+    })
+    .catch(()=>{
+        console.log("There was an error saving")
+    })
+};
