@@ -5,16 +5,17 @@ import { connect } from 'react-redux';
 import { Table, TableWrapper, Row, Cell } from 'react-native-table-component';
 import { UserParticipationInfo } from '../../store/actions/index';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { getItem } from '../../StorageData';
+import { getItem, saveUserData, saveUserAccounts } from '../../StorageData';
 
 class Profile extends React.Component {
     constructor(props){
         super(props);
         Navigation.events().bindComponent(this);
         this.state = {
-            tableHead: ['Name','Account','Iron#','Balance', 'Address', 'Phone'],
+            tableHead: ['Name','Account','Iron#','Balance', 'Address'],
             tableData: [],
-            isloggedIn : false
+            isloggedIn : false,
+            counter: 0
         }
         this.renderTableData = this.renderTableData.bind(this);
         this.addingUserAccount = this.addingUserAccount.bind(this);
@@ -37,23 +38,34 @@ class Profile extends React.Component {
             this.props.onGetParticipationInfo(Number(userID));        
         })
     }
+
     componentWillReceiveProps(props){
-        if(props.particpationInfo.length > 0){
+        this.setState({
+            counter: this.state.counter+1
+        })
+        // make sure to render data only once
+        if(props.particpationInfo.length > 0 && this.state.counter === 1){
             this.renderTableData(props.particpationInfo);
+            // save user profile in phone storage
+            console.log(props.userProfile);
+            saveUserData(props.userProfile);
+            // save user accounts in phone storage
+            saveUserAccounts(props.userAccounts);
         }
     }
     renderTableData(data){
         // Extract certain values from returned API data and assigin it to the the state.
         for ( var key in data) {
-            for ( index in data[key]){
+            for ( var index in data[key]){
                 if( index === 'info'){
-                    this.state.tableData= this.state.tableData.concat({
-                        name : data[key]['info']['name'],
-                        account : data[key]['account'],
-                        ironNum : data[key]['info']['counter'],
-                        balance : data[key]['info']['balance'],
-                        address : data[key]['info']['address'] ,
-                        phone : data[key]['info']['phone'],
+                    this.setState({
+                        tableData : this.state.tableData.concat({
+                            name : data[key]['info']['name'],
+                            account : data[key]['account'],
+                            ironNum : data[key]['info']['counter'],
+                            balance : data[key]['info']['balance'],
+                            address : data[key]['info']['address'] 
+                        })
                     })
                 }
             }   
@@ -122,7 +134,8 @@ const mapStateToProps = state => {
       user_id : state.names.user_id,
       userProfile : state.names.userProfile,
       particpationInfo : state.names.particpationInfo,
-      particpFailMsg : state.names.particpFailMsg 
+      particpFailMsg : state.names.particpFailMsg,
+      userAccounts : state.names.userAccounts
     };
 };
 
