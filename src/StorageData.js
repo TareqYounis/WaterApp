@@ -11,13 +11,13 @@ export const getItem = async (key) => {
 }
 
 export const saveUserId = async userId => {
-    let test = '';
+    let value = '';
     try {
-        test = await AsyncStorage.setItem('userId', userId);
+        value = await AsyncStorage.setItem('userId', userId);
     } catch (error) {
         console.log(error.message);
     }
-    return test
+    return value
 };
 
 export const saveLangauge = async lang  => {
@@ -50,3 +50,13 @@ export const saveUserAccounts = async info  => {
         console.log("There was an error saving")
     })
 };
+
+export const removeItemValue = async key => {
+    try {
+        await AsyncStorage.removeItem(key);
+        console.log("It was removed successfully")
+    }
+    catch(exception) {
+        console.log("remove error")
+    }
+}
