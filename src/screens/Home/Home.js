@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { View, Text, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ActivityIndicator, Picker } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import { UserBalanceHistory, UserParticipationInfo } from './../../store/actions/index';
@@ -18,18 +18,20 @@ const chartConfig = {
 }
 
 let data = []
-let userID = 0;
 
 class Home extends Component{
     constructor(props){
       super(props);
       Navigation.events().bindComponent(this);
       this.state = {
-          gotData: true,
-          isLoading: true
+          isLoading: true,
+          userAccounts: null,
+          userID: null,
+          particpFailMsg: null,
+          account: null
       }
       this.renderChart = this.renderChart.bind(this);
-      this.getAccountsData = this.getAccountsData.bind(this);
+      this.getAccountData = this.getAccountData.bind(this);
     }
 
     //show sidemenu when menu button is clicked.
@@ -44,94 +46,116 @@ class Home extends Component{
     }    
     
     componentWillMount(){
-      console.log(this.props.balanceHistoryFailMsg, this.props.particpFailMsg)
-      getItem('userId').then(userid => {
-         console.log("rest2",userid)
-         userID = Number(userid)
-         this.props.onGetParticipationInfo(userID);
+      // get particpationInfo from local storage to render it
+      getItem('particInfo')
+      .then( results => {
+          if(results !== 'none'){
+              this.setState({
+                  particpFailMsg: JSON.parse(results)[1]
+              })
+          }
+      })
+
+      // get UserID
+      getItem('userId')
+      .then( results => {
+          this.setState({
+            userID: Number(results)
+          })
+      })
+
+      // get particpationInfo from local storage to render it
+      getItem('userAccounts')
+      .then( results => {
+        if(results !== 'none'){
+            this.setState({
+                userAccounts: JSON.parse(results)                
+            })
+            // bring first account history detailes to be rendered
+            this.getAccountData(this.state.userAccounts[0]['account'])
+          }
       })
     }
    
-    async componentWillReceiveProps(props){
-      // make sure to bring data only once, therefor check the state
-      if(this.state.gotData){
-        for ( var i=0; i< props.userAccounts.length ; i++){
-          const userData = {
-            "user_id" : userID,
-            "account" : Number(props.userAccounts[i])
+    componentWillReceiveProps(props){
+      // loop through userbalance history and extract all account number, dates, and amount values to render it
+      for( var i=0 ; i< props.balanceHistory.length ; i++){
+        const innerData = {
+          labels :[],
+          datasets: [{
+            data: []
+          }],
+          account: 0
+        };
+        innerData.account=props.balanceHistory[i]['account'];
+        // view only the last 5 balance history
+        for( var j=4 ; j >= 0 ; j-- ){
+          innerData.labels.push(props.balanceHistory[i]['history'][j]['DATCLC'].substring(3))
+          innerData.datasets[0].data.push(props.balanceHistory[i]['history'][j]['SUMMOUNT'])
+          if(j === 0){
+            data.push(innerData);
           }
-          await this.props.onGetUserHistory(userData);   
         }
       }
-      // this.getAccountsData();
       this.setState({
-        gotData: false
+        isLoading : false
       })
+      this.renderChart();
     }
 
-    getAccountsData() {
-      // loop through userbalance history and extract all account number, dates, and amount values to render it
-      if(this.props.balanceHistory.length > 0){
-        for( var i=0 ; i< this.props.balanceHistory.length ; i++){
-          const innerData = {
-            labels :[],
-            datasets: [{
-              data: []
-            }],
-            account: 0
-          };
-          innerData.account=this.props.balanceHistory[i]['account'];
-          // view only the last 5 balance history
-          for( var j=0 ; j< 5 ; j++ ){
-            innerData.labels.push(this.props.balanceHistory[i]['history'][j]['DATCLC'].substring(3))
-            innerData.datasets[0].data.push(this.props.balanceHistory[i]['history'][j]['SUMMOUNT'])
-            if(j === 4){
-              data.push(innerData);
-            }
-          }
-        }
-        this.setState({
-          isLoading : false
-        })
+    getAccountData(account) {
+      this.setState({
+        account: account,
+        isLoading: true
+      })
+      const userData = {
+        "user_id" : this.state.userID,
+        "account" : account
       }
+      this.props.onGetUserHistory(userData);   
     }
 
     renderChart(){
+      if(data.length > 0){
         return (
-          data.map((rowData, index) => ([
-              <Text key={index}>Account Number: {rowData['account']}</Text>,
-              <LineChart
-                data={rowData}
-                width={screenWidth}
-                height={220}
-                chartConfig={chartConfig}
-                backgroundColor="transparent"                
-                bezier
-                style={{
-                  marginVertical: 8,
-                  borderRadius: 16
-                }}
-              />
-          ]))
-        )     
+          <LineChart
+            data={data[0]}
+            width={screenWidth}
+            height={220}
+            chartConfig={chartConfig}
+            backgroundColor="transparent"                
+            bezier
+            style={{
+              marginVertical: 8,
+              borderRadius: 16
+            }}
+          />
+        )
+      }
     }
 
     render(){
       return (
-        <ScrollView>
-          <View>
-            { this.props.balanceHistoryFailMsg !== null && (
-                <Text>Please add an account to display data</Text>
-            )}
-            { this.props.particpFailMsg !== null && (
-                <Text>Please add an account to display data</Text>
-            )}
-            { this.state.isLoading !== false && (
-              <View style={styles.activityIndicator}><ActivityIndicator color='#1493ff' /></View>
-            )}
-            {/* {this.renderChart()} */}
+        <View>
+        {this.state.userAccounts !== null && (
+          <Picker
+            selectedValue={this.state.account}
+            itemStyle={styles.picker}
+            onValueChange={(account) => this.getAccountData(account)}>
+            <Picker.Item label='Please select an option...' value='0' color="#1493ff" />
+              {this.state.userAccounts.map((item, index) => {
+                return (<Picker.Item label={item['accountHolder']} value={item['account']} key={index}/>) 
+              })}
+          </Picker>
+        )}
+        {this.props.balanceHistoryFailMsg !== null && (
+          <Text>Please add an account to display data</Text>
+        )}
+        {this.state.isLoading !== false && (
+          <View style={styles.activityIndicator}><ActivityIndicator color='#1493ff' /></View>
+        )}
+        {this.renderChart()}
         </View>
-      </ScrollView>
       )
     }
 }
@@ -159,7 +183,13 @@ const styles = StyleSheet.create({
     transform: [{scale: 1.00}],
     marginTop: 3.5,
     marginLeft: 5
-  }
+  },
+  greeting: {
+    fontFamily: 'Lato-Light',
+    color: '#666',
+    fontSize: 18,
+    marginTop: 5
+  },
 })
   
 export default connect(mapStateToProps,mapDispatchToProps,null, {"withRef" : true})(Home);
