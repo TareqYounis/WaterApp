@@ -7,6 +7,7 @@ import { Navigation } from "react-native-navigation";
 import { connect } from 'react-redux';
 import { SaveTabID } from './../../store/actions/index';
 import Button from '../../Components/Styles/Button'
+import { removeItemValue } from '../../StorageData';
 
 class SideDrawer extends Component {
     constructor(props){
@@ -14,8 +15,9 @@ class SideDrawer extends Component {
         Navigation.events().bindComponent(this);
         // get current componentID and save it in store in order to navigate from sidemenu to screens
         Navigation.events().registerComponentDidAppearListener((componentId) => {
-            // component 6 is sidedrawer ID, need not to regester its ID since its causing a navigation problem when navigating from sidemenu of ios.
-            if(componentId.componentId !== 'Component8'){
+            // component sideDrawer is the sidedrawer ID, need not to regester the ID of the drawer since its causing a navigation 
+            // problem when navigating from sidemenu of ios.
+            if(componentId.componentId !== 'sideDrawer'){
                 this.props.onSavingTapID(componentId.componentId);
             }
         });
@@ -56,6 +58,10 @@ class SideDrawer extends Component {
     }
 
     loggingOut(){
+        removeItemValue('userId');
+        removeItemValue('userData');
+        removeItemValue('userAccounts');
+        removeItemValue('particInfo');
         this.closeModel();
         this.handleScreenNavigation('water-app.LoginScreen');
     } 
@@ -80,15 +86,15 @@ class SideDrawer extends Component {
             </View>
             </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => this.handleScreenNavigation('water-app.ReturnCounterScreen')}>
+        <TouchableOpacity>
             <View style={styles.drawerItem}>
-                <IconFontAwsm
-                name="unlock-alt"
+                <Icon
+                name={Platform.OS === "android" ? "md-notifications" : "ios-notifications"}
                 size={30}
                 color="#aaa"
                 style={styles.drawerItemIcon}
                 />
-                <Text>Return Blocked Counter</Text>
+                <Text>Notifications</Text>
             </View>
             </TouchableOpacity>
 
