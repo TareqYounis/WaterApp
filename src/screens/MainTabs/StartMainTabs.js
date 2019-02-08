@@ -120,11 +120,11 @@ const StartMainTabs = () => {
                       children: [
                         {
                           component: {
-                            name: 'water-app.UserProfileScreen',
+                            name: 'water-app.UserAccountsScreen',
                             options: {
                               bottomTab: {
                                 badge: '',
-                                text: 'Water Accounts',
+                                text: 'Accounts',
                                 fontSize: 12,
                                 icon: sources[1]
                               },
