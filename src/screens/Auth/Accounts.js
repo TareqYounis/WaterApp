@@ -98,7 +98,7 @@ class Accounts extends React.Component {
                 {this.state.accountData !== null && (
                     Object.keys(accountData).map(function(element,key){
                         return (
-                            <Text>{element}: {accountData[element]}</Text>
+                            <Text key={key}>{element}: {accountData[element]}</Text>
                         )
                     })
                 )}
