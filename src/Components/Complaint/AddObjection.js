@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Picker, StyleSheet } from 'react-native';
+import { View, Text, Picker, StyleSheet, Linking } from 'react-native';
 import Input from '../Styles/Input'
 import Button from '../Styles/Button'
 
@@ -16,6 +16,7 @@ class AddObjection extends React.Component {
         this.handleObjection = this.handleObjection.bind(this);
         this.renderingResults = this.renderingResults.bind(this);
         this.renderError = this.renderError.bind(this);
+        this.payNow = this.payNow.bind(this);
     }
     
     handleObjection(){
@@ -53,6 +54,16 @@ class AddObjection extends React.Component {
                 </View>
             )
         })
+    }
+
+    payNow(){
+        Linking.canOpenURL('https://www.efawateercom.jo/').then(supported => {
+            if (supported) {
+              Linking.openURL('https://www.efawateercom.jo/');
+            } else {
+              alert("Don't know how to open URI: " + 'https://www.efawateercom.jo/');
+            }
+          });
     }
 
     render(){
@@ -93,6 +104,12 @@ class AddObjection extends React.Component {
                 />
                 {this.props.objFail !== null && (this.renderError())}
                 {this.props.objectionResults && (this.renderingResults())}
+                {this.props.objectionResults &&
+                    <Button
+                        title='PayNow'
+                        onPress={this.payNow.bind(this)}
+                    />
+                }
             </View>
         )
     }
