@@ -1,24 +1,24 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView, TouchableOpacity, Text, Platform} from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, Platform, Picker, ActivityIndicator} from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
-import { Table, TableWrapper, Row, Cell } from 'react-native-table-component';
 import { UserParticipationInfo } from '../../store/actions/index';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { getItem, saveUserData, saveUserAccounts } from '../../StorageData';
+import { getItem } from '../../StorageData';
 
 class Profile extends React.Component {
     constructor(props){
         super(props);
         Navigation.events().bindComponent(this);
         this.state = {
-            tableHead: ['Name','Account','Iron#','Balance', 'Address'],
-            tableData: [],
-            isloggedIn : false,
-            counter: 0
+            isLoading: true,
+            account: null,
+            accountData: null,
+            particpationInfo:null,
+            particpFailMsg: null
         }
-        this.renderTableData = this.renderTableData.bind(this);
-        this.addingUserAccount = this.addingUserAccount.bind(this);
+        this.addUserAccount = this.addUserAccount.bind(this);
+        this.displayAccountData = this.displayAccountData.bind(this);
     }
     //show sidemenu when menu button is clicked.
     navigationButtonPressed({ buttonId }) {
@@ -32,47 +32,44 @@ class Profile extends React.Component {
     } 
     
     componentWillMount() {
-        getItem('userId')
-        .then(userID => {
-            console.log("test",userID)
-            this.props.onGetParticipationInfo(Number(userID));        
+        // get particpationInfo from local storage to render it
+        getItem('particInfo')
+        .then( results => {
+            if(results !== 'none'){
+                this.setState({
+                    particpationInfo: JSON.parse(results)[0],
+                    particpFailMsg: JSON.parse(results)[1]
+                })
+                // an initial render for the first account data
+                this.displayAccountData(this.state.particpationInfo[0]['account']);
+            }
         })
     }
 
-    componentWillReceiveProps(props){
+    displayAccountData(account){
         this.setState({
-            counter: this.state.counter+1
+            account : account,
+            isLoading: true
         })
-        // make sure to render data only once
-        if(props.particpationInfo.length > 0 && this.state.counter === 1){
-            this.renderTableData(props.particpationInfo);
-            // save user profile in phone storage
-            console.log(props.userProfile);
-            saveUserData(props.userProfile);
-            // save user accounts in phone storage
-            saveUserAccounts(props.userAccounts);
-        }
-    }
-    renderTableData(data){
-        // Extract certain values from returned API data and assigin it to the the state.
-        for ( var key in data) {
-            for ( var index in data[key]){
-                if( index === 'info'){
+         // Extract certain values from returned API data and assigin it to the the state.
+         for ( var i = 0; i < this.state.particpationInfo.length; i++) {
+             if(this.state.particpationInfo[i]['account'] === this.state.account){
                     this.setState({
-                        tableData : this.state.tableData.concat({
-                            name : data[key]['info']['name'],
-                            account : data[key]['account'],
-                            ironNum : data[key]['info']['counter'],
-                            balance : data[key]['info']['balance'],
-                            address : data[key]['info']['address'] 
-                        })
+                        accountData : {
+                            name : this.state.particpationInfo[i]['info']['name'],
+                            account : this.state.particpationInfo[i]['account'],
+                            ironNum : this.state.particpationInfo[i]['info']['counter'],
+                            balance : this.state.particpationInfo[i]['info']['balance'],
+                            address : this.state.particpationInfo[i]['info']['address'],
+                            phone : this.state.particpationInfo[i]['info']['phone']  
+                        }
+                        ,isLoading : false
                     })
                 }
-            }   
-        }
+            }
     }
 
-    addingUserAccount(){
+    addUserAccount(){
         Navigation.push(this.props.componentId,{
             component:{
                 name: 'water-app.AddUserAccountScreen'
@@ -81,32 +78,31 @@ class Profile extends React.Component {
     }
 
     render(){
-        const state = this.state;
-     
+        const accountData = this.state.accountData;
         return (
             <View style={styles.container}>
-            <ScrollView>
-                <Table borderStyle={{borderWidth: 2}}>
-                <Row data={state.tableHead} style={styles.head} textStyle={styles.text}/>                
-                
-                { 
-                    state.tableData.map((rowData, index) => (
-                    <TableWrapper key={index} style={styles.row} >
-                        { 
-                            Object.keys(rowData).map((cellData, cellIndex) => (
-                                <Cell key={cellIndex} data= {rowData[cellData]} textStyle={styles.text}/>
-                            ))
-                        } 
-                    </TableWrapper>
-                    ))
-                }
-                </Table>
-                {this.props.particpFailMsg && ( 
-                 <Text> Please Add an Account to view Data</Text>   
+                {this.state.particpationInfo !== null && (
+                    <Picker
+                        selectedValue={this.state.account}
+                        itemStyle={styles.picker}
+                        onValueChange={(account) => this.displayAccountData(account)}>
+                        <Picker.Item label='Please select an option...' value='0' color="#1493ff" />
+                        {this.state.particpationInfo.map((item, index) => {
+                            return (<Picker.Item label={item['info']['name']} value={item['account']} key={index}/>) 
+                        })}
+                    </Picker>
                 )}
-             
-        </ScrollView>
-               <TouchableOpacity onPress={this.addingUserAccount} style={styles.TouchableOpacityStyle}>                   
+                {this.state.isLoading !== false && (
+                    <View style={styles.activityIndicator}><ActivityIndicator color='#1493ff' /></View>
+                )}
+                {this.state.accountData !== null && (
+                    Object.keys(accountData).map(function(element,key){
+                        return (
+                            <Text>{element}: {accountData[element]}</Text>
+                        )
+                    })
+                )}
+               <TouchableOpacity onPress={this.addUserAccount} style={styles.TouchableOpacityStyle}>                   
                         <Icon name={Platform.OS === "android" ? "md-add-circle-outline" : "ios-add-circle-outline"} size={40}/>
                 </TouchableOpacity>
         </View>
@@ -126,7 +122,12 @@ const styles = StyleSheet.create({
         height: 50,
         right: 30,
         bottom: 30,
-      }
+    },
+    activityIndicator: {
+        transform: [{scale: 1.00}],
+        marginTop: 3.5,
+        marginLeft: 5
+    }
 });
 
 const mapStateToProps = state => {
