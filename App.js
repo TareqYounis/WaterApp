@@ -161,6 +161,9 @@ Navigation.events().registerAppLaunchedListener(() => {
               text: 'Welcome screen'
             },
             visible: false,
+          },
+          layout: { 
+            backgroundColor: 'white' 
           }
         }
       }
