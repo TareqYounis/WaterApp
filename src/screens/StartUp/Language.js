@@ -1,23 +1,18 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text, Image, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import Button from '../../Components/Styles/Button'
-import { getItem, saveLangauge } from '../../StorageData';
+import { saveLangauge } from '../../StorageData';
+import { fonts, colors } from './../../Components/Styles/Theme';
+
+const deviceWidth = Dimensions.get("window").width;
+const deviceHeight= Dimensions.get("window").height;
 
 class Language extends React.Component {
     constructor(props){
         super(props);
-        this.state = {
-            isAuthenticating: false
-        }
         this.selectLangague= this.selectLangague.bind(this);
     }
-    componentWillMount(){
-        getItem('userId')
-       .then(results => {
-           console.log(results)
-       })
-    }
+    
     selectLangague(lang){
         // save the user option in the local storage.
         saveLangauge(lang);
@@ -27,19 +22,28 @@ class Language extends React.Component {
             } 
         })
     }
+    
     render(){
         return (
             <View style={styles.container}>
-                <Button
-                    title='العربية'
-                    onPress = {this.selectLangague.bind(this,'Arabic')}
-                    isLoading={this.state.isAuthenticating}
-                    />
-                <Button
-                    title='English'
-                    onPress = {this.selectLangague.bind(this,'English')}
-                    isLoading={this.state.isAuthenticating}
-                />
+                <View style={styles.half1}>
+                    <Image source={require('./../../assets/images/logo_inner_page.png')} />
+                    <Text style={styles.text}>Water App</Text>
+                </View>
+                <View style={styles.half2}>
+                    <ImageBackground source={require('./../../assets/images/background_blue.png')} style={{width: deviceWidth, height: deviceHeight}} >
+                        <View style={styles.buttons}>
+                            <TouchableOpacity onPress={()=> this.selectLangague('Arabic')} style={{marginBottom: 30}}>
+                                <Image source={require('./../../assets/images/blue_button.png')} />
+                                    <Text style={styles.buttonText}>العربية</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=> this.selectLangague('English')}>
+                                <Image source={require('./../../assets/images/green_button.png')} />
+                                    <Text style={styles.buttonText}>English</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </ImageBackground>
+                </View>
           </View>
         )
     }
@@ -47,11 +51,36 @@ class Language extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
-        alignItems: 'center',
-        justifyContent: 'center',
         flex: 1
-      }
+    },
+    half1: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    half2:{
+        flex: 2,
+    },
+    buttons:{
+        flex: 0.6,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    buttonText:{
+      flex:1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      position: 'absolute', 
+      alignSelf: 'center',
+      color: 'white',
+      fontSize: 20,
+      fontFamily: fonts.TunisiaLt
+    },
+    text:{
+        color: colors.DarkBlue,
+        fontSize: 30,
+        fontFamily: fonts.bold
+    }
 });
 
 export default Language;
