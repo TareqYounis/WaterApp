@@ -17,7 +17,6 @@ class Login extends React.Component {
             // save userID and detailes in the device storage
             saveUserId(props.user_id);
             saveUserData(props.userProfile); 
-            console.log('test',props.userProfile)
             StartMainTabs();
         }
           
@@ -25,7 +24,7 @@ class Login extends React.Component {
 
     render(){
         return(
-            <View style={styles.container}>
+            <View style={{flex:1}}>
                 <UserLogin {...this.props}/>     
             </View>
         )
@@ -34,9 +33,10 @@ class Login extends React.Component {
 
 const mapStateToProps = state => {
     return {
-      user_id : state.names.user_id,
-      loginFailMsg : state.names.loginFailMsg,
-      userProfile : state.names.userProfile 
+        lang: state.names.lang,
+        user_id : state.names.user_id,
+        loginFailMsg : state.names.loginFailMsg,
+        userProfile : state.names.userProfile 
     };
 };
   
@@ -46,13 +46,5 @@ const mapDispatchToProps = dispatch => {
         onLoggingIn: (userData) => dispatch(UserLogsIn(userData))
     };
 };
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      paddingHorizontal: 40
-    },
-})
   
 export default connect(mapStateToProps,mapDispatchToProps,null, {"withRef" : true})(Login);

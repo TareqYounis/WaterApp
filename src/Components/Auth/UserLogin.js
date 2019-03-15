@@ -1,7 +1,12 @@
 import React from 'react';
-import { View, StyleSheet, Image, Text } from 'react-native';
-import Input from '../Styles/Input'
-import Button from '../Styles/Button'
+import { View, StyleSheet, Text, Image, Dimensions, ImageBackground, TouchableOpacity, TextInput } from 'react-native';
+import { Navigation } from 'react-native-navigation';
+import { fonts, colors } from './../../assets/Theme';
+import * as data from './../../assets/lang.json';
+
+const deviceWidth = Dimensions.get("window").width;
+const deviceHeight= Dimensions.get("window").height;
+
 
 class UserLogin extends React.Component {
     constructor(props){
@@ -10,87 +15,128 @@ class UserLogin extends React.Component {
             username : '',
             password: ''
         }
-        this.loggingIn = this.loggingIn.bind(this);
-        this.onChangeText = this.onChangeText.bind(this);
     }
-   
+    paddingLeft = () => {
+        return this.props.lang === 'English' ? 10 : 150
+    }
+
+    paddingRight = () => {
+        return this.props.lang === 'English' ? 150 : 10
+    }
+
+    inputDirectionRight = () => {
+        return this.props.lang  === 'English' ? 10 : 150
+    }
+
     onChangeText = (key, value) => {
         this.setState({
           [key]: value
         })
     }
 
-    loggingIn (){
+    loggingIn = () => {
         this.props.onLoggingIn(this.state);
+    }
+
+    signingUp = () => {
+        Navigation.push(this.props.componentId,{
+            component:{
+                name: 'water-app.SignUpScreen'
+            } 
+        })
     }
 
     render(){
         return(
-            <View>
-                    <View style={styles.heading}>
-                        <Image
-                            source={require('../../assets/miyahuna.png')}
-                            style={styles.headingImage}
-                            resizeMode="contain"
-                        />
-                    </View>
-                    <Text style={styles.greeting}>
-                    Welcome again, Sign In to continue
-                    </Text>
-                    <View style={styles.inputContainer}>
-                        <Input
+            <View style={styles.container}>
+            <View style={styles.half1}>
+                <Image source={require('./../../assets/images/logo_inner_page.png')} />
+                <Text style={styles.logoText}>Water App</Text>
+            </View>
+            <View style={styles.half2}>
+                <ImageBackground source={require('./../../assets/images/background_blue.png')} style={{width: deviceWidth, height: deviceHeight}} >
+                    <View style={[styles.inputs]}>
+                        <TextInput
                             value={this.state.username}
-                            placeholder="User Name"
-                            type='username'
-                            onChangeText={this.onChangeText}
+                            placeholder={data[this.props.lang]['userName']}
+                            onChangeText= {value => this.onChangeText('username', value)}
+                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()}]}
                         />
-                        <Input
+                        <TextInput
                             value={this.state.password}
-                            placeholder="Password"
+                            onChangeText= {value => this.onChangeText('password', value)}
+                            placeholder={data[this.props.lang]['passWord']}
+                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()}]}
                             secureTextEntry
-                            type='password'
-                            onChangeText={this.onChangeText}
                         />
+                        <TouchableOpacity onPress={()=> this.loggingIn()} style={{marginBottom: 20}}>
+                            <Image source={require('./../../assets/images/blue_button.png')} />
+                                <Text style={styles.buttonText}>{data[this.props.lang]['login']}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=> this.signingUp()} style={{marginBottom: 15}}>
+                            <Text style={styles.text}>{data[this.props.lang]['signup']}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=> alert('لا يوجد')} style={{marginBottom: 15}}>
+                            <Text style={styles.text}>{data[this.props.lang]['forgetPassword']}</Text>
+                        </TouchableOpacity>
+                        {this.props.loginFailMsg && (
+                            <Text style={[styles.text, { color: 'red' }]}>{this.props.loginFailMsg}</Text>
+                        )}
                     </View>
-                    <Button
-                        title='LogIn'
-                        onPress={this.loggingIn.bind(this)}
-                        isLoading={this.state.isAuthenticating}
-                    />
-                    {this.props.loginFailMsg && (
-                            <Text style={[styles.errorMessage,{ color: 'black' }]}>Error signing in in. Please try again.{"\n"} {this.props.loginFailMsg}</Text>
-                    )}
+                </ImageBackground>
+            </View>
             </View>
         )
     }
 }
+
 const styles = StyleSheet.create({
-    inputContainer: {
-      marginTop: 20
-    },
     container: {
-      flex: 1,
-      justifyContent: 'center',
-      paddingHorizontal: 40
+        flex: 1
     },
-    greeting: {
-      fontFamily: 'Lato-Light',
-      color: '#666',
-      fontSize: 24,
-      marginTop: 5
+    half1: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    heading: {
-      flexDirection: 'row'
+    half2:{
+        flex: 2,
     },
-    headingImage: {
-      width: 38,
-      height: 38
+    logoText:{
+        color: colors.DarkBlue,
+        fontSize: 30,
+        fontFamily: fonts.bold
     },
-    errorMessage: {
-        fontFamily: 'Lato-Regular',
-        fontSize: 12,
-        marginTop: 10,
-        color: 'transparent'
-  }
+    inputs:{
+        flex: 0.6,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    text:{
+        fontSize: 18,
+        fontFamily: fonts.TunisiaLt,
+        color: colors.LightBlue
+    },
+    textInput: {
+        fontSize: 18,
+        fontFamily: fonts.TunisiaLt,
+        marginBottom: 15,
+        paddingTop: 5,
+        paddingBottom: 5,
+        // paddingLeft: this.props.lang === 'English' ? 10 : 150,
+        // paddingRight: this.props.lang === 'English' ? 150 : 10,
+        borderRadius: 20,
+        backgroundColor: 'white'
+    },
+    buttonText:{
+        flex:1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute', 
+        alignSelf: 'center',
+        color: 'white',
+        fontSize: 20,
+        fontFamily: fonts.TunisiaLt
+    }
 });
 export default UserLogin;
