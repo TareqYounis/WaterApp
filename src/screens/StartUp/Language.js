@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text, Image, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { saveLangauge } from '../../StorageData';
-import { fonts, colors } from './../../Components/Styles/Theme';
+import { fonts, colors } from './../../assets/Theme';
 
 const deviceWidth = Dimensions.get("window").width;
 const deviceHeight= Dimensions.get("window").height;
