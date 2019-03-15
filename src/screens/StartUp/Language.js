@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
 import { Navigation } from 'react-native-navigation';
+import {connect} from 'react-redux';
 import { saveLangauge } from '../../StorageData';
+import { SaveUserLanguage } from '../../store/actions/index';
 import { fonts, colors } from './../../assets/Theme';
 
 const deviceWidth = Dimensions.get("window").width;
@@ -14,8 +16,9 @@ class Language extends React.Component {
     }
     
     selectLangague(lang){
-        // save the user option in the local storage.
+        // save the user option in the local storage and in Redux store.
         saveLangauge(lang);
+        this.props.onSavingLanguage(lang);
         Navigation.push(this.props.componentId,{
             component:{
                 name: 'water-app.WaterCompanyScreen'
@@ -83,4 +86,11 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Language;
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onSavingLanguage: ( lang ) => dispatch(SaveUserLanguage(lang))
+    };
+};
+
+export default connect(null,mapDispatchToProps,null, {"withRef" : true})(Language);
