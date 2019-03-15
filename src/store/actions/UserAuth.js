@@ -1,5 +1,11 @@
-import {FetchFailure, FetchSuccessUserRegister, FetchFailureUserRegister, FetchSuccessUserLogin, FetchFailureUserLogin, FetchSuccessAddAccount, FetchFailureAddAccount, SavingTabID, FetchSuccessBalanceHistory, FetchFailureBalanceHistory, FetchSuccessRegisterConfirm, FetchFailureRegisterConfirm, FetchSuccessResendCode, FetchFailureResendCode, FetchSuccessParticipationInfo, FetchFailureParticipationInfo } from './actions';
+import {FetchFailure, SavingUserLanguage, FetchSuccessUserRegister, FetchFailureUserRegister, FetchSuccessUserLogin, FetchFailureUserLogin, FetchSuccessAddAccount, FetchFailureAddAccount, SavingTabID, FetchSuccessBalanceHistory, FetchFailureBalanceHistory, FetchSuccessRegisterConfirm, FetchFailureRegisterConfirm, FetchSuccessResendCode, FetchFailureResendCode, FetchSuccessParticipationInfo, FetchFailureParticipationInfo } from './actions';
 import { sha256 } from 'react-native-sha256';
+
+export const SaveUserLanguage = (lang) => {
+  return dispatch => {
+     dispatch(SavingUserLanguage(lang));
+  }
+}
 
 //Register a new user (POST).
 export const UserSignsUp = (userData) => {
@@ -225,14 +231,15 @@ export const UserParticipationInfo = ( userID ) => {
               }
            })
             .then((response) => response.json())
-            .then((responseJson) => {   
+            .then((responseJson) => {  
+              console.log('test',responseJson) 
               if(responseJson.status === false ){
                 dispatch(FetchFailureParticipationInfo(responseJson.message));
               }else{
                 // collect all user counter accounts and save it
                 const accounts= [];
                 responseJson.forEach(element => {
-                  accounts.push(element['account'])
+                  accounts.push({account: element['account'], accountHolder: element['info']['name']})
                 });
                 dispatch(FetchSuccessParticipationInfo(responseJson, accounts));
               }
