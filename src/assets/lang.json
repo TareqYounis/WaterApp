@@ -1,0 +1,22 @@
+{
+    "English": {
+        "title": "Hello",
+        "contents": "water",
+        "userName": "User Name",
+        "passWord": "Password",
+        "login" : "Log In",
+        "signup" : "Sign up",
+        "forgetPassword" : "Forgot password?",
+        "successLog" : "Successfully logged In"
+    }, 
+    "Arabic": {
+        "title": "مرحبا",
+        "contents": "ماء",
+        "userName": "اسم المستخدم",
+        "passWord": "كلمة السر",
+        "login" : "دخول",
+        "signup":"تسجيل حساب",
+        "forgetPassword": "نسيت كلمة المرور ؟",
+        "successLog" : "لقد قمت بعملية التسجيل بنجاح"
+    }
+}
