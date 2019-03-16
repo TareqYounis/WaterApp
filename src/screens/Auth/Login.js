@@ -1,23 +1,33 @@
 import React from 'react';
-import { View, Alert, StyleSheet } from 'react-native';
+import { View, StyleSheet, Modal, ImageBackground, TouchableOpacity, Image, Text } from 'react-native';
 import {connect} from 'react-redux';
 import UserLogin from '../../Components/Auth/UserLogin';
 import { UserLogsIn } from '../../store/actions/index';
 import StartMainTabs from '../MainTabs/StartMainTabs';
 import { saveUserId, saveUserData } from '../../StorageData';
+import { fonts } from './../../assets/Theme';
+import * as data from './../../assets/lang.json';
 
 class Login extends React.Component {
     constructor(props){
         super(props);
+        this.state={
+            modalVisible: false
+        }
     }
 
+    openModel = () => {
+        this.setState({
+            modalVisible: true
+        }) 
+    }
+    
     async componentWillReceiveProps(props){
         if(props.user_id){
-            Alert.alert('you have signed in Successfully')
+            this.setState({ modalVisible: true});
             // save userID and detailes in the device storage
             saveUserId(props.user_id);
             saveUserData(props.userProfile); 
-            StartMainTabs();
         }
           
     }
@@ -25,11 +35,51 @@ class Login extends React.Component {
     render(){
         return(
             <View style={{flex:1}}>
-                <UserLogin {...this.props}/>     
+                <UserLogin {...this.props} openmodel={this.openModel.bind(this)}/>  
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={this.state.modalVisible}
+                    onRequestClose={() => {
+                        console.log('Modal has been closed.');
+                    }}>
+                    <View style={styles.modal}>            
+                        <TouchableOpacity onPress={()=> {this.setState({ modalVisible : false }); StartMainTabs() }}>
+                            <ImageBackground source={require('./../../assets/images/pop_up.png')} style={{width: 250, height: 158}} >
+                                <View style={styles.modalCotent}>
+                                    <Image source={require('./../../assets/images/right_icon.png')} style={{marginBottom: 20}} />
+                                    <Text style={styles.modelText}>{data[this.props.lang]['successLog']}</Text>
+                                </View>
+                            </ImageBackground>
+                        </TouchableOpacity>
+                    </View>
+                </Modal> 
             </View>
         )
     }   
 }
+const styles = StyleSheet.create({
+    modal: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor:'rgba(0,0,0,0.7)'
+    },
+    modalCotent:{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    modelText:{
+        flex: 0.5,
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: 'white',
+        fontSize: 20,
+        fontFamily: fonts.Hacen
+    }
+})
 
 const mapStateToProps = state => {
     return {
