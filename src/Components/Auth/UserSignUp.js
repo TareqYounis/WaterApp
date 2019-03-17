@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Image, Text, View, ScrollView} from 'react-native';
 import Input from '../Styles/Input'
 import Button from '../Styles/Button'
+import { Navigation } from 'react-native-navigation';
 
 class UserSignUp extends React.Component {
     constructor(props){
@@ -16,6 +17,7 @@ class UserSignUp extends React.Component {
             isAuthenticating: false
         }
         this.signingUp = this.signingUp.bind(this);
+        this.signingIn = this.signingIn.bind(this);
         this.onChangeText = this.onChangeText.bind(this);
     }
     signingUp () {
@@ -23,6 +25,14 @@ class UserSignUp extends React.Component {
             isAuthenticating: !this.state.isAuthenticating
         })
         this.props.onSignup(this.state);
+    }
+
+    signingIn(){
+        Navigation.push(this.props.componentId,{
+            component:{
+                name: 'water-app.LoginScreen'
+            } 
+        })
     }
     
     onChangeText = (key, value) => {
@@ -89,6 +99,11 @@ class UserSignUp extends React.Component {
                     <Button
                         title='Sign Up'
                         onPress={this.signingUp.bind(this)}
+                        isLoading={this.state.isAuthenticating}
+                    />
+                    <Button
+                        title='Already a User? SignIn'
+                        onPress={this.signingIn.bind(this)}
                         isLoading={this.state.isAuthenticating}
                     />
                     {this.props.errorMsg && (

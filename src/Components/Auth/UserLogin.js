@@ -25,7 +25,11 @@ class UserLogin extends React.Component {
     }
 
     inputDirectionRight = () => {
-        return this.props.lang  === 'English' ? 10 : 150
+        return this.props.lang  === 'English' ? 10 : 150 
+    }
+
+    textAlign = ()=> {
+        return this.props.lang  === 'English' ? 'left' : 'right'     
     }
 
     onChangeText = (key, value) => {
@@ -60,7 +64,7 @@ class UserLogin extends React.Component {
                             value={this.state.username}
                             placeholder={data[this.props.lang]['userName']}
                             onChangeText= {value => this.onChangeText('username', value)}
-                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()}]}
+                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()}, { textAlign: this.textAlign()}]}
                         />
                         <TextInput
                             value={this.state.password}
@@ -123,8 +127,6 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         paddingTop: 5,
         paddingBottom: 5,
-        // paddingLeft: this.props.lang === 'English' ? 10 : 150,
-        // paddingRight: this.props.lang === 'English' ? 150 : 10,
         borderRadius: 20,
         backgroundColor: 'white'
     },
