@@ -5,11 +5,9 @@ import { UserSignsUp } from '../../store/actions/index';
 import { connect } from 'react-redux';
 import { Navigation } from 'react-native-navigation';
 
-
 class SignUp extends React.Component {
     constructor(props){
         super(props);
-        this.handleSigningUp = this.handleSigningUp.bind(this);
     }
 
     componentWillReceiveProps(props){
@@ -22,24 +20,18 @@ class SignUp extends React.Component {
         }
     }
     
-    handleSigningUp(userData){
-        console.log('test',userData)
-        this.props.onSigningUp(userData)
-    }
-   
     render() {
         return (
-            <View>
-               <UserSignUp onSignup={this.handleSigningUp} errorMsg= {this.props.signupFailMsg}/>
+            <View style={{flex:1}}>
+                <UserSignUp {...this.props}/>
             </View>
         )
     }
 }
+
 const mapStateToProps = state => {
     return {
-      names: state.names.names,
-      data : state.enquiry.data,
-      waterRole : state.enquiry.waterRole,
+      lang: state.names.lang,
       user_id : state.names.user_id,
       signupFailMsg : state.names.signupFailMsg 
     };

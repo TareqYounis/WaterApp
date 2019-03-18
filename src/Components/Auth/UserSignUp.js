@@ -1,8 +1,10 @@
 import React from 'react';
-import { StyleSheet, Image, Text, View, ScrollView} from 'react-native';
-import Input from '../Styles/Input'
-import Button from '../Styles/Button'
-import { Navigation } from 'react-native-navigation';
+import { StyleSheet, Image, Text, View, ScrollView, Dimensions, TouchableOpacity, ImageBackground, TextInput, ActivityIndicator} from 'react-native';
+import { fonts, colors } from './../../assets/Theme';
+import * as data from './../../assets/lang.json';
+
+const deviceWidth = Dimensions.get("window").width;
+const deviceHeight= Dimensions.get("window").height;
 
 class UserSignUp extends React.Component {
     constructor(props){
@@ -16,132 +18,169 @@ class UserSignUp extends React.Component {
             full_name: '',
             isAuthenticating: false
         }
-        this.signingUp = this.signingUp.bind(this);
-        this.signingIn = this.signingIn.bind(this);
-        this.onChangeText = this.onChangeText.bind(this);
     }
-    signingUp () {
+    
+    componentWillReceiveProps(props){
+        console.log(props);
         this.setState({
             isAuthenticating: !this.state.isAuthenticating
         })
-        this.props.onSignup(this.state);
-    }
-
-    signingIn(){
-        Navigation.push(this.props.componentId,{
-            component:{
-                name: 'water-app.LoginScreen'
-            } 
-        })
     }
     
+    signingUp = () => {
+        console.log('signingup')
+        this.setState({
+            isAuthenticating: !this.state.isAuthenticating
+        })
+        this.props.onSigningUp(this.state);
+    }
+
     onChangeText = (key, value) => {
         this.setState({
           [key]: value
         })
     }
 
+    paddingLeft = () => {
+        return this.props.lang === 'English' ? 10 : 150
+    }
+
+    paddingRight = () => {
+        return this.props.lang === 'English' ? 150 : 10
+    }
+
+    inputDirectionRight = () => {
+        return this.props.lang  === 'English' ? 10 : 150 
+    }
+
+    textAlign = ()=> {
+        return this.props.lang  === 'English' ? 'left' : 'right'     
+    }
+
     render(){
         return (
-            <ScrollView>
             <View style={styles.container}>
-                    <View style={styles.heading}>
-                        <Image
-                            source={require('../../assets/miyahuna.png')}
-                            style={styles.headingImage}
-                            resizeMode="contain"
-                        />
-                    </View>
-                    <Text style={styles.greeting}>
-                    Welcome, Sign up to continue
-                    </Text>
-                    <View style={styles.inputContainer}>
-                    <Input
-                        value={this.state.full_name}
-                        placeholder="Full Name"
-                        type='full_name'
-                        onChangeText={this.onChangeText}
-                    />
-                    <Input
-                        value={this.state.username}
-                        placeholder="User Name"
-                        type='username'
-                        onChangeText={this.onChangeText}
-                    />
-                    <Input
-                        value={this.state.email}
-                        placeholder="Email"
-                        type='email'
-                        onChangeText={this.onChangeText}
-                    />
-                    <Input
-                        value={this.state.phone}
-                        placeholder="Phone Number"
-                        type='phone'
-                        keyboardType='numeric'
-                        onChangeText={this.onChangeText}
-                    />
-                    <Input
-                        value={this.state.password}
-                        placeholder="Password"
-                        secureTextEntry
-                        type='password'
-                        onChangeText={this.onChangeText}
-                    />
-                    <Input
-                        value={this.state.pass_confirm}
-                        placeholder="Confirm Password"
-                        secureTextEntry
-                        type='pass_confirm'
-                        onChangeText={this.onChangeText}
-                    />
-                    </View>
-                    <Button
-                        title='Sign Up'
-                        onPress={this.signingUp.bind(this)}
-                        isLoading={this.state.isAuthenticating}
-                    />
-                    <Button
-                        title='Already a User? SignIn'
-                        onPress={this.signingIn.bind(this)}
-                        isLoading={this.state.isAuthenticating}
-                    />
-                    {this.props.errorMsg && (
-                            <Text style={[styles.errorMessage,{ color: 'black' }]}>Error signing up in. Please try again.{"\n"} {this.props.errorMsg}</Text>
-                    )}
+            <View style={styles.half1}>
+                <Image source={require('./../../assets/images/logo_inner_page.png')} />
+                <Text style={styles.logoText}>{data[this.props.lang]['welcome']}</Text>
+                <Text style={styles.logoText}>{data[this.props.lang]['signInRequest']}</Text>
             </View>
-        </ScrollView>
+                
+            <ScrollView style={styles.half2}>
+                <ImageBackground source={require('./../../assets/images/background_blue.png')} style={{width: deviceWidth, height: deviceHeight}} >
+                    <View style={[styles.inputs]}>
+                        <TextInput
+                            value={this.state.full_name}
+                            onChangeText= {value => this.onChangeText('full_name', value)}
+                            placeholder={data[this.props.lang]['fullName']}
+                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()},{textAlign: this.textAlign()}]}
+                        />
+                        <TextInput
+                            value={this.state.username}
+                            onChangeText= {value => this.onChangeText('username', value)}
+                            placeholder={data[this.props.lang]['userName']}
+                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()},{textAlign: this.textAlign()}]}
+                        />
+                        <TextInput
+                            value={this.state.email}
+                            onChangeText= {value => this.onChangeText('email', value)}
+                            placeholder={data[this.props.lang]['email']}
+                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()},{textAlign: this.textAlign()}]}
+                        />
+                        <TextInput
+                            value={this.state.phone}
+                            onChangeText= {value => this.onChangeText('phone', value)}
+                            placeholder={data[this.props.lang]['phoneNum']}
+                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()},{textAlign: this.textAlign()}]}
+                        />
+                        <TextInput
+                            value={this.state.password}
+                            onChangeText= {value => this.onChangeText('password', value)}
+                            placeholder={data[this.props.lang]['passWord']}
+                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()},{textAlign: this.textAlign()}]}
+                            secureTextEntry
+                        />
+                        <TextInput
+                            value={this.state.pass_confirm}
+                            onChangeText= {value => this.onChangeText('pass_confirm', value)}
+                            placeholder={data[this.props.lang]['confirmPass']}
+                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()},{textAlign: this.textAlign()}]}
+                            secureTextEntry
+                        />
+                        <TouchableOpacity onPress={()=> this.signingUp()} style={{marginBottom: 20}}>
+                            <Image source={require('./../../assets/images/dark_blue_button.png')} />
+                                <Text style={styles.buttonText}>{data[this.props.lang]['signup']}</Text>
+                        </TouchableOpacity>
+                        {
+                            this.state.isAuthenticating && (
+                            <View style={styles.activityIndicator}>
+                                <ActivityIndicator color={colors.LightBlue} />
+                            </View>
+                            )
+                        }
+                        {this.props.signupFailMsg && (
+                            <Text style={[styles.text, { color: 'red' }]}> {this.props.signupFailMsg}</Text>
+                        )}
+                    </View>
+                </ImageBackground>
+            </ScrollView>
+            </View>
         )
     }
 }
 const styles = StyleSheet.create({
-    inputContainer: {
-      marginTop: 20
-    },
     container: {
-      flex: 1,
-      justifyContent: 'center',
-      paddingHorizontal: 40
+        flex: 1
     },
-    greeting: {
-      fontFamily: 'Lato-Light',
-      color: '#666',
-      fontSize: 24,
-      marginTop: 5
+    half1: {
+        flex: 0.5,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    heading: {
-      flexDirection: 'row'
+    half2:{
+        flex: 2,
     },
-    headingImage: {
-      width: 38,
-      height: 38
+    logoText:{
+        color: colors.DarkBlue,
+        fontSize: 25,
+        fontFamily: fonts.bold
     },
-    errorMessage: {
-        fontFamily: 'Lato-Regular',
-        fontSize: 12,
-        marginTop: 10,
-        color: 'transparent'
-  }
+    inputs:{
+        flex: 0.7,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    text:{
+        fontSize: 18,
+        fontFamily: fonts.TunisiaLt,
+        color: colors.LightBlue
+    },
+    textInput: {
+        fontSize: 18,
+        fontFamily: fonts.TunisiaLt,
+        marginBottom: 10,
+        paddingTop: 5,
+        paddingBottom: 5,
+        borderRadius: 20,
+        width: 280,
+        height: 35,
+        backgroundColor: 'white'
+    },
+    buttonText:{
+        flex:1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute', 
+        alignSelf: 'center',
+        color: 'white',
+        fontSize: 20,
+        fontFamily: fonts.TunisiaLt
+    },
+    activityIndicator: {
+        transform: [{scale: 0.70}],
+        marginTop: 3.5,
+        marginLeft: 5
+    }
 });
 
 export default UserSignUp;

@@ -7,7 +7,6 @@ import * as data from './../../assets/lang.json';
 const deviceWidth = Dimensions.get("window").width;
 const deviceHeight= Dimensions.get("window").height;
 
-
 class UserLogin extends React.Component {
     constructor(props){
         super(props);
@@ -55,7 +54,7 @@ class UserLogin extends React.Component {
             <View style={styles.container}>
             <View style={styles.half1}>
                 <Image source={require('./../../assets/images/logo_inner_page.png')} />
-                <Text style={styles.logoText}>Water App</Text>
+                <Text style={styles.logoText}>{data[this.props.lang]['logInRequest']}</Text>
             </View>
             <View style={styles.half2}>
                 <ImageBackground source={require('./../../assets/images/background_blue.png')} style={{width: deviceWidth, height: deviceHeight}} >
@@ -64,13 +63,13 @@ class UserLogin extends React.Component {
                             value={this.state.username}
                             placeholder={data[this.props.lang]['userName']}
                             onChangeText= {value => this.onChangeText('username', value)}
-                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()}, { textAlign: this.textAlign()}]}
+                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()}, {textAlign: this.textAlign()}]}
                         />
                         <TextInput
                             value={this.state.password}
                             onChangeText= {value => this.onChangeText('password', value)}
                             placeholder={data[this.props.lang]['passWord']}
-                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()}]}
+                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()}, {textAlign: this.textAlign()}]}
                             secureTextEntry
                         />
                         <TouchableOpacity onPress={()=> this.loggingIn()} style={{marginBottom: 20}}>
@@ -108,7 +107,7 @@ const styles = StyleSheet.create({
     },
     logoText:{
         color: colors.DarkBlue,
-        fontSize: 30,
+        fontSize: 25,
         fontFamily: fonts.bold
     },
     inputs:{
@@ -128,7 +127,9 @@ const styles = StyleSheet.create({
         paddingTop: 5,
         paddingBottom: 5,
         borderRadius: 20,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        width: 270,
+        height: 35
     },
     buttonText:{
         flex:1,

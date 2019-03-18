@@ -16,12 +16,6 @@ class Login extends React.Component {
         }
     }
 
-    openModel = () => {
-        this.setState({
-            modalVisible: true
-        }) 
-    }
-    
     async componentWillReceiveProps(props){
         if(props.user_id){
             this.setState({ modalVisible: true});
@@ -35,7 +29,7 @@ class Login extends React.Component {
     render(){
         return(
             <View style={{flex:1}}>
-                <UserLogin {...this.props} openmodel={this.openModel.bind(this)}/>  
+                <UserLogin {...this.props}/>  
                 <Modal
                     animationType="slide"
                     transparent={true}
