@@ -1,8 +1,11 @@
 import React from 'react';
-import { View, Image, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Image, Dimensions, ImageBackground, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
 import ResendCode from '../Auth/ResendCode';
-import Input from '../Styles/Input'
-import Button from '../Styles/Button'
+import { fonts, colors } from './../../assets/Theme';
+import * as data from './../../assets/lang.json';
+
+const deviceWidth = Dimensions.get("window").width;
+const deviceHeight= Dimensions.get("window").height;
 
 class ConfirmSignUp extends React.Component {
     constructor(props){
@@ -11,112 +14,153 @@ class ConfirmSignUp extends React.Component {
             code : '',
             user_id: '',
             isLoadingSendCode: false,
-            isLoadingResendCode: false,
             showReSendModel : false
         }
-        this.onChangeText = this.onChangeText.bind(this);
-        this.confirm = this.confirm.bind(this);
-        this.showReSendModel = this.showReSendModel.bind(this);
-        this.handleResendCode = this.handleResendCode.bind(this);
     }
     
+    componentWillReceiveProps(props){
+        console.log(props);
+        //activate activityindicator only if there is sending code messages ( to solve conflict that happens when resend code)
+        if( props.registConfirmFailMsg || props.registConfirmMsg ){
+            this.setState({
+                isLoadingSendCode : false
+            })
+        }
+    }
+
     onChangeText = (key, value) => {
         this.setState({
           [key]: value
         })
     }
 
-    confirm(){
+    confirm = () => {
         this.setState({
-            isLoadingSendCode : !this.state.isLoadingSendCode
+            isLoadingSendCode : true,
+            user_id: this.props.user_id
         })
-        this.props.onConfirmSignUp(this.state);
+        this.props.onConfirmRegisteration(this.state);
     }
     
-    showReSendModel(){
+    showReSendModel = ()=> {
         this.setState({
-            isLoadingResendCode : !this.state.isLoadingResendCode,
             showReSendModel : !this.state.showReSendModel
         })
     }
-    
-    handleResendCode(){
-        this.props.onResendCodef(this.state)
+
+    paddingLeft = () => {
+        return this.props.lang === 'English' ? 10 : 150
+    }
+
+    paddingRight = () => {
+        return this.props.lang === 'English' ? 150 : 10
+    }
+
+    textAlign = ()=> {
+        return this.props.lang  === 'English' ? 'left' : 'right'     
     }
 
     render(){
         return(
-            <View >
-            <View style={styles.heading}>
-                <Image
-                    source={require('../../assets/miyahuna.png')}
-                    style={styles.headingImage}
-                    resizeMode="contain"
-                />
+            <View style={styles.container}>
+            <View style={styles.half1}>
+                <Image source={require('./../../assets/images/logo_inner_page.png')} />
+                <Text style={styles.logoText}>{data[this.props.lang]['checkPhone']}</Text>
             </View>
-            <Text style={styles.greeting2}>
-                Check your Phone
-            </Text>
-            <View style={styles.inputContainer}>
-                <Input
-                    value={this.state.code}
-                    placeholder="Enter Code"
-                    type='code'
-                    onChangeText={this.onChangeText}
-                />
-            </View>
-                <Button
-                    title='Send Code'
-                    onPress={this.confirm.bind(this)}
-                    isLoading={this.state.isLoadingSendCode}
-                />
-                <Text style={[styles.errorMessage,{ color: 'black' }]}>{this.props.registConfirmMsg}</Text>
-                        { this.props.registConfirmFailMsg && (
-                            <Text style={[styles.errorMessage,{ color: 'black' }]}>Error. Please try again. {"\n"} {this.props.registConfirmFailMsg}</Text>
+            <View style={styles.half2}>
+                <ImageBackground source={require('./../../assets/images/background_blue.png')} style={{width: deviceWidth, height: deviceHeight}} >
+                    <View style={[styles.inputs]}>
+                        <TextInput
+                            value={this.state.code}
+                            placeholder={data[this.props.lang]['enterCode']}
+                            onChangeText= {value => this.onChangeText('code', value)}
+                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()}, {textAlign: this.textAlign()}]}
+                            keyboardType='numeric'
+                        />
+                        <TouchableOpacity onPress={()=> this.confirm()} style={{marginBottom: 20}}>
+                            <Image source={require('./../../assets/images/dark_blue_button.png')} />
+                                <Text style={styles.buttonText}>{data[this.props.lang]['submitCode']}</Text>
+                        </TouchableOpacity>
+                        {
+                            this.state.isLoadingSendCode && (
+                            <View style={styles.activityIndicator}>
+                                <ActivityIndicator color={colors.LightBlue} />
+                            </View>
+                            )
+                        }
+                        <TouchableOpacity onPress={()=> this.showReSendModel()} style={{marginBottom: 20}}>
+                            <Image source={require('./../../assets/images/blue_button.png')} />
+                                <Text style={styles.buttonText}>{data[this.props.lang]['reSendCode']}</Text>
+                        </TouchableOpacity>
+                        {this.props.registConfirmMsg && (
+                            <Text style={[styles.text, { color: 'green' }]}>{this.props.registConfirmMsg}</Text>
                         )}
-                <Button
-                    title='Didnt recieve code? Re-Send Code'
-                    onPress={this.showReSendModel.bind(this)}
-                    isLoading={this.state.isLoadingResendCode}
-                />
-                {
-                    this.state.showReSendModel && (
-                        <ResendCode onhandleResendCode={this.handleResendCode} {...this.props}/>
-                    )
-                }
+                        {this.props.registConfirmFailMsg && (
+                            <Text style={[styles.text, { color: 'red' }]}>{this.props.registConfirmFailMsg}</Text>
+                        )}
+                        {this.state.showReSendModel && (
+                            <ResendCode {...this.props}/>
+                        )}
+                    </View>
+                </ImageBackground>
+            </View>
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-
-    inputContainer: {
-      marginTop: 20
-    },
     container: {
-      flex: 1,
-      justifyContent: 'center',
-      paddingHorizontal: 40
+        flex: 1
     },
-    greeting2: {
-      fontFamily: 'Lato-Light',
-      color: '#666',
-      fontSize: 24,
-      marginTop: 5
+    half1: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    heading: {
-      flexDirection: 'row'
+    half2:{
+        flex: 2,
     },
-    headingImage: {
-      width: 38,
-      height: 38
+    logoText:{
+        color: colors.DarkBlue,
+        fontSize: 25,
+        fontFamily: fonts.bold
     },
-    errorMessage: {
-      fontFamily: 'Lato-Regular',
-      fontSize: 12,
-      marginTop: 10,
-      color: 'transparent'
+    inputs:{
+        flex: 0.6,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    text:{
+        fontSize: 18,
+        fontFamily: fonts.TunisiaLt,
+        color: colors.LightBlue
+    },
+    textInput: {
+        fontSize: 18,
+        fontFamily: fonts.TunisiaLt,
+        marginBottom: 25,
+        paddingTop: 5,
+        paddingBottom: 5,
+        borderRadius: 20,
+        backgroundColor: 'white',
+        width: 270,
+        height: 35
+    },
+    buttonText:{
+        flex:1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute', 
+        alignSelf: 'center',
+        color: 'white',
+        fontSize: 18,
+        fontFamily: fonts.TunisiaLt
+    },
+    activityIndicator: {
+        transform: [{scale: 0.70}],
+        marginTop: 3.5,
+        marginLeft: 5
     }
 });
 
