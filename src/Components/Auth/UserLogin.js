@@ -23,10 +23,6 @@ class UserLogin extends React.Component {
         return this.props.lang === 'English' ? 150 : 10
     }
 
-    inputDirectionRight = () => {
-        return this.props.lang  === 'English' ? 10 : 150 
-    }
-
     textAlign = ()=> {
         return this.props.lang  === 'English' ? 'left' : 'right'     
     }
