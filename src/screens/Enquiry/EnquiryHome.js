@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import Button from '../../Components/Styles/Button'
+import { fonts, colors } from './../../assets/Theme';
+import * as data from './../../assets/lang.json';
 
 class EnquiryHome extends Component{
     constructor(props){
@@ -9,8 +10,7 @@ class EnquiryHome extends Component{
         this.state= {
             isLoading: false
         }
-        Navigation.events().bindComponent(this);        
-        this.handleScreenNavigation = this.handleScreenNavigation.bind(this);
+        Navigation.events().bindComponent(this);                
     }
     
     //show sidemenu when menu button is clicked.
@@ -24,7 +24,7 @@ class EnquiryHome extends Component{
         });        
     }
 
-    handleScreenNavigation(screen){
+    handleScreenNavigation = (screen) =>{
         Navigation.push(this.props.componentId,{
             component:{
                 name: screen
@@ -35,41 +35,51 @@ class EnquiryHome extends Component{
     render(){
         return (
             <View style={styles.container}>
-                <Text style={styles.greeting2}>
-                Please choose one of the following services:
-                </Text>
-                <Button
-                    title='Get Water Role'
-                    onPress={this.handleScreenNavigation.bind(this, 'water-app.WaterRolesScreen')}
-                    isLoading={this.state.isLoading}
-                />
-                <Button
-                    title='Get Water Bill'
-                    onPress={this.handleScreenNavigation.bind(this, 'water-app.WaterBillScreen')}
-                    isLoading={this.state.isLoading}
-                />
-                <Button
-                    title='Calculate Water Cost'
-                    onPress={this.handleScreenNavigation.bind(this, 'water-app.CalculateWaterScreen')}
-                    isLoading={this.state.isLoading}
-                />
-            </View>
+                <View style={styles.buttons}>
+                    <TouchableOpacity onPress={()=> this.handleScreenNavigation('water-app.WaterRolesScreen')}>
+                        <Image source={require('./../../assets/images/water_role.png')} />
+                            <Text style={[styles.buttonText,{color: 'white'}]}>{data[this.props.lang]['waterRole']}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.handleScreenNavigation('water-app.WaterBillScreen')}>
+                        <Image source={require('./../../assets/images/bill_on.png')} />
+                            <Text style={styles.buttonText}>{data[this.props.lang]['waterBill']}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.handleScreenNavigation('water-app.CalculateWaterScreen')}>
+                        <Image source={require('./../../assets/images/water_cost_on.png')} />
+                            <Text style={styles.buttonText}>{data[this.props.lang]['waterCost']}</Text>
+                    </TouchableOpacity>
+                </View>
+          </View>
         )
     }
 }
    
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      justifyContent: 'center',
-      paddingHorizontal: 40
+        flex: 1
     },
-    greeting2: {
-        fontFamily: 'Lato-Light',
-        color: '#666',
-        fontSize: 24,
-        marginTop: 5
+    buttons:{
+        flex: 1,
+        justifyContent: 'space-around',
+        alignItems: 'center'
+    },
+    buttonText:{
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute', 
+        alignSelf: 'center',
+        padding: 37,
+        paddingLeft: 5,
+        color: colors.LightBlue,
+        fontSize: 20,
+        fontFamily: fonts.bold
+    },
+    text:{
+        color: colors.DarkBlue,
+        fontSize: 30,
+        fontFamily: fonts.bold
     }
-})
+});
 
 export default EnquiryHome;

@@ -3,21 +3,26 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import IconOcticons from "react-native-vector-icons/Octicons";
 import IconMaterial from "react-native-vector-icons/MaterialCommunityIcons";
 import { getItem } from '../../StorageData';
+import * as data from './../../assets/lang.json';
 
 const StartMainTabs = () => {
   // getuser Id from storage
-    getItem('userId')
+  getItem('userId')
     .then(results => {
       console.log(results);
-    })
+  })
   //Icons returns a promise, we will need to wait before we load the tab, therefor we use promise  
   Promise.all([
     Icon.getImageSource("md-stats",30),
     IconMaterial.getImageSource("water",30),
     Icon.getImageSource('md-information-circle-outline',30),
     Icon.getImageSource('md-menu',30),
-    IconOcticons.getImageSource('report',30)
-  ]).then(sources => {
+    IconOcticons.getImageSource('report',30),
+    // get language from storage and pass it
+    getItem('language')
+    .then(results => {
+      return results 
+    })]).then(sources => {
       Navigation.setRoot({
         root: {
           sideMenu: {
@@ -52,7 +57,7 @@ const StartMainTabs = () => {
                 options: {
                   topBar: {
                     visible: true,
-                  }
+                  },
                 },
                 children: [
                   {
@@ -72,13 +77,19 @@ const StartMainTabs = () => {
                                     id: 'buttonmenu22'
                                   }
                                 ],
+                                title: {
+                                  text: data[sources[5]]['tabEnquiry']
+                                }
                               },
                               bottomTab: {
                                 // badge: '2',
                                 fontSize: 12,
                                 text: 'Enquiry',
                                 icon: sources[2]
-                              },
+                              }
+                            },
+                            passProps: {
+                              lang: sources[5]
                             }
                           },
                         },
@@ -107,6 +118,12 @@ const StartMainTabs = () => {
                                     id: 'buttonmenu22'
                                   }
                                 ],
+                                title: {
+                                  text: data[sources[5]]['tabStatisc']
+                                }
+                              },
+                              passProps: {
+                                lang: sources[5]
                               },
                             }
                           },
@@ -129,7 +146,7 @@ const StartMainTabs = () => {
                                 icon: sources[1]
                               },
                               passProps: {
-                                text: 'This is tab 1'
+                                lang: sources[5]
                               },
                               topBar: {
                                 visible: true,
@@ -139,6 +156,9 @@ const StartMainTabs = () => {
                                     id: 'buttonmenu22'
                                   }
                                 ],
+                                title: {
+                                  text: data[sources[5]]['tabSubsc']
+                                }
                               },
                             }
                           },
