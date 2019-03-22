@@ -2,6 +2,9 @@
     "English": {
         "welcome": "Hello",
         "contents": "water",
+        "tabEnquiry":"Enquiry",
+        "tabStatisc": "Statics",
+        "tabSubsc": "Subscriptions",
         "login" : "Log In",
         "signup" : "Sign up",
         "forgetPassword" : "Forgot password?",
@@ -19,11 +22,22 @@
         "enterCode":"Enter code",
         "submitCode": "Send Code",
         "reSendCode":"Resend Code",
-        "close": "Close"
+        "close": "Close",
+        "waterRole": "Water Role",
+        "waterBill" : "Water Bill",
+        "waterCost" : "Water Cost",
+        "waterRoleFillMessg" :"Please fill the following to know your water role",
+        "waterRoleAccount#" : "Your Account",
+        "waterRolesOrgz#": "Pick from the list",
+        "waterRoleRespMessg": "You water role is ",
+        "send": "Send"
     }, 
     "Arabic": {
         "welcome": "!مرحبا",
         "contents": "ماء",
+        "tabEnquiry":"الإستعلام",
+        "tabStatisc": "إحصائيات",
+        "tabSubsc": "إشتراكات المياه",
         "login" : "دخول",
         "signup":"سجل",
         "forgetPassword": "نسيت كلمة المرور ؟",
@@ -41,6 +55,14 @@
         "enterCode":"أدخل الرمز",
         "submitCode": "أرسل الرمز",
         "reSendCode":"إعادة إرسال الرمز",
-        "close": "أغلق"
+        "close": "أغلق",
+        "waterRole": "دورالمياه",
+        "waterBill" : "فاتورتك",
+        "waterCost" : "تكلفة المياه",
+        "waterRoleFillMessg" : "يرجى تعبئة المعلومات لمعرفة دورك بالمياه",
+        "waterRoleAccount#" : "حسابك",
+        "waterRolesOrgz#": "إختر القائمة",
+        "waterRoleRespMessg": "يأتي دورك ",
+        "send": "إرسال"
     }
 }

@@ -38,14 +38,14 @@ class WaterRoles extends Component{
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      justifyContent: 'center',
-      paddingHorizontal: 30
-    },
+    //   justifyContent: 'center',
+    //   paddingHorizontal: 30
+    }
 })
 
 const mapStateToProps = state => {
     return {
-      names: state.names.names,
+      lang: state.enquiry.lang,
       data : state.enquiry.data,
       waterRole : state.enquiry.waterRole 
     };
