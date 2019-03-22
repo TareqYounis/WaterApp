@@ -1,24 +1,22 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, Platform, Picker, ActivityIndicator} from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, Picker, ActivityIndicator, Image} from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import { UserParticipationInfo } from '../../store/actions/index';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { getItem } from '../../StorageData';
+import { fonts, colors } from './../../assets/Theme';
+import * as data from './../../assets/lang.json';
 
 class Accounts extends React.Component {
     constructor(props){
         super(props);
         Navigation.events().bindComponent(this);
         this.state = {
-            isLoading: true,
+            isLoading: false,
             account: null,
             accountData: null,
             particpationInfo:null,
-            particpFailMsg: null
         }
-        this.addUserAccount = this.addUserAccount.bind(this);
-        this.displayAccountData = this.displayAccountData.bind(this);
     }
     //show sidemenu when menu button is clicked.
     navigationButtonPressed({ buttonId }) {
@@ -26,19 +24,19 @@ class Accounts extends React.Component {
             sideMenu: {
               left: {
                 visible: true,
-              },
+              }
             },
         });        
     } 
     
     componentWillMount() {
-        // get particpationInfo from local storage to render it
+        // get particpationInfo that contains all user accounts from local storage to render it
         getItem('particInfo')
         .then( results => {
             if(results !== 'none'){
                 this.setState({
                     particpationInfo: JSON.parse(results)[0],
-                    particpFailMsg: JSON.parse(results)[1]
+                    isLoading: true
                 })
                 // an initial render for the first account data
                 this.displayAccountData(this.state.particpationInfo[0]['account']);
@@ -46,22 +44,21 @@ class Accounts extends React.Component {
         })
     }
 
-    displayAccountData(account){
+    displayAccountData = (account) => {
         this.setState({
-            account : account,
-            isLoading: true
+            account : account
         })
          // Extract certain values from returned API data and assigin it to the the state.
          for ( var i = 0; i < this.state.particpationInfo.length; i++) {
              if(this.state.particpationInfo[i]['account'] === this.state.account){
                     this.setState({
                         accountData : {
-                            name : this.state.particpationInfo[i]['info']['name'],
-                            account : this.state.particpationInfo[i]['account'],
-                            ironNum : this.state.particpationInfo[i]['info']['counter'],
-                            balance : this.state.particpationInfo[i]['info']['balance'],
-                            address : this.state.particpationInfo[i]['info']['address'],
-                            phone : this.state.particpationInfo[i]['info']['phone']  
+                            [data[this.props.lang]['waterTableName']] : this.state.particpationInfo[i]['info']['name'],
+                            [data[this.props.lang]['waterTableAccount']] : this.state.particpationInfo[i]['account'],
+                            [data[this.props.lang]['waterTableIron']] : this.state.particpationInfo[i]['info']['counter'],
+                            [data[this.props.lang]['waterTableBalanc']] : this.state.particpationInfo[i]['info']['balance'],
+                            [data[this.props.lang]['waterTableAddres']] : this.state.particpationInfo[i]['info']['address'],
+                            [data[this.props.lang]['waterTablePhone']] : this.state.particpationInfo[i]['info']['phone']  
                         }
                         ,isLoading : false
                     })
@@ -69,7 +66,7 @@ class Accounts extends React.Component {
             }
     }
 
-    addUserAccount(){
+    addUserAccount = () => {
         Navigation.push(this.props.componentId,{
             component:{
                 name: 'water-app.AddUserAccountScreen'
@@ -81,7 +78,18 @@ class Accounts extends React.Component {
         const accountData = this.state.accountData;
         return (
             <View style={styles.container}>
-                {this.state.particpationInfo !== null && (
+            {this.state.particpationInfo === null && (
+                <View style={styles.quarter1}>
+                    <Text style={styles.headText}>{data[this.props.lang]['waterSubsFillMessg']}</Text>
+                </View>
+            )}
+            {this.state.particpationInfo !== null && (
+                <View style={styles.half2}>
+                    {this.state.isLoading !== false && (
+                        <View style={styles.activityIndicator}>
+                            <ActivityIndicator color={colors.LightBlue} />
+                        </View>
+                    )}
                     <Picker
                         selectedValue={this.state.account}
                         itemStyle={styles.picker}
@@ -90,38 +98,73 @@ class Accounts extends React.Component {
                         {this.state.particpationInfo.map((item, index) => {
                             return (<Picker.Item label={item['info']['name']} value={item['account']} key={index}/>) 
                         })}
-                    </Picker>
-                )}
-                {this.state.isLoading !== false && (
-                    <View style={styles.activityIndicator}><ActivityIndicator color='#1493ff' /></View>
-                )}
-                {this.state.accountData !== null && (
-                    Object.keys(accountData).map(function(element,key){
-                        return (
-                            <Text key={key}>{element}: {accountData[element]}</Text>
-                        )
-                    })
-                )}
-               <TouchableOpacity onPress={this.addUserAccount} style={styles.TouchableOpacityStyle}>                   
-                        <Icon name={Platform.OS === "android" ? "md-add-circle-outline" : "ios-add-circle-outline"} size={40}/>
+                    </Picker>                    
+                    {this.state.accountData !== null && (
+                        Object.keys(accountData).map(function(element,key){
+                            return (
+                                <TouchableOpacity>
+                                    <Image source={require('./../../assets/images/table_names.png')} />
+                                    <Text style={styles.tabelTextRight}>{element}</Text>
+                                    <Text style={styles.tabelTextLeft}>{accountData[element]}</Text>
+                                </TouchableOpacity> 
+                            )
+                        })
+                    )} 
+                </View>
+            )}
+            <View style={styles.addIcon}>
+                <TouchableOpacity onPress={this.addUserAccount}>                   
+                    <Image source={require('./../../assets/images/add_account.png')} />
                 </TouchableOpacity>
+            </View>
         </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-    head: { height: 40, backgroundColor: '#f1f8ff'},
-    text: { margin: 6, fontFamily :'Lato-Light'},
-    row: { flexDirection: 'row' },
-    TouchableOpacityStyle: {
-        position:'absolute',
-        alignSelf:'flex-end',
-        width: 50,
-        height: 50,
+    container: {
+        flex: 1
+    },
+    quarter1: {
+        flex: 0.2,
+        backgroundColor: colors.LightBlue
+    },
+    headText:{
+        color: 'white',
+        fontSize: 22,
+        fontFamily: fonts.bold
+    },
+    half2:{
+        flex: 0.8,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    tabelTextRight:{
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute', 
+        alignSelf: 'flex-end',
+        paddingRight: 7,
+        color: 'white',
+        fontSize: 20,
+        fontFamily: fonts.TunisiaLt
+    },
+    tabelTextLeft:{
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute', 
+        alignSelf: 'flex-start',
+        paddingLeft: 20,
+        fontSize: 20,
+        fontFamily: fonts.TunisiaLt
+    },
+    addIcon:{
+        flex: 0.1,
         right: 30,
+        position:'absolute',
         bottom: 30,
+        alignSelf:'flex-end'
     },
     activityIndicator: {
         transform: [{scale: 1.00}],
@@ -132,11 +175,11 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-      user_id : state.names.user_id,
-      userProfile : state.names.userProfile,
-      particpationInfo : state.names.particpationInfo,
-      particpFailMsg : state.names.particpFailMsg,
-      userAccounts : state.names.userAccounts
+        lang: state.names.lang,
+        user_id : state.names.user_id,
+        userProfile : state.names.userProfile,
+        particpationInfo : state.names.particpationInfo,
+        userAccounts : state.names.userAccounts
     };
 };
 

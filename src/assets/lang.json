@@ -30,7 +30,14 @@
         "waterRoleAccount#" : "Your Account",
         "waterRolesOrgz#": "Pick from the list",
         "waterRoleRespMessg": "You water role is ",
-        "send": "Send"
+        "send": "Send",
+        "waterSubsFillMessg" : "From this page, you can add other your other water accounts and view detailes",
+        "waterTableName": "Name",
+        "waterTableAccount": "Account Number",
+        "waterTableIron#": "Iron Number",
+        "waterTableBalanc": "Balance",
+        "waterTableAddres": "Address",
+        "waterTablePhone" : "Phone Number"
     }, 
     "Arabic": {
         "welcome": "!مرحبا",
@@ -63,6 +70,13 @@
         "waterRoleAccount#" : "حسابك",
         "waterRolesOrgz#": "إختر القائمة",
         "waterRoleRespMessg": "يأتي دورك ",
-        "send": "إرسال"
+        "send": "إرسال",
+        "waterSubsFillMessg" : "من خلال هذه الشاشة يمكنك إضافة حسابات أخرى للتحقق من عدادات المياه الخاصة بك مع التفاصيل",
+        "waterTableName": "الإسم",
+        "waterTableAccount": "رقم الحساب",
+        "waterTableIron#": "رقم العداد الحديدي",
+        "waterTableBalanc": "الرصيد",
+        "waterTableAddres": "العنوان",
+        "waterTablePhone" : "رقم الهاتف"
     }
 }
