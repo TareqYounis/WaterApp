@@ -37,7 +37,9 @@
         "waterTableIron#": "Iron Number",
         "waterTableBalanc": "Balance",
         "waterTableAddres": "Address",
-        "waterTablePhone" : "Phone Number"
+        "waterTablePhone" : "Phone Number",
+        "addAccount": "Add Account",
+        "successAddAccount": "Successfully added counter account"
     }, 
     "Arabic": {
         "welcome": "!مرحبا",
@@ -77,6 +79,8 @@
         "waterTableIron#": "رقم العداد الحديدي",
         "waterTableBalanc": "الرصيد",
         "waterTableAddres": "العنوان",
-        "waterTablePhone" : "رقم الهاتف"
+        "waterTablePhone" : "رقم الهاتف",
+        "addAccount" : "إضافة حساب",
+        "successAddAccount": "تم إضافة حساب عداد بنجاح"
     }
 }

@@ -1,101 +1,88 @@
 import React from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Modal, StyleSheet, ImageBackground, TouchableOpacity, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { Navigation } from 'react-native-navigation';
 import { UserAddAccount, GetOrganizations } from './../../store/actions/index';
 import AddAccount from './../../Components/Auth/AddAccount';
-import { getItem } from '../../StorageData';
-
-let userID=0;
 
 class AddUserAccount extends React.Component {
     constructor(props){
         super(props);
         this.state= {
-            isLoading: false
+            modalVisible: false
         }
-        this.handleAddingAccount = this.handleAddingAccount.bind(this);
     }
-    //load all water companies before rendering. 
+    //load all water companies for display before rendering. 
     componentWillMount() {
-        console.log(this.props.rootTag)
-        //get userID and save it locally.
-        getItem('userId')
-        .then(userid => {
-           userID = Number(userid);
-        })
         this.props.onGetOrganizations();
     }
-
+    
     componentWillReceiveProps(props){
-        // needs to be fixed by removing the props data
         if(props.messageAddAccount){
-            alert(props.messageAddAccount)
-            //Navigate to the user profile screen
-            Navigation.pop(props.componentId);
-        }
-        //stop running the activity monitor when recieving message
-        if(this.props.messageFailAddAccount){
-            this.setState({
-                isLoading: !this.state.isLoading
+            this.setState({ 
+                modalVisible: true
             })
         }
     }
 
-    async handleAddingAccount(userAccountData){
-        // send userID convery it to number
-        this.setState({
-            isLoading: !this.state.isLoading
-        })
-        userAccountData.user_id = userID;
-        await this.props.onAddingUserAccount(userAccountData);        
-    }
-
     render(){
         return(
-            <View style={styles.container}>
-                <AddAccount organizations={this.props.data} onAddingAccount={this.handleAddingAccount}/>
-                {this.state.isLoading && (
-                    <View style={styles.activityIndicator}>
-                        <ActivityIndicator color='#1493ff' />
+            <View style={{flex:1}}>
+                <AddAccount {...this.props}/>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={this.state.modalVisible}
+                    onRequestClose={() => {
+                        console.log('Modal has been closed.');
+                    }}>
+                    <View style={styles.modal}>            
+                        <TouchableOpacity onPress={()=> {this.setState({ modalVisible : false }); Navigation.pop(props.componentId) }}>
+                            <ImageBackground source={require('./../../assets/images/pop_up.png')} style={{width: 250, height: 158}} >
+                                <View style={styles.modalCotent}>
+                                    <Image source={require('./../../assets/images/right_icon.png')} style={{marginBottom: 20}} />
+                                    <Text style={styles.modelText}>{data[this.props.lang]['successAddAccount']}</Text>
+                                </View>
+                            </ImageBackground>
+                        </TouchableOpacity>
                     </View>
-                )}
-                {this.props.messageFailAddAccount && (
-                    <Text>Error Adding account, Please try again.{"\n"} {this.props.messageFailAddAccount}</Text>
-                )}
+                </Modal>                 
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    inputContainer: {
-      marginTop: 20
+    modal: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor:'rgba(0,0,0,0.7)'
     },
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      paddingHorizontal: 40
+    modalCotent:{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    errorMessage: {
-        fontFamily: 'Lato-Regular',
-        fontSize: 12,
-        marginTop: 10,
-        color: 'transparent'
-    },
-    activityIndicator: {
-        transform: [{scale: 1.00}],
-        marginTop: 3.5,
-        marginLeft: 5
+    modelText:{
+        flex: 0.5,
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: 'white',
+        fontSize: 20,
+        fontFamily: fonts.Hacen
     }
 })
 
+
 const mapStateToProps = state => {
     return {
-      data : state.enquiry.data,
-      user_id : state.names.user_id,
-      messageAddAccount : state.names.messageAddAccount,
-      messageFailAddAccount : state.names.messageFailAddAccount
+        lang: state.enquiry.lang,
+        data : state.enquiry.data,
+        user_id : state.names.user_id,
+        messageAddAccount : state.names.messageAddAccount,
+        messageFailAddAccount : state.names.messageFailAddAccount
     };
   };
   
