@@ -1,9 +1,11 @@
 import React from 'react';
-import { View, Modal, StyleSheet, ImageBackground, TouchableOpacity, Text } from 'react-native';
+import { View, Modal, StyleSheet, ImageBackground, Image, TouchableOpacity, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { Navigation } from 'react-native-navigation';
 import { UserAddAccount, GetOrganizations } from './../../store/actions/index';
 import AddAccount from './../../Components/Auth/AddAccount';
+import { fonts } from './../../assets/Theme';
+import * as data from './../../assets/lang.json';
 
 class AddUserAccount extends React.Component {
     constructor(props){
@@ -16,7 +18,7 @@ class AddUserAccount extends React.Component {
     componentWillMount() {
         this.props.onGetOrganizations();
     }
-    
+
     componentWillReceiveProps(props){
         if(props.messageAddAccount){
             this.setState({ 
