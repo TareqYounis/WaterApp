@@ -3,6 +3,7 @@ export const Delete_Name = "Delete_Name";
 export const Select_Name = "Select_Name";
 export const Deselect_Name = "Deselect_Name";
 export const Save_Lang = 'Save_Lang';
+export const Save_Id = 'Save_Id';
 export const Fetch_Sucess = 'Fetch_Sucess';
 export const Fetch_Failure = 'Fetch_Failure';
 export const Fetch_Sucess_Water_Role = 'Fetch_Sucess_Water_Role';
