@@ -12,16 +12,15 @@ const deviceHeight= Dimensions.get("window").height;
 class Language extends React.Component {
     constructor(props){
         super(props);
-        this.selectLangague= this.selectLangague.bind(this);
     }
     
-    selectLangague(lang){
+    selectLangague = (lang) => {
         // save the user option in the local storage and in Redux store.
         saveLangauge(lang);
         this.props.onSavingLanguage(lang);
         Navigation.push(this.props.componentId,{
             component:{
-                name: 'water-app.WaterCompanyScreen'
+                name: 'water-app.LoginScreen'
             } 
         })
     }

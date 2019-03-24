@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Modal, ImageBackground, TouchableOpacity, Image, Text } from 'react-native';
 import {connect} from 'react-redux';
 import UserLogin from '../../Components/Auth/UserLogin';
-import { UserLogsIn } from '../../store/actions/index';
+import { UserLogsIn, SaveUserID } from '../../store/actions/index';
 import StartMainTabs from '../MainTabs/StartMainTabs';
 import { saveUserId, saveUserData } from '../../StorageData';
 import { fonts } from './../../assets/Theme';
@@ -19,11 +19,11 @@ class Login extends React.Component {
     async componentWillReceiveProps(props){
         if(props.user_id){
             this.setState({ modalVisible: true});
-            // save userID and detailes in the device storage
+            // save userID and detailes in the device storage and in the store
             saveUserId(props.user_id);
+            this.props.onSavingUserId(props.user_id);
             saveUserData(props.userProfile); 
-        }
-          
+        }     
     }
 
     render(){
@@ -87,7 +87,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onLoggingIn: (userData) => dispatch(UserLogsIn(userData))
+        onLoggingIn: (userData) => dispatch(UserLogsIn(userData)),
+        onSavingUserId: ( userID ) => dispatch(SaveUserID(userID))
     };
 };
   

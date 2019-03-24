@@ -2,8 +2,9 @@ import React from 'react';
 import { View, StyleSheet, Modal, ImageBackground, TouchableOpacity, Image, Text } from 'react-native';
 import ConfirmSignUp from '../../Components/Auth/ConfirmSignUp';
 import { connect } from 'react-redux';
-import { UserRegisterConfirm, UserResendCode } from '../../store/actions/index';
+import { UserRegisterConfirm, UserResendCode, SaveUserID } from '../../store/actions/index';
 import StartMainTabs from '../MainTabs/StartMainTabs';
+import { saveUserId } from '../../StorageData';
 import { fonts } from './../../assets/Theme';
 import * as data from './../../assets/lang.json';
 
@@ -16,10 +17,13 @@ class ConfirmRegister extends React.Component {
     }
    
     componentWillReceiveProps(props){
+        // if signed up success, and recieved a confirm messages, save userID in local storage and in the state and navigate
         if( (props.user_id !== "" || props.user_id !== "undefined" ) && props.registConfirmMsg ){
             this.setState({
                 modalVisible: true
             })
+            saveUserId(props.user_id);
+            this.props.onSavingUserId(props.user_id);
         }
     }
 
@@ -87,7 +91,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onConfirmRegisteration: (userData) => dispatch(UserRegisterConfirm(userData)),
-        onResendCode: (userData) => dispatch(UserResendCode(userData))
+        onResendCode: (userData) => dispatch(UserResendCode(userData)),
+        onSavingUserId: ( userID ) => dispatch(SaveUserID(userID))
     };
 };
 
