@@ -41,18 +41,6 @@ class UserSignUp extends React.Component {
         })
     }
 
-    paddingLeft = () => {
-        return this.props.lang === 'English' ? 10 : 150
-    }
-
-    paddingRight = () => {
-        return this.props.lang === 'English' ? 150 : 10
-    }
-
-    inputDirectionRight = () => {
-        return this.props.lang  === 'English' ? 10 : 150 
-    }
-
     textAlign = ()=> {
         return this.props.lang  === 'English' ? 'left' : 'right'     
     }
@@ -73,38 +61,38 @@ class UserSignUp extends React.Component {
                             value={this.state.full_name}
                             onChangeText= {value => this.onChangeText('full_name', value)}
                             placeholder={data[this.props.lang]['fullName']}
-                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()},{textAlign: this.textAlign()}]}
+                            style= {[styles.textInput]}
                         />
                         <TextInput
                             value={this.state.username}
                             onChangeText= {value => this.onChangeText('username', value)}
                             placeholder={data[this.props.lang]['userName']}
-                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()},{textAlign: this.textAlign()}]}
+                            style= {[styles.textInput]}
                         />
                         <TextInput
                             value={this.state.email}
                             onChangeText= {value => this.onChangeText('email', value)}
                             placeholder={data[this.props.lang]['email']}
-                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()},{textAlign: this.textAlign()}]}
+                            style= {[styles.textInput]}
                         />
                         <TextInput
                             value={this.state.phone}
                             onChangeText= {value => this.onChangeText('phone', value)}
                             placeholder={data[this.props.lang]['phoneNum']}
-                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()},{textAlign: this.textAlign()}]}
+                            style= {[styles.textInput]}
                         />
                         <TextInput
                             value={this.state.password}
                             onChangeText= {value => this.onChangeText('password', value)}
                             placeholder={data[this.props.lang]['passWord']}
-                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()},{textAlign: this.textAlign()}]}
+                            style= {[styles.textInput,{textAlign: this.textAlign()}]}
                             secureTextEntry
                         />
                         <TextInput
                             value={this.state.pass_confirm}
                             onChangeText= {value => this.onChangeText('pass_confirm', value)}
                             placeholder={data[this.props.lang]['confirmPass']}
-                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()},{textAlign: this.textAlign()}]}
+                            style= {[styles.textInput,{textAlign: this.textAlign()}]}
                             secureTextEntry
                         />
                         <TouchableOpacity onPress={()=> this.signingUp()} style={{marginBottom: 20}}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, Dimensions, ImageBackground, TouchableOpacity, TextInput } from 'react-native';
+import { View, StyleSheet, Text, Image, Dimensions, ImageBackground, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { fonts, colors } from './../../assets/Theme';
 import * as data from './../../assets/lang.json';
@@ -11,20 +11,20 @@ class UserLogin extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            isLoading: false,
             username : '',
             password: ''
         }
     }
-    paddingLeft = () => {
-        return this.props.lang === 'English' ? 10 : 150
-    }
-
-    paddingRight = () => {
-        return this.props.lang === 'English' ? 150 : 10
-    }
 
     textAlign = ()=> {
         return this.props.lang  === 'English' ? 'left' : 'right'     
+    }
+    
+    componentWillReceiveProps(props){
+        this.setState({
+            isLoading: false
+        })
     }
 
     onChangeText = (key, value) => {
@@ -34,6 +34,10 @@ class UserLogin extends React.Component {
     }
 
     loggingIn = () => {
+        // activate activityindicator
+        this.setState({
+            isLoading: true
+        })
         this.props.onLoggingIn(this.state);
     }
 
@@ -59,19 +63,24 @@ class UserLogin extends React.Component {
                             value={this.state.username}
                             placeholder={data[this.props.lang]['userName']}
                             onChangeText= {value => this.onChangeText('username', value)}
-                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()}, {textAlign: this.textAlign()}]}
+                            style= {[styles.textInput]}
                         />
                         <TextInput
                             value={this.state.password}
                             onChangeText= {value => this.onChangeText('password', value)}
                             placeholder={data[this.props.lang]['passWord']}
-                            style= {[styles.textInput,{paddingLeft: this.paddingLeft()},{paddingRight: this.paddingRight()}, {textAlign: this.textAlign()}]}
+                            style= {[styles.textInput,{textAlign: this.textAlign()}]}
                             secureTextEntry
                         />
                         <TouchableOpacity onPress={()=> this.loggingIn()} style={{marginBottom: 20}}>
                             <Image source={require('./../../assets/images/blue_button.png')} />
                                 <Text style={styles.buttonText}>{data[this.props.lang]['login']}</Text>
                         </TouchableOpacity>
+                        {this.state.isLoading !== false && (
+                            <View style={styles.activityIndicator}>
+                                <ActivityIndicator color={colors.LightBlue} />
+                            </View>
+                        )}
                         <TouchableOpacity onPress={()=> this.signingUp()} style={{marginBottom: 15}}>
                             <Text style={styles.text}>{data[this.props.lang]['signup']}</Text>
                         </TouchableOpacity>
@@ -136,6 +145,11 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20,
         fontFamily: fonts.TunisiaLt
-    }
+    },
+    activityIndicator: {
+        transform: [{scale: 0.70}],
+        marginTop: 3.5,
+        marginLeft: 5
+    },
 });
 export default UserLogin;
