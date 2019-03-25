@@ -1,11 +1,12 @@
 import React,{Component} from 'react';
-import { View, StyleSheet, ActivityIndicator, Picker } from 'react-native';
+import { View, StyleSheet, Dimensions, ActivityIndicator, Picker, Text } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import { UserBalanceHistory, UserParticipationInfo } from '../../store/actions/index';
 import { LineChart } from 'react-native-chart-kit'
-import { Dimensions } from 'react-native'
 import { getItem } from '../../StorageData';
+import { fonts, colors } from './../../assets/Theme';
+import * as dataLang from './../../assets/lang.json';
 
 const screenWidth = Dimensions.get('window').width
 const chartConfig = {
@@ -24,14 +25,12 @@ class Statistics extends Component{
       super(props);
       Navigation.events().bindComponent(this);
       this.state = {
-          isLoading: true,
+          isLoading: false,
           userAccounts: null,
           userID: null,
           particpFailMsg: null,
           account: null
       }
-      this.renderChart = this.renderChart.bind(this);
-      this.getAccountData = this.getAccountData.bind(this);
     }
 
     //show sidemenu when menu button is clicked.
@@ -67,6 +66,7 @@ class Statistics extends Component{
       // get particpationInfo from local storage to render it
       getItem('userAccounts')
       .then( results => {
+        console.log(results)
         if(results !== 'none'){
             this.setState({
                 userAccounts: JSON.parse(results)                
@@ -103,7 +103,7 @@ class Statistics extends Component{
       this.renderChart();
     }
 
-    getAccountData(account) {
+    getAccountData = (account) => {
       this.setState({
         account: account,
         isLoading: true
@@ -115,7 +115,7 @@ class Statistics extends Component{
       this.props.onGetUserHistory(userData);   
     }
 
-    renderChart(){
+    renderChart = () => {
       if(data.length > 0){
         return (
           <LineChart
@@ -136,20 +136,24 @@ class Statistics extends Component{
 
     render(){
       return (
-        <View>
-        {this.state.userAccounts !== null && (
-          <Picker
-            selectedValue={this.state.account}
-            itemStyle={styles.picker}
-            onValueChange={(account) => this.getAccountData(account)}>
-            <Picker.Item label='Please select an option...' value='0' color="#1493ff" />
-              {this.state.userAccounts.map((item, index) => {
-                return (<Picker.Item label={item['accountHolder']} value={item['account']} key={index}/>) 
-              })}
-          </Picker>
-        )}
+        <View style={styles.container}>
         {this.props.balanceHistoryFailMsg !== null && (
-          <Text>Please add an account to display data</Text>
+            <View style={styles.quarter1}>
+              <Text style={styles.headText}>{dataLang[this.props.lang]['addAccountMsg']}</Text>
+            </View>
+         )}
+        {this.state.userAccounts !== null && (
+            <View style={styles.picker}>
+              <Picker
+                selectedValue={this.state.account}
+                style={{height: 35, width: 200}}
+                onValueChange={(account) => this.getAccountData(account)}>
+                <Picker.Item label={dataLang[this.props.lang]['pickerMsg']} value='0' />
+                  {this.state.userAccounts.map((item, index) => {
+                    return (<Picker.Item label={item['accountHolder']} value={item['account']} key={index}/>) 
+                  })}
+              </Picker>
+            </View>
         )}
         {this.state.isLoading !== false && (
           <View style={styles.activityIndicator}><ActivityIndicator color='#1493ff' /></View>
@@ -162,6 +166,7 @@ class Statistics extends Component{
 
 const mapStateToProps = state => {
     return {
+      lang : state.enquiry.lang,
       balanceHistory : state.enquiry.balanceHistory,
       balanceHistoryFailMsg : state.names.balanceHistoryFailMsg,
       particpationInfo : state.names.particpationInfo,
@@ -179,17 +184,32 @@ const mapDispatchToProps = dispatch => {
 };
   
 const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  quarter1: {
+    flex: 0.2,
+    backgroundColor: colors.LightBlue
+  },
+  headText:{
+    color: 'white',
+    fontSize: 22,
+    fontFamily: fonts.bold
+  },
   activityIndicator: {
     transform: [{scale: 1.00}],
     marginTop: 3.5,
     marginLeft: 5
   },
-  greeting: {
-    fontFamily: 'Lato-Light',
-    color: '#666',
-    fontSize: 18,
-    marginTop: 5
-  },
+  picker: {
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: colors.LightBlue,
+    overflow: 'hidden',
+    marginBottom: 25
+  }
 })
   
 export default connect(mapStateToProps,mapDispatchToProps,null, {"withRef" : true})(Statistics);
