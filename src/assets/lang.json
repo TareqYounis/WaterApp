@@ -28,18 +28,20 @@
         "waterCost" : "Water Cost",
         "waterRoleFillMessg" :"Please fill the following to know your water role",
         "waterRoleAccount#" : "Your Account",
-        "waterRolesOrgz#": "Pick from the list",
+        "pickerMsg": "Pick from the list",
         "waterRoleRespMessg": "You water role is ",
         "send": "Send",
         "waterSubsFillMessg" : "From this page, you can add other your other water accounts and view detailes",
         "waterTableName": "Name",
         "waterTableAccount": "Account Number",
-        "waterTableIron#": "Iron Number",
+        "waterTableIron": "Iron Number",
         "waterTableBalanc": "Balance",
         "waterTableAddres": "Address",
         "waterTablePhone" : "Phone Number",
         "addAccount": "Add Account",
-        "successAddAccount": "Successfully added counter account"
+        "successAddAccount": "Successfully added counter account",
+        "addAccountMsg": "Please add an account to display data",
+        "failDataMsg": "Please make sure of your data and internet connection and try again"
     }, 
     "Arabic": {
         "welcome": "!مرحبا",
@@ -70,17 +72,19 @@
         "waterCost" : "تكلفة المياه",
         "waterRoleFillMessg" : "يرجى تعبئة المعلومات لمعرفة دورك بالمياه",
         "waterRoleAccount#" : "حسابك",
-        "waterRolesOrgz#": "إختر القائمة",
+        "pickerMsg": "إختر القائمة",
         "waterRoleRespMessg": "يأتي دورك ",
         "send": "إرسال",
         "waterSubsFillMessg" : "من خلال هذه الشاشة يمكنك إضافة حسابات أخرى للتحقق من عدادات المياه الخاصة بك مع التفاصيل",
         "waterTableName": "الإسم",
         "waterTableAccount": "رقم الحساب",
-        "waterTableIron#": "رقم العداد الحديدي",
+        "waterTableIron": "العداد الحديدي",
         "waterTableBalanc": "الرصيد",
         "waterTableAddres": "العنوان",
         "waterTablePhone" : "رقم الهاتف",
         "addAccount" : "إضافة حساب",
-        "successAddAccount": "تم إضافة حساب عداد بنجاح"
+        "successAddAccount": "تم إضافة حساب عداد بنجاح",
+        "addAccountMsg": "يرجى إضافة حساب لعرض احصائيات لسحبك الخاص بالمياه",
+        "failDataMsg": "يرجى التأكد من البيانات المدخلة ومن الإتصال بالإنترنت, والمحاولة مره اخرى"
     }
 }
