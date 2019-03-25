@@ -39,7 +39,7 @@ class AddUserAccount extends React.Component {
                         console.log('Modal has been closed.');
                     }}>
                     <View style={styles.modal}>            
-                        <TouchableOpacity onPress={()=> {this.setState({ modalVisible : false }); Navigation.pop(props.componentId) }}>
+                        <TouchableOpacity onPress={()=> {this.setState({ modalVisible : false }); Navigation.pop(this.props.componentId) }}>
                             <ImageBackground source={require('./../../assets/images/pop_up.png')} style={{width: 250, height: 158}} >
                                 <View style={styles.modalCotent}>
                                     <Image source={require('./../../assets/images/right_icon.png')} style={{marginBottom: 20}} />

@@ -66,7 +66,7 @@ class AddAccount extends React.Component {
                 />
                 <TextInput
                     value={this.state.iron_number}
-                    placeholder={data[this.props.lang]['waterTableIron#']}
+                    placeholder={data[this.props.lang]['waterTableIron']}
                     onChangeText= {value => this.onChangeText('iron_number', value)}
                     style= {[styles.textInput]}
                 />
@@ -82,7 +82,7 @@ class AddAccount extends React.Component {
                         </View>
                     )}
                     {this.props.messageFailAddAccount && (
-                        <Text style={[styles.text, {color:'red'}]}>{this.props.messageFailAddAccount}</Text>
+                        <Text style={[styles.text, {color:'red'}]}>{data[this.props.lang]['failDataMsg']}</Text>
                     )}
                 </View>
             </View>
