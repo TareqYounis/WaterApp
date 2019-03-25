@@ -15,7 +15,7 @@ class Accounts extends React.Component {
             isLoading: false,
             account: null,
             accountData: null,
-            particpationInfo:null,
+            particpationInfo:[],
         }
     }
     //show sidemenu when menu button is clicked.
@@ -90,15 +90,17 @@ class Accounts extends React.Component {
                             <ActivityIndicator color={colors.LightBlue} />
                         </View>
                     )}
-                    <Picker
-                        selectedValue={this.state.account}
-                        itemStyle={styles.picker}
-                        onValueChange={(account) => this.displayAccountData(account)}>
-                        <Picker.Item label='Please select an option...' value='0' color="#1493ff" />
-                        {this.state.particpationInfo.map((item, index) => {
-                            return (<Picker.Item label={item['info']['name']} value={item['account']} key={index}/>) 
-                        })}
-                    </Picker>                    
+                    <View style={styles.picker}>
+                        <Picker
+                            selectedValue={this.state.account}
+                            style={{height: 35, width: 200}}
+                            onValueChange={(account) => this.displayAccountData(account)}>
+                            <Picker.Item label={data[this.props.lang]['pickerMsg']} value='0' />
+                            {this.state.particpationInfo.map((item, index) => {
+                                return (<Picker.Item label={item['info']['name']} value={item['account']} key={index}/>) 
+                            })}
+                        </Picker> 
+                    </View>                   
                     {this.state.accountData !== null && (
                         Object.keys(accountData).map(function(element,key){
                             return (
@@ -159,11 +161,18 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontFamily: fonts.TunisiaLt
     },
+    picker: {
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: colors.LightBlue,
+        overflow: 'hidden',
+        marginBottom:50
+    },
     addIcon:{
         flex: 0.1,
         right: 30,
         position:'absolute',
-        bottom: 30,
+        bottom: 40,
         alignSelf:'flex-end'
     },
     activityIndicator: {
