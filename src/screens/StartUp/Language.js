@@ -20,7 +20,7 @@ class Language extends React.Component {
         this.props.onSavingLanguage(lang);
         Navigation.push(this.props.componentId,{
             component:{
-                name: 'water-app.LoginScreen'
+                name: 'water-app.WaterCompanyScreen'
             } 
         })
     }
