@@ -8,19 +8,23 @@ class AddAccount extends React.Component {
         super(props);
         this.state = {
             company_id: 1,
-            account: '',
-            iron_number: '',
+            user_id: this.props.user_id,
+            account: 0,
+            iron_number: 0,
             account_name: '',
             isLoading: false
         }
     }
 
-    handleAddAccount = () => {
-        //convert string values to numbers and send it
+    // deactivate activity indicator whenever there is any response from the API
+    componentWillReceiveProps(props){
         this.setState({
-            iron_number: Number(this.state.iron_number),
-            account : Number(this.state.account),
-            user_id: this.props.user_id,
+            isLoading: false
+        })
+    }
+    handleAddAccount = () => {
+        // run activity indicator
+        this.setState({
             isLoading: true
         })
         this.props.onAddingUserAccount(this.state);
@@ -36,15 +40,17 @@ class AddAccount extends React.Component {
         return(
             <View style={styles.container}>
             <View style={styles.half1}>
-                <Picker
-                    selectedValue={this.state.company_id}
-                    itemStyle={styles.picker}
-                    onValueChange={(company_id) => this.setState({company_id})}>
-                    <Picker.Item label={data[this.props.lang]['waterRolesOrgz#']} value='0' color="#1493ff" />
-                    {this.props.data.map((item, index) => {
-                        return (<Picker.Item label={item.name_en} value={item.id} key={index} color="#1493ff"/>) 
-                    })}
-                </Picker>
+                <View style={styles.picker}>
+                    <Picker
+                        selectedValue={this.state.company_id}
+                        style={{height: 35, width: 270}} 
+                        onValueChange={(company_id) => this.setState({company_id})}>
+                        <Picker.Item label={data[this.props.lang]['pickerMsg']} value='0' />
+                        {this.props.data.map((item, index) => {
+                            return (<Picker.Item label={item.name_en} value={item.id} key={index} />) 
+                        })}
+                    </Picker>
+                </View>
                 <TextInput
                     value={this.state.account_name}
                     placeholder={data[this.props.lang]['waterTableName']}
@@ -63,7 +69,6 @@ class AddAccount extends React.Component {
                     placeholder={data[this.props.lang]['waterTableIron#']}
                     onChangeText= {value => this.onChangeText('iron_number', value)}
                     style= {[styles.textInput]}
-                    keyboardType='numeric'
                 />
                 </View>
                 <View style={styles.half2}>
@@ -99,13 +104,11 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     picker: {
-        height: 45,
-        width: 150,
-        marginBottom: 15,
-        borderBottomWidth: 1.5,
-        fontSize: 16,
-        borderBottomColor: '#1493ff',
-        fontFamily: 'Lato-Light'
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: colors.LightBlue,
+        overflow: 'hidden',
+        marginBottom: 15
     },
     textInput: {
         fontSize: 18,
