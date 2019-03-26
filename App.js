@@ -14,8 +14,7 @@ import CalculateWaterInvoice from './src/screens/Enquiry/CalculateWaterInvoice';
 
 import Complaint  from './src/screens/Complaint/Complaint';
 import ObjectionService from './src/screens/Complaint/ObjectionService';
-
-
+import locationPicker from './src/screens/Complaint/locationPicker';
 import Accounts from './src/screens/Auth/Accounts';
 import SignUp from './src/screens/Auth/SignUp';
 import Login from './src/screens/Auth/Login';
@@ -72,6 +71,10 @@ Navigation.registerComponent('water-app.statisticsScreen',
 Navigation.registerComponent("water-app.ComplaintScreen", 
   //() => Complaint, store, Provider);
   reduxStoreWrapper(Complaint, store))
+
+  Navigation.registerComponent("water-app.LocationPicker", 
+  //() => Complaint, store, Provider);
+  reduxStoreWrapper(locationPicker, store))
 
 Navigation.registerComponent('water-app.ObjectionService', 
   // () => Enquiry, store, Provider );
@@ -163,7 +166,8 @@ Navigation.events().registerAppLaunchedListener(() => {
             visible: false,
           },
           layout: { 
-            backgroundColor: 'white' 
+            backgroundColor: 'white',
+            direction: 'ltr' 
           }
         }
       }
