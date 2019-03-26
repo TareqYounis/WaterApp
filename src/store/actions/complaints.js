@@ -38,9 +38,11 @@ export const Complain = ( complainData ) => {
   // generate form data from an object
   var userFormData = new FormData();
   for ( var key in complainData){
-    if(key === 'image' && complainData['image']['uri'] !== undefined ){
-      userFormData.append('image', complainData['image']['uri']); 
-      console.log(userFormData);
+    // check if the user is sending images, since its an array, loop and send all images
+    if(key === 'image' && complainData['image'].length > 0 ){
+      for (var i = 0; i < complainData['image'].length; i++) {
+        formData.append('image', complainData['image'][i]['uri']);
+      }
     }else{
       userFormData.append( key , complainData[key] )
     }
