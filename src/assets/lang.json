@@ -41,7 +41,13 @@
         "addAccount": "Add Account",
         "successAddAccount": "Successfully added counter account",
         "addAccountMsg": "Please add an account to display data",
-        "failDataMsg": "Please make sure of your data and internet connection and try again"
+        "failDataMsg": "Please make sure of your data and internet connection and try again",
+        "fillDataMsg": "Kindly fill the follwoing:",
+        "pickerMsgComplain" : "Pick Complaint Type",
+        "complainRemark": "Complain Description",
+        "enterLocationMsg": "Enter Location",
+        "pickImage": "Image Loading",
+        "successComplaint" : "Successfully Complaint"
     }, 
     "Arabic": {
         "welcome": "!مرحبا",
@@ -85,6 +91,12 @@
         "addAccount" : "إضافة حساب",
         "successAddAccount": "تم إضافة حساب عداد بنجاح",
         "addAccountMsg": "يرجى إضافة حساب لعرض احصائيات لسحبك الخاص بالمياه",
-        "failDataMsg": "يرجى التأكد من البيانات المدخلة ومن الإتصال بالإنترنت, والمحاولة مره اخرى"
+        "failDataMsg": "يرجى التأكد من البيانات المدخلة ومن الإتصال بالإنترنت, والمحاولة مره اخرى",
+        "fillDataMsg": "يرجى ملء التالي",
+        "pickerMsgComplain" : "إختر نوع الشكوى",
+        "complainRemark": "وصف الشكوى",
+        "enterLocationMsg" : "أدخل الموقع",
+        "pickImage": "تحميل الصور",
+        "successComplaint" : "تم إرسال الشكوى بنجاح"
     }
 }
