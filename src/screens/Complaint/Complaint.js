@@ -29,10 +29,8 @@ class Complaint extends Component{
 
     render(){
         return (
-            <ScrollView>
-                <View style={styles.container}>
-                    <AddComplaint {...this.props}/>
-                </View>
+            <ScrollView contentContainerStyle={{flexGrow: 1}}>
+                <AddComplaint {...this.props}/>
             </ScrollView>
             
         )
@@ -41,18 +39,19 @@ class Complaint extends Component{
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      justifyContent: 'center',
-      paddingHorizontal: 40
-    },
+      flex: 1
+    }
 })
 
 const mapStateToProps = state => {
     return {
-      data : state.enquiry.data,
-      complaintType : state.enquiry.complaintType,
-      complaintFailMsg : state.enquiry.complaintFailMsg,
-      complaint : state.enquiry.complaint 
+        lang: state.enquiry.lang,
+        user_id: state.enquiry.user_id,
+        data : state.enquiry.data,
+        error: state.enquiry.error,
+        complaintType : state.enquiry.complaintType,
+        complaintFailMsg : state.enquiry.complaintFailMsg,
+        complaint : state.enquiry.complaint 
     };
   };
   
