@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import AddComplaint from './../../Components/Complaint/AddComplaint';
@@ -29,19 +29,13 @@ class Complaint extends Component{
 
     render(){
         return (
-            <ScrollView contentContainerStyle={{flexGrow: 1}}>
+            <View style={{flex: 1}}>
                 <AddComplaint {...this.props}/>
-            </ScrollView>
+            </View>
             
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1
-    }
-})
 
 const mapStateToProps = state => {
     return {
