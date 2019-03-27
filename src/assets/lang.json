@@ -47,7 +47,8 @@
         "complainRemark": "Complain Description",
         "enterLocationMsg": "Enter Location",
         "pickImage": "Image Loading",
-        "successComplaint" : "Successfully Complaint"
+        "successComplaint" : "Successfully Complaint",
+        "shareLocation" : "Share your current Location"
     }, 
     "Arabic": {
         "welcome": "!مرحبا",
@@ -97,6 +98,7 @@
         "complainRemark": "وصف الشكوى",
         "enterLocationMsg" : "أدخل الموقع",
         "pickImage": "تحميل الصور",
-        "successComplaint" : "تم إرسال الشكوى بنجاح"
+        "successComplaint" : "تم إرسال الشكوى بنجاح",
+        "shareLocation" : "مشاركة موقعك الحالي"
     }
 }
