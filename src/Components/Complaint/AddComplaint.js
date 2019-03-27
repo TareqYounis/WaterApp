@@ -49,7 +49,8 @@ class AddComplaint extends React.Component{
             component:{
                 name: 'water-app.LocationPicker',
                 passProps: {
-                    results: this.handlevalue
+                    results: this.handlevalue,
+                    lang: this.props.lang
                 } 
             }
         })
@@ -60,6 +61,7 @@ class AddComplaint extends React.Component{
         this.setState({
             location: locationResults
         })
+        console.log(locationResults)
     }
     
     onChangeText = (key, value) => {
@@ -242,10 +244,6 @@ const styles = StyleSheet.create({
         transform: [{scale: 0.70}],
         marginTop: 3.5,
         marginLeft: 5
-    },
-    map:{
-        width: "100%",
-        height: 250
     }
 });
 
