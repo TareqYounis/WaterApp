@@ -3,14 +3,24 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import IconOcticons from "react-native-vector-icons/Octicons";
 import IconMaterial from "react-native-vector-icons/MaterialCommunityIcons";
 import { getItem } from '../../StorageData';
+import { fonts, colors } from './../../assets/Theme';
 import * as data from './../../assets/lang.json';
 
 const StartMainTabs = () => {
-  // getuser Id from storage
-  getItem('userId')
-    .then(results => {
-      console.log(results);
+  // get langague to decide side menu and button direction
+  let sideMenuDirection;
+  let menuButton;
+  getItem('language')
+  .then(results => {
+      if(results === 'Arabic'){
+        sideMenuDirection = 'right';
+        menuButton = 'rightButtons'
+      }else{
+        sideMenuDirection = 'left';
+        menuButton = 'leftButtons'
+      }
   })
+
   //Icons returns a promise, we will need to wait before we load the tab, therefor we use promise  
   Promise.all([
     Icon.getImageSource("md-stats",30),
@@ -26,7 +36,7 @@ const StartMainTabs = () => {
       Navigation.setRoot({
         root: {
           sideMenu: {
-            left: {
+            [sideMenuDirection]: {
               width: 100,
               component: {
                 name: 'water-app.SideDrawerScreen',
@@ -56,8 +66,11 @@ const StartMainTabs = () => {
                 id: 'BottomTabsId',
                 options: {
                   topBar: {
-                    visible: true,
+                    visible: true
                   },
+                  layout: {
+                    direction: 'ltr',
+                  }
                 },
                 children: [
                   {
@@ -70,15 +83,22 @@ const StartMainTabs = () => {
                             id: 'EnquiryTab',
                             options: {
                               topBar: {
+                                background: {
+                                  color: colors.DarkBlue
+                                },
                                 visible: true,
-                                leftButtons: [
+                                [menuButton]: [
                                   {
                                     icon: sources[3],
-                                    id: 'buttonmenu22'
+                                    color: 'white'
                                   }
                                 ],
                                 title: {
-                                  text: data[sources[5]]['tabEnquiry']
+                                  text: data[sources[5]]['tabEnquiry'],
+                                  color: 'white',
+                                  fontFamily: fonts.TunisiaLt,
+                                  fontSize: 20,
+                                  alignment: 'center' 
                                 }
                               },
                               bottomTab: {
@@ -111,15 +131,22 @@ const StartMainTabs = () => {
                                 icon: sources[0]
                               },
                               topBar: {
+                                background: {
+                                  color: colors.DarkBlue
+                                },
                                 visible: true,
-                                leftButtons: [
+                                [menuButton]: [
                                   {
                                     icon: sources[3],
-                                    id: 'buttonmenu22'
+                                    color: 'white'
                                   }
                                 ],
                                 title: {
-                                  text: data[sources[5]]['tabStatisc']
+                                  text: data[sources[5]]['tabStatisc'],
+                                  color: 'white',
+                                  fontFamily: fonts.TunisiaLt,
+                                  fontSize: 20,
+                                  alignment: 'center' 
                                 }
                               },
                               passProps: {
@@ -149,15 +176,22 @@ const StartMainTabs = () => {
                                 lang: sources[5]
                               },
                               topBar: {
+                                background: {
+                                  color: colors.DarkBlue
+                                },
                                 visible: true,
-                                leftButtons: [
+                                [menuButton]: [
                                   {
                                     icon: sources[3],
-                                    id: 'buttonmenu22'
+                                    color: 'white'
                                   }
                                 ],
                                 title: {
-                                  text: data[sources[5]]['tabSubsc']
+                                  text: data[sources[5]]['tabSubsc'],
+                                  color: 'white',
+                                  fontFamily: fonts.TunisiaLt,
+                                  fontSize: 20,
+                                  alignment: 'center' 
                                 }
                               },
                             }
