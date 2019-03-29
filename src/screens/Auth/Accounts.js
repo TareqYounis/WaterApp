@@ -106,7 +106,7 @@ class Accounts extends React.Component {
                     {this.state.accountData !== null && (
                         Object.keys(accountData).map(function(element,key){
                             return (
-                                <TouchableOpacity>
+                                <TouchableOpacity key={key}>
                                     <Image source={require('./../../assets/images/table_names.png')} />
                                     <Text style={styles.tabelTextRight}>{element}</Text>
                                     <Text style={styles.tabelTextLeft}>{accountData[element]}</Text>
