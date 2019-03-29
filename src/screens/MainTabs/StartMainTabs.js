@@ -12,8 +12,8 @@ const StartMainTabs = () => {
   let menuButton = 'leftButtons';
   getItem('language')
   .then(results => {
-      sideMenuDirection = results !== 'Arabic' ? 'right' :  'left'
-      menuButton = results !== 'Arabic' ? 'rightButtons' :  'leftButtons'
+      sideMenuDirection = results === 'Arabic' ? 'right' :  'left'
+      menuButton = results === 'Arabic' ? 'rightButtons' :  'leftButtons'
   })
 
   //Icons returns a promise, we will need to wait before we load the tab, therefor we use promise  
