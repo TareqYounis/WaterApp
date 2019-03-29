@@ -20,9 +20,11 @@ class Accounts extends React.Component {
     }
     //show sidemenu when menu button is clicked.
     navigationButtonPressed({ buttonId }) {
+        // position menu button on topBar according to the langague
+        let menuButton = this.props.lang === 'Arabic' ? 'right' :  'left'
         Navigation.mergeOptions(this.props.componentId, {
             sideMenu: {
-              left: {
+              [menuButton]: {
                 visible: true,
               }
             },

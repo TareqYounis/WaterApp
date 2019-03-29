@@ -8,17 +8,12 @@ import * as data from './../../assets/lang.json';
 
 const StartMainTabs = () => {
   // get langague to decide side menu and button direction
-  let sideMenuDirection;
-  let menuButton;
+  let sideMenuDirection = 'left';
+  let menuButton = 'leftButtons';
   getItem('language')
   .then(results => {
-      if(results === 'Arabic'){
-        sideMenuDirection = 'right';
-        menuButton = 'rightButtons'
-      }else{
-        sideMenuDirection = 'left';
-        menuButton = 'leftButtons'
-      }
+      sideMenuDirection = results === 'Arabic' ? 'right' :  'left'
+      menuButton = results === 'Arabic' ? 'rightButtons' :  'leftButtons'
   })
 
   //Icons returns a promise, we will need to wait before we load the tab, therefor we use promise  
