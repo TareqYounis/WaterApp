@@ -31,56 +31,56 @@ class Drawer extends React.Component {
                 <View style={styles.half}>
                     <TouchableOpacity  onPress={() => this.props.navigate('water-app.ObjectionService')} style={{flexDirection: 'row', justifyContent: this.justifyContent(), paddingRight: this.paddingRight(), paddingLeft: this.paddingLeft()}}>
                     { this.props.lang === 'English' ? ([
-                        <Image source={require('./../../assets/images/objection_icon.png')} />,
-                        <Text style={styles.text}>  {data[this.props.lang]['sideMenuObjection']} </Text>
+                        <Image key={0} source={require('./../../assets/images/objection_icon.png')} />,
+                        <Text key={1} style={styles.text}>  {data[this.props.lang]['sideMenuObjection']} </Text>
                     ]) : ([
-                        <Text key={0} style={styles.text}>  {data[this.props.lang]['sideMenuObjection']} </Text>,
-                        <Image key={1} source={require('./../../assets/images/objection_icon.png')} />
+                        <Text key={2} style={styles.text}>  {data[this.props.lang]['sideMenuObjection']} </Text>,
+                        <Image key={3} source={require('./../../assets/images/objection_icon.png')} />
                     ])}
                     </TouchableOpacity>
                     <TouchableOpacity style={{flexDirection: 'row', justifyContent: this.justifyContent(), paddingRight: this.paddingRight(), paddingLeft: this.paddingLeft()}}>
                     { this.props.lang === 'English' ? ([
-                        <Image source={require('./../../assets/images/notifications_icon.png')} />,
-                         <Text style={styles.text}>  {data[this.props.lang]['sideMenuNotific']} </Text>
+                        <Image key={4} source={require('./../../assets/images/notifications_icon.png')} />,
+                         <Text key={5} style={styles.text}>  {data[this.props.lang]['sideMenuNotific']} </Text>
                     ]) : ([
-                        <Text key={2} style={styles.text}>  {data[this.props.lang]['sideMenuNotific']} </Text>,
-                        <Image key={3} source={require('./../../assets/images/notifications_icon.png')} />
+                        <Text key={6} style={styles.text}>  {data[this.props.lang]['sideMenuNotific']} </Text>,
+                        <Image key={7} source={require('./../../assets/images/notifications_icon.png')} />
                     ])}
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => this.props.navigate('water-app.ComplaintScreen')} style={{flexDirection: 'row', justifyContent: this.justifyContent(), paddingRight: this.paddingRight(), paddingLeft: this.paddingLeft()}}>
                     { this.props.lang === 'English' ? ([
-                        <Image source={require('./../../assets/images/complaints_icon.png')} />,
-                         <Text style={styles.text}>  {data[this.props.lang]['sideMenuComplaint']} </Text>
+                        <Image key={8} source={require('./../../assets/images/complaints_icon.png')} />,
+                         <Text key={9} style={styles.text}>  {data[this.props.lang]['sideMenuComplaint']} </Text>
                     ]) : ([ 
-                        <Text key={4} style={styles.text}>  {data[this.props.lang]['sideMenuComplaint']} </Text>,
-                        <Image key={5} source={require('./../../assets/images/complaints_icon.png')} />
+                        <Text key={10} style={styles.text}>  {data[this.props.lang]['sideMenuComplaint']} </Text>,
+                        <Image key={11} source={require('./../../assets/images/complaints_icon.png')} />
                     ])}
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => this.props.navigate('water-app.MainApplicationScreen')} style={{flexDirection: 'row', justifyContent: this.justifyContent(), paddingRight: this.paddingRight(), paddingLeft: this.paddingLeft()}}>
                     { this.props.lang === 'English' ? ([
-                        <Image source={require('./../../assets/images/applications_icon.png')} />,
-                         <Text style={styles.text}>  {data[this.props.lang]['sideMenuApplications']} </Text>
+                        <Image key={12} source={require('./../../assets/images/applications_icon.png')} />,
+                         <Text key={13} style={styles.text}>  {data[this.props.lang]['sideMenuApplications']} </Text>
                     ]) : ([ 
-                        <Text key={6} style={styles.text}>  {data[this.props.lang]['sideMenuApplications']} </Text>,
-                        <Image key={7} source={require('./../../assets/images/applications_icon.png')} />
+                        <Text key={14} style={styles.text}>  {data[this.props.lang]['sideMenuApplications']} </Text>,
+                        <Image key={15} source={require('./../../assets/images/applications_icon.png')} />
                     ])}
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => this.props.navigate('water-app.SettingsScreen')} style={{flexDirection: 'row', justifyContent: this.justifyContent(), paddingRight: this.paddingRight(), paddingLeft: this.paddingLeft()}}>
                     { this.props.lang === 'English' ? ([
-                        <Image source={require('./../../assets/images/settings_icon.png')} />,
-                         <Text style={styles.text}>  {data[this.props.lang]['sideMenuSettings']} </Text>
+                        <Image key={16} source={require('./../../assets/images/settings_icon.png')} />,
+                         <Text key={17} style={styles.text}>  {data[this.props.lang]['sideMenuSettings']} </Text>
                     ]) : ([ 
-                        <Text key={8} style={styles.text}>  {data[this.props.lang]['sideMenuSettings']} </Text>,
-                        <Image key={9} source={require('./../../assets/images/settings_icon.png')} />
+                        <Text key={18} style={styles.text}>  {data[this.props.lang]['sideMenuSettings']} </Text>,
+                        <Image key={19} source={require('./../../assets/images/settings_icon.png')} />
                     ])}
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => this.props.triggerModel()} style={{flexDirection: 'row', justifyContent: this.justifyContent(), paddingRight: this.paddingRight(), paddingLeft: this.paddingLeft()}}>
                     { this.props.lang === 'English' ? ([
-                        <Image source={require('./../../assets/images/exit_icon.png')} />,
-                         <Text style={styles.text}>  {data[this.props.lang]['sideMenuLogOut']} </Text>
+                        <Image key={20} source={require('./../../assets/images/exit_icon.png')} />,
+                         <Text key={21} style={styles.text}>  {data[this.props.lang]['sideMenuLogOut']} </Text>
                     ]) : ([ 
-                        <Text key={10} style={styles.text}>  {data[this.props.lang]['sideMenuLogOut']} </Text>,
-                        <Image key={11} source={require('./../../assets/images/exit_icon.png')} />
+                        <Text key={22} style={styles.text}>  {data[this.props.lang]['sideMenuLogOut']} </Text>,
+                        <Image key={23} source={require('./../../assets/images/exit_icon.png')} />
                     ])}
                     </TouchableOpacity>
                 </View>
