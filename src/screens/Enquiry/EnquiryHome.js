@@ -39,8 +39,8 @@ class EnquiryHome extends Component{
             <View style={styles.container}>
                 <View style={styles.buttons}>
                     <TouchableOpacity onPress={()=> this.handleScreenNavigation('water-app.WaterRolesScreen')}>
-                        <Image source={require('./../../assets/images/water_role.png')} />
-                            <Text style={[styles.buttonText,{color: 'white'}]}>{data[this.props.lang]['waterRole']}</Text>
+                        <Image source={require('./../../assets/images/water_role_on.png')} />
+                            <Text style={styles.buttonText}>{data[this.props.lang]['waterRole']}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.handleScreenNavigation('water-app.WaterBillScreen')}>
                         <Image source={require('./../../assets/images/bill_on.png')} />
@@ -48,7 +48,7 @@ class EnquiryHome extends Component{
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.handleScreenNavigation('water-app.CalculateWaterScreen')}>
                         <Image source={require('./../../assets/images/water_cost_on.png')} />
-                            <Text style={styles.buttonText}>{data[this.props.lang]['waterCost']}</Text>
+                            <Text style={[styles.buttonText, {left: 12}]}>{data[this.props.lang]['waterCost']}</Text>
                     </TouchableOpacity>
                 </View>
           </View>
@@ -66,15 +66,12 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     buttonText:{
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        alignItems: 'center',
+        flex:1,
         position: 'absolute', 
-        alignSelf: 'center',
-        padding: 37,
-        paddingLeft: 5,
+        top: 35,
+        left: 16,
         color: colors.LightBlue,
-        fontSize: 20,
+        fontSize: 18,
         fontFamily: fonts.bold
     },
     text:{
