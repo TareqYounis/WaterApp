@@ -12,8 +12,8 @@ const StartMainTabs = () => {
   let menuButton = 'leftButtons';
   getItem('language')
   .then(results => {
-      sideMenuDirection = results === 'Arabic' ? 'right' :  'left'
-      menuButton = results === 'Arabic' ? 'rightButtons' :  'leftButtons'
+      sideMenuDirection = results !== 'Arabic' ? 'right' :  'left'
+      menuButton = results !== 'Arabic' ? 'rightButtons' :  'leftButtons'
   })
 
   //Icons returns a promise, we will need to wait before we load the tab, therefor we use promise  
@@ -26,7 +26,7 @@ const StartMainTabs = () => {
     // get language from storage and pass it
     getItem('language')
     .then(results => {
-      return results 
+      return results !== 'none' ? results :  'Arabic'
     })]).then(sources => {
       Navigation.setRoot({
         root: {
