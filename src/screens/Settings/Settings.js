@@ -20,9 +20,11 @@ class Settings extends React.Component{
           // get user profile data from local storage
           getItem('userData')
           .then(results => {
+            if(results !== 'none'){
               this.setState({
                   userProfile: JSON.parse(results)[0]
               })
+            }
           })
 
           // get user app langage from local storage
