@@ -48,7 +48,14 @@
         "enterLocationMsg": "Enter Location",
         "pickImage": "Image Loading",
         "successComplaint" : "Successfully Complaint",
-        "shareLocation" : "Share your current Location"
+        "shareLocation" : "Share your current Location",
+        "sideMenuObjection": "Objections",
+        "sideMenuNotific": "Notifications",
+        "sideMenuComplaint": "Complaints",
+        "sideMenuApplications": "Applications",
+        "sideMenuSettings": "Settings",
+        "sideMenuLogOut": "Log Out",
+        "cancel": "Cancel"
     }, 
     "Arabic": {
         "welcome": "!مرحبا",
@@ -99,6 +106,13 @@
         "enterLocationMsg" : "أدخل الموقع",
         "pickImage": "تحميل الصور",
         "successComplaint" : "تم إرسال الشكوى بنجاح",
-        "shareLocation" : "مشاركة موقعك الحالي"
+        "shareLocation" : "مشاركة موقعك الحالي",
+        "sideMenuObjection": "تقديم إعتراض",
+        "sideMenuNotific": "الإشعارات",
+        "sideMenuComplaint": "الشكاوي",
+        "sideMenuApplications": "الطلبات",
+        "sideMenuSettings": "الإعدادت",
+        "sideMenuLogOut": "خروج",
+        "cancel": "إالغاء"
     }
 }
