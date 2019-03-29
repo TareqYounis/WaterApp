@@ -1,13 +1,16 @@
 import React, { Component } from "react";
-import { View, Text, Dimensions, StyleSheet, TouchableOpacity, Platform, Modal } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
-import IconFontAwsm from "react-native-vector-icons/FontAwesome";
-import IconOcticons from "react-native-vector-icons/Octicons";
+import { View,Alert, Text, Dimensions, StyleSheet, TouchableOpacity, Platform, Modal, ImageBackground, Image } from "react-native";
 import { Navigation } from "react-native-navigation";
 import { connect } from 'react-redux';
 import { SaveTabID } from './../../store/actions/index';
-import Button from '../../Components/Styles/Button'
 import { removeItemValue } from '../../StorageData';
+import Drawer from './../../Components/SideDrawer/Drawer'
+import { fonts, colors } from './../../assets/Theme';
+import * as data from './../../assets/lang.json';
+
+const deviceWidth = Dimensions.get("window").width;
+const deviceHeight= Dimensions.get("window").height;
+
 
 class SideDrawer extends Component {
     constructor(props){
@@ -22,16 +25,11 @@ class SideDrawer extends Component {
             }
         });
         this.state={
-            modalVisible: false,
-            isAuthenticating: false
+            modalVisible: false
         }
-        this.handleScreenNavigation = this.handleScreenNavigation.bind(this);
-        this.closeSideDrawer = this.closeSideDrawer.bind(this);
-        this.loggingOut = this.loggingOut.bind(this);
-        this.closeModel = this.closeModel.bind(this);
     }
     
-    handleScreenNavigation(screen){
+    handleScreenNavigation = (screen) => {
         this.closeSideDrawer();        
         Navigation.push(this.props.Tab_ID,{
             component:{
@@ -40,16 +38,19 @@ class SideDrawer extends Component {
         })
     }
 
-    closeModel(){
-        // close the Model
+    triggerModel = () => {
+        // open or close Model
         this.setState({
-            modalVisible : false
+            modalVisible : !this.state.modalVisible
         })
     }
 
-    closeSideDrawer(){
+    closeSideDrawer = () => {
         Navigation.mergeOptions(this.props.componentId, {
             sideMenu: {
+              right: {
+                visible: false
+              },
               left: {
                 visible: false
               },
@@ -57,153 +58,89 @@ class SideDrawer extends Component {
         }); 
     }
 
-    loggingOut(){
+    loggingOut = () => {
         removeItemValue('userId');
         removeItemValue('userData');
         removeItemValue('userAccounts');
-        removeItemValue('particInfo');
-        this.closeModel();
+        this.triggerModel();
         this.handleScreenNavigation('water-app.LoginScreen');
     } 
 
     render() {
         return (
-        <View
-            style={[
-            styles.container,
-            { width: Dimensions.get("window").width * 0.8 }
-            ]}
-        >
-        <TouchableOpacity onPress={() => this.handleScreenNavigation('water-app.ObjectionService')}> 
-            <View style={styles.drawerItem}>
-                <IconFontAwsm
-                name="hand-stop-o"
-                size={30}
-                color="#aaa"
-                style={styles.drawerItemIcon}
-                />
-                <Text>Objection Service</Text>
-            </View>
-            </TouchableOpacity>
-
-        <TouchableOpacity>
-            <View style={styles.drawerItem}>
-                <Icon
-                name={Platform.OS === "android" ? "md-notifications" : "ios-notifications"}
-                size={30}
-                color="#aaa"
-                style={styles.drawerItemIcon}
-                />
-                <Text>Notifications</Text>
-            </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => this.handleScreenNavigation('water-app.ComplaintScreen')}>
-            <View style={styles.drawerItem}>
-                <IconOcticons
-                name= "report"
-                size={30}
-                color="#aaa"
-                style={styles.drawerItemIcon}
-                />
-                <Text>Complaint</Text>
-            </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => this.handleScreenNavigation('water-app.MainApplicationScreen')}>
-            <View style={styles.drawerItem}>
-                <IconFontAwsm
-                name= "file-text-o"
-                size={30}
-                color="#aaa"
-                style={styles.drawerItemIcon}
-                />
-                <Text>Applications</Text>
-            </View>
-            </TouchableOpacity>
-            
-            <TouchableOpacity onPress={() => this.setState({ modalVisible: true})}>
-            <View style={styles.drawerItem}>
-                <Icon
-                name={Platform.OS === "android" ? "md-log-out" : "ios-log-out"}
-                size={30}
-                color="#aaa"
-                style={styles.drawerItemIcon}
-                />
-                <Text>Sign Out</Text>
-            </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => this.handleScreenNavigation('water-app.SettingsScreen')}>
-            <View style={styles.drawerItem}>
-                <Icon
-                name={Platform.OS === "android" ? "md-settings" : "ios-settings"}
-                size={30}
-                color="#aaa"
-                style={styles.drawerItemIcon}
-                />
-                <Text>Settings</Text>
-            </View>
-            </TouchableOpacity>
-            <Modal
-                animationType="slide"
-                transparent={false}
-                visible={this.state.modalVisible}
-                onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
-                }}>
-                 <View style={styles.modal}>
-                    <Text style={styles.greeting}>
-                     Are you sure you want to log out?
-                    </Text>
-                        <Button
-                            title='LogOut'
-                            onPress= {this.loggingOut.bind(this)}
-                            isLoading={this.state.isAuthenticating}
-                        />
-                        <Button
-                            title='Cancel'
-                            onPress= {this.closeModel.bind(this)}
-                            isLoading={this.state.isAuthenticating}
-                        />
+            <View style={{flex: 1}}>
+                <Drawer {...this.props} triggerModel={this.triggerModel.bind(this)} navigate={this.handleScreenNavigation.bind(this)}/>
+                <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={this.state.modalVisible}
+                    onRequestClose={() => {
+                        Alert.alert('Modal has been closed.');
+                    }}>
+                <View style={styles.container}>
+                <View style={styles.half1}>
+                    <Image source={require('./../../assets/images/logo_inner_page.png')} />
+                    <Text style={styles.text}>Water App</Text>
                 </View>
-            </Modal>
-        </View>
-        );
+                <View style={styles.half2}>
+                    <ImageBackground source={require('./../../assets/images/background_blue.png')} style={{width: deviceWidth, height: deviceHeight}} >
+                        <View style={styles.buttons}>
+                            <TouchableOpacity onPress= {this.loggingOut.bind(this)} style={{marginBottom: 30}}>
+                                <Image source={require('./../../assets/images/dark_blue_button.png')} />
+                                    <Text style={styles.buttonText}>{data[this.props.lang]['sideMenuLogOut']}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress= {this.triggerModel.bind(this)}>
+                                <Image source={require('./../../assets/images/dark_blue_button.png')} />
+                                    <Text style={styles.buttonText}>{data[this.props.lang]['cancel']}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </ImageBackground>
+                </View>
+                </View>
+                </Modal>
+            </View>
+        )
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 50,
-        backgroundColor: "white",
         flex: 1
     },
-    drawerItem: {
-        flexDirection: "row",
-        alignItems: "center",
-        padding: 10,
-        backgroundColor: "#eee"
-    },
-    drawerItemIcon: {
-        marginRight: 10
-    },
-    modal: {
+    half1: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
     },
-    greeting: {
-        fontFamily: 'Lato-Light',
-        color: '#666',
-        fontSize: 24,
-        marginTop: 5
+    half2:{
+        flex: 2,
     },
+    buttons:{
+        flex: 0.6,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    buttonText:{
+      flex:1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      position: 'absolute', 
+      alignSelf: 'center',
+      color: 'white',
+      fontSize: 20,
+      fontFamily: fonts.TunisiaLt
+    },
+    text:{
+        color: colors.DarkBlue,
+        fontSize: 30,
+        fontFamily: fonts.bold
+    }
 });
 
 const mapStateToProps = state => {
     return {
-      Tab_ID : state.names.Tab_ID 
+      Tab_ID : state.names.Tab_ID,
+      lang: state.names.lang
     };
 };
 
