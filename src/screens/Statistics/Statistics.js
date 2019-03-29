@@ -68,7 +68,6 @@ class Statistics extends Component{
       // get particpationInfo from local storage to render it
       getItem('userAccounts')
       .then( results => {
-        console.log(results)
         if(results !== 'none'){
             this.setState({
                 userAccounts: JSON.parse(results)                
@@ -158,7 +157,9 @@ class Statistics extends Component{
             </View>
         )}
         {this.state.isLoading !== false && (
-          <View style={styles.activityIndicator}><ActivityIndicator color='#1493ff' /></View>
+          <View style={styles.activityIndicator}>
+            <ActivityIndicator color='#1493ff' />
+          </View>
         )}
         {this.renderChart()}
         </View>
