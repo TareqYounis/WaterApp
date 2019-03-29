@@ -51,6 +51,16 @@ export const saveUserAccounts = async info  => {
     })
 };
 
+export const saveParticipationInfo = async info  => {
+    await AsyncStorage.setItem('particInfo', JSON.stringify(info) )
+    .then(()=>{
+        console.log("It was saved successfully")
+    })
+    .catch(()=>{
+        console.log("There was an error saving")
+    })
+};
+
 export const removeItemValue = async key => {
     try {
         await AsyncStorage.removeItem(key);
