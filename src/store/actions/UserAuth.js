@@ -1,9 +1,15 @@
-import {FetchFailure, SavingUserLanguage, FetchSuccessUserRegister, FetchFailureUserRegister, FetchSuccessUserLogin, FetchFailureUserLogin, FetchSuccessAddAccount, FetchFailureAddAccount, SavingTabID, FetchSuccessBalanceHistory, FetchFailureBalanceHistory, FetchSuccessRegisterConfirm, FetchFailureRegisterConfirm, FetchSuccessResendCode, FetchFailureResendCode, FetchSuccessParticipationInfo, FetchFailureParticipationInfo } from './actions';
+import {FetchFailure, SavingUserLanguage, SavingUserID, FetchSuccessUserRegister, FetchFailureUserRegister, FetchSuccessUserLogin, FetchFailureUserLogin, FetchSuccessAddAccount, FetchFailureAddAccount, SavingTabID, FetchSuccessBalanceHistory, FetchFailureBalanceHistory, FetchSuccessRegisterConfirm, FetchFailureRegisterConfirm, FetchSuccessResendCode, FetchFailureResendCode, FetchSuccessParticipationInfo, FetchFailureParticipationInfo } from './actions';
 import { sha256 } from 'react-native-sha256';
 
 export const SaveUserLanguage = (lang) => {
   return dispatch => {
      dispatch(SavingUserLanguage(lang));
+  }
+}
+
+export const SaveUserID = (id) => {
+  return dispatch => {
+     dispatch(SavingUserID(id));
   }
 }
 
@@ -62,7 +68,8 @@ export const UserLogsIn = (userData) => {
               body: userFormData
            })
             .then((response) => response.json())
-            .then((responseJson) => {  
+            .then((responseJson) => {
+              console.log(responseJson)  
               if(responseJson.profile){
                 dispatch(FetchSuccessUserLogin(responseJson.profile));
               }else{
@@ -70,10 +77,12 @@ export const UserLogsIn = (userData) => {
               }
             })
             .catch((error)=> {
+              console.log(error)
               dispatch(FetchFailure(error));
             })
         })
         .catch((error)=> {
+          console.log(error)
             dispatch(FetchFailure(error));
         })
     }
@@ -135,7 +144,6 @@ export const UserRegisterConfirm = ( userData ) => {
            })
             .then((response) => response.json())
             .then((responseJson) => {  
-              console.log(responseJson)    
               if(!responseJson.status){
                 dispatch(FetchFailureRegisterConfirm(responseJson.msg || responseJson.message));
               }else{
@@ -172,7 +180,6 @@ export const UserResendCode = ( userData ) => {
            })
             .then((response) => response.json())
             .then((responseJson) => { 
-              console.log(responseJson)     
               if(!responseJson.status){
                 dispatch(FetchFailureResendCode(responseJson.message));
               }else{
@@ -232,7 +239,6 @@ export const UserParticipationInfo = ( userID ) => {
            })
             .then((response) => response.json())
             .then((responseJson) => {  
-              console.log('test',responseJson) 
               if(responseJson.status === false ){
                 dispatch(FetchFailureParticipationInfo(responseJson.message));
               }else{
