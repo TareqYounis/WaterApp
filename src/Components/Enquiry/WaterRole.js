@@ -21,9 +21,7 @@ class WaterRole extends React.Component {
 
     getWaterRolesHandler = () => {
         this.setState({
-            isLoading : true,
-            organizationID: Number(this.state.organizationID),
-            userAccount: Number(this.state.userAccount),
+            isLoading : true
         })
         this.props.onGettingWaterRoles(this.state);
     }
@@ -47,16 +45,18 @@ class WaterRole extends React.Component {
                     onChangeText= {value => this.onChangeText('userAccount', value)}
                     style= {[styles.textInput]}
                     keyboardType='numeric'
-                />
-                <Picker
-                    selectedValue={this.state.organizationID}
-                    itemStyle={styles.picker}
-                    onValueChange={(organizationID) => this.setState({organizationID})}>
-                    <Picker.Item label={data[this.props.lang]['waterRolesOrgz#']} value='0' color="#1493ff" />
-                    {this.props.data.map((item, index) => {
-                        return (<Picker.Item label={item.name_en} value={item.id} key={index}/>) 
-                    })}
-                </Picker> 
+                /> 
+                <View style={styles.picker}>
+                    <Picker
+                        selectedValue={this.state.organizationID}
+                        style={{height: 35, width: 270}}
+                        onValueChange={(organizationID) => this.setState({organizationID})}>
+                        <Picker.Item label={data[this.props.lang]['pickerMsg']} value='0' />
+                        {this.props.data.map((item, index) => {
+                            return (<Picker.Item label={item.name_en} value={item.id}  key={index}/>) 
+                        })}
+                    </Picker>
+                </View>
                 <TouchableOpacity onPress={()=> this.getWaterRolesHandler()}>
                     <Image source={require('./../../assets/images/blue_button.png')} />
                         <Text style={styles.buttonText}>{data[this.props.lang]['send']}</Text>
@@ -119,15 +119,11 @@ const styles = StyleSheet.create({
         fontFamily: fonts.TunisiaLt
     },
     picker: {
-        height: 45,
-        width: 150,
-        marginBottom: 15,
-        borderBottomWidth: 1.5,
-        fontSize: 16,
-        // borderBottomColor: 'black',
+        borderRadius: 20,
+        borderWidth: 1,
         borderColor: colors.LightBlue,
-        borderWidth:1,
-        // fontFamily: fonts.TunisiaLt
+        overflow: 'hidden',
+        marginBottom: 25
     },
     activityIndicator: {
         transform: [{scale: 0.70}],

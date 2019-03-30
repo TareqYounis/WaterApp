@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import WaterRole from '../../Components/Enquiry/WaterRole'
@@ -37,9 +37,7 @@ class WaterRoles extends Component{
 }
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-    //   justifyContent: 'center',
-    //   paddingHorizontal: 30
+      flex: 1
     }
 })
 
