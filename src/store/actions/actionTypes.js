@@ -7,6 +7,7 @@ export const Save_Id = 'Save_Id';
 export const Fetch_Sucess = 'Fetch_Sucess';
 export const Fetch_Failure = 'Fetch_Failure';
 export const Fetch_Sucess_Water_Role = 'Fetch_Sucess_Water_Role';
+export const Fetch_Failure_Water_Roles = 'Fetch_Failure_Water_Roles';
 export const Fetch_Sucess_User_Register = 'Fetch_Sucess_User_Register';
 export const Fetch_Failure_User_Register= 'Fetch_Failure_User_Register';
 export const Fetch_Sucess_User_Login = 'Fetch_Sucess_User_Login';

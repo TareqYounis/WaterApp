@@ -1,9 +1,10 @@
-import { Add_Name, Delete_Name, Select_Name, Deselect_Name, Save_Lang, Save_Id, Fetch_Sucess, Fetch_Failure, Fetch_Sucess_Water_Role, Fetch_Sucess_User_Register, Fetch_Failure_User_Register, Fetch_Sucess_User_Login, Fetch_Failure_User_Login, Fetch_Sucess_User_Add_Account, Fetch_Success_Complaint_Service, Fetch_Failure_Complaint_Service, Fetch_Success_Balance_History, Fetch_Failure_User_Add_Account, Fetch_Sucess_Invoice_Calculation, Fetch_Failure_Invoice_Calculation, Fetch_Sucess_Usage_Type, Tab_ID, Fetch_Success_Complaint_Type, Fetch_Sucess_Subscription_Type, Fetch_Success_Villages, Fetch_Success_Blooks, Fetch_Success_Sectors, Fetch_Success_Parcles, Fetch_Success_Application_Request, Fetch_Success_Objection_Service, Fetch_Failure_Objection_Service, Fetch_Failure_Balance_History, Fetch_Success_Return_Counter, Fetch_Failure_Return_Counter, Fetch_Success_Register_Confirm,  Fetch_Failure_Register_Confirm, Fetch_Success_Resend_Code, Fetch_Failure_Resend_Code, Fetch_Failure_Participation_Info, Fetch_Success_Participation_Info  } from '../actions/actionTypes';
+import { Add_Name, Delete_Name, Select_Name, Deselect_Name, Save_Lang, Save_Id, Fetch_Sucess, Fetch_Failure, Fetch_Sucess_Water_Role, Fetch_Failure_Water_Roles, Fetch_Sucess_User_Register, Fetch_Failure_User_Register, Fetch_Sucess_User_Login, Fetch_Failure_User_Login, Fetch_Sucess_User_Add_Account, Fetch_Success_Complaint_Service, Fetch_Failure_Complaint_Service, Fetch_Success_Balance_History, Fetch_Failure_User_Add_Account, Fetch_Sucess_Invoice_Calculation, Fetch_Failure_Invoice_Calculation, Fetch_Sucess_Usage_Type, Tab_ID, Fetch_Success_Complaint_Type, Fetch_Sucess_Subscription_Type, Fetch_Success_Villages, Fetch_Success_Blooks, Fetch_Success_Sectors, Fetch_Success_Parcles, Fetch_Success_Application_Request, Fetch_Success_Objection_Service, Fetch_Failure_Objection_Service, Fetch_Failure_Balance_History, Fetch_Success_Return_Counter, Fetch_Failure_Return_Counter, Fetch_Success_Register_Confirm,  Fetch_Failure_Register_Confirm, Fetch_Success_Resend_Code, Fetch_Failure_Resend_Code, Fetch_Failure_Participation_Info, Fetch_Success_Participation_Info  } from '../actions/actionTypes';
 
 const initiaState ={
     names: [],
     lang: '',
     waterRole: null,
+    waterRoleFail: null,
     user_id: null,
     signupFailMsg: null,
     loginFailMsg: null,
@@ -102,6 +103,11 @@ const reducer = (state = initiaState, action ) => {
             ...state,
             waterRole: action.payload.data
         };
+        case Fetch_Failure_Water_Roles:
+        return {
+            ...state,
+            waterRoleFail: action.payload.data
+        }
         case Fetch_Sucess_User_Register:
         return {
             ...state,

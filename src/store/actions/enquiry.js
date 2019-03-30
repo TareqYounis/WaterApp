@@ -1,4 +1,4 @@
-import { FetchFailure, FetchSuccessWaterRoles, FetchSucessInvoiceCalculation, FetchFailureInvoiceCalculation, FetchSuccessComplaintType } from './actions';
+import { FetchFailure, FetchSuccessWaterRoles, FetchFailureWaterRoles, FetchSucessInvoiceCalculation, FetchFailureInvoiceCalculation, FetchSuccessComplaintType } from './actions';
 import { sha256 } from 'react-native-sha256';
 
 //asynchrounous calls are being handled in here
@@ -16,7 +16,7 @@ export const GetWaterRoles = ( data ) => {
             .then((response) => response.json())
             .then((responseJson) => {
               if(responseJson.status === false){
-                dispatch(FetchFailure(responseJson.message));
+                dispatch(FetchFailureWaterRoles(responseJson.message));
               }else{     
                 dispatch(FetchSuccessWaterRoles(responseJson.data));
               }

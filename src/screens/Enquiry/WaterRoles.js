@@ -45,7 +45,8 @@ const mapStateToProps = state => {
     return {
       lang: state.enquiry.lang,
       data : state.enquiry.data,
-      waterRole : state.enquiry.waterRole 
+      waterRole : state.enquiry.waterRole,
+      waterRoleFail : state.enquiry.waterRoleFail
     };
 };
   

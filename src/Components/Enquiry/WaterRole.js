@@ -72,6 +72,11 @@ class WaterRole extends React.Component {
                     <Text style={styles.text}> {data[this.props.lang]['waterRoleRespMessg']} {this.props.waterRole}</Text>
                 </View>
             )}
+            {this.props.waterRoleFail && (
+                <View style={[styles.response]}>
+                    <Text style={styles.text}> {data[this.props.lang]['failDataMsg']} {this.props.waterRoleFail}</Text>
+                </View>
+            )}
             </View>
         )
     }
@@ -115,7 +120,7 @@ const styles = StyleSheet.create({
         position: 'absolute', 
         alignSelf: 'center',
         color: 'white',
-        fontSize: 22,
+        fontSize: 20,
         fontFamily: fonts.TunisiaLt
     },
     picker: {
@@ -137,7 +142,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.DarkBlue
     },
     text:{
-        fontSize: 22,
+        fontSize: 20,
         fontFamily: fonts.bold,
         color: 'white'
     }
