@@ -1,20 +1,23 @@
 import React,{Component} from 'react';
-import {View, Text, StyleSheet, ActivityIndicator} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import WaterBill from '../../Components/Enquiry/WaterBill';
 import { UserParticipationInfo } from '../../store/actions/index';
 import { getItem } from '../../StorageData';
-import Button from '../../Components/Styles/Button';
+import { fonts, colors } from './../../assets/Theme';
+import * as data from './../../assets/lang.json';
 
 class WaterBills extends Component{
     constructor(props){
         super(props);
         this.state= {
-            isLoading: false
+            isLoading: false,
+            userAccounts:null,
+            particpationInfo: null,
+            particpFailMsg: null
         }
-        Navigation.events().bindComponent(this);
-        this.handleAddAccount = this.handleAddAccount.bind(this);
+        Navigation.events().bindComponent(this);        
     }
     
     //show sidemenu when menu button is clicked.
@@ -29,13 +32,35 @@ class WaterBills extends Component{
     }
 
     componentWillMount(){
+        // from UserId get his accounts, and accounts info detailes to check his balance
         getItem('userId')
         .then(userID => {
-            this.props.onGetParticipationInfo(Number(userID));        
+            if(userID !== 'none'){
+                getItem('particInfo')
+                .then(parInfo => {
+                    if(parInfo !== 'none'){
+                        this.setState({
+                            particpationInfo: JSON.parse(parInfo)[0],
+                            particpFailMsg: JSON.parse(parInfo)[1]
+                        })
+                    }else{
+                        this.props.onGetParticipationInfo(Number(userID));        
+                    }
+                })
+                getItem('userAccounts')
+                .then(userAccount => {
+                    if(userAccount !== 'none'){
+                        this.setState({
+                            userAccounts: JSON.parse(userAccount)
+                        })
+                    }
+                })
+                
+            }
         })
     }
-
-    handleAddAccount(){
+ 
+    handleAddAccount = () => {
         //Navigate to the add account page when user asks to add an account
         Navigation.push(this.props.componentId,{
             component:{
@@ -45,24 +70,21 @@ class WaterBills extends Component{
     }
 
     render(){
-        return (
+        return ( 
             <View style={styles.container}>
-                { this.props.particpationInfo.length > 0 ? (
-                    <WaterBill accounts= {this.props.userAccounts} info={this.props.particpationInfo} onHandleAddAccount= {this.handleAddAccount}/>
-                ) : 
-                <View style={styles.activityIndicator}>
-                    <ActivityIndicator color={'#1493ff'} />
-                </View>
-                }
-                { this.props.particpFailMsg !== null && (
+                { this.props.particpationInfo.length > 0 && (
+                    <WaterBill {...this.props} userAccounts={this.state.userAccounts || this.props.userAccounts} particpationInfo={this.state.particpationInfo || this.props.particpationInfo} onHandleAddAccount= {this.handleAddAccount}/>
+                )}
+                { (this.props.particpFailMsg || this.state.particpFailMsg ) && ( 
                     <View>
-                        <Text style={[styles.greeting]}>You don't have any regested account, please add one firt, click below</Text>
-                            <Button
-                            title='Add Account'
-                            onPress={this.handleAddAccount.bind(this)}
-                            isLoading={this.state.isLoading}
-                            />
-                     </View>
+                        <View style={[styles.response]}>
+                            <Text style={styles.text}> {data[this.props.lang]['waterBillAddAccountMsg']}</Text>
+                            <TouchableOpacity onPress={()=> this.handleAddAccount()}>
+                                <Image source={require('./../../assets/images/green_button.png')} />
+                                <Text style={styles.buttonText}>{data[this.props.lang]['addAccount']}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 )}
             </View>
         )
@@ -71,34 +93,36 @@ class WaterBills extends Component{
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-    //   justifyContent: 'center',
-      paddingHorizontal: 30
+      flex: 1
     },
-    greeting: {
-        fontFamily: 'Lato-Light',
-        color: '#666',
-        fontSize: 20,
-        marginTop: 5
+    buttonText:{
+        flex:1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute', 
+        alignSelf: 'center',
+        color: 'white',
+        fontSize: 22,
+        fontFamily: fonts.TunisiaLt
     },
-    activityIndicator: {
-        transform: [{scale: 0.70}],
-        marginTop: 3.5,
-        marginLeft: 5
+    text:{
+        fontSize: 22,
+        fontFamily: fonts.bold,
+        color: 'white'
     },
-    errorMessage: {
-        fontFamily: 'Lato-Regular',
-        fontSize: 12,
-        marginTop: 10,
-        color: 'transparent'
+    response:{
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.DarkBlue
     }
 })
 
 const mapStateToProps = state => {
     return {
-      particpationInfo : state.names.particpationInfo,
-      userAccounts : state.names.userAccounts,
-      particpFailMsg : state.names.particpFailMsg
+        lang: state.names.lang,
+        particpationInfo : state.names.particpationInfo,
+        userAccounts : state.names.userAccounts,
+        particpFailMsg : state.names.particpFailMsg
     };
 };
   

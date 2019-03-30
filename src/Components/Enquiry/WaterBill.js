@@ -1,8 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import Input from '../Styles/Input'
-import Button from '../Styles/Button'
-import { Navigation } from 'react-native-navigation/lib/dist/Navigation';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image, ActivityIndicator } from 'react-native';
+import { fonts, colors } from './../../assets/Theme';
+import * as data from './../../assets/lang.json';
 
 class WaterBill extends React.Component {
     constructor(props){
@@ -13,20 +12,21 @@ class WaterBill extends React.Component {
             balance: null,
             accountFailMsg : false       
         }
-        this.handleCheckBill = this.handleCheckBill.bind(this);
-        this.handleAddAccount = this.handleAddAccount.bind(this);
-        this.onChangeText = this.onChangeText.bind(this);
     }
 
-    handleCheckBill(){
+    handleCheckBill = () => {
         this.setState({
-            isLoading: true,
-            accountFailMsg : false
+            isLoading: true
         })
-        const index =this.props.accounts.indexOf(this.state.account);
+        let index= false;
+        this.props.userAccounts.forEach(element => {
+            if(element['account'] === this.state.account){
+                return index = true
+            }
+        });
         //check if the element exist in users account database.
-        if( index > -1){
-            this.props.info.forEach(element => {
+        if( index ){
+            this.props.particpationInfo.forEach(element => {
                 if(element['account'] === this.state.account){
                     this.setState({
                         balance: element['info']['balance'],
@@ -49,7 +49,7 @@ class WaterBill extends React.Component {
         })
     }
 
-    handleAddAccount (){
+    handleAddAccount = () => {
         this.setState({
             accountFailMsg: false
         })
@@ -58,63 +58,110 @@ class WaterBill extends React.Component {
 
     render (){
         return (
-                <View>
-                    <Text style={styles.greeting}>
-                    Please Enter your Account Number to Check
-                    </Text>
-                    <View style={styles.inputContainer}>
-                        <Input
-                            value={this.state.account}
-                            placeholder="Account Number"
-                            type='account'
-                            keyboardType='numeric'
-                            onChangeText={this.onChangeText}
-                        />
+            <View style={styles.container}>
+            <View style={styles.quarter1}>
+                <Text style={styles.headText}>{data[this.props.lang]['waterBillFillMessg']}</Text>
+            </View>
+            <View style={styles.half2}>
+                <TextInput
+                    value={this.state.account}
+                    placeholder={data[this.props.lang]['waterRoleAccount#']}
+                    onChangeText= {value => this.onChangeText('account', value)}
+                    style= {[styles.textInput]}
+                    keyboardType='numeric'
+                /> 
+                <TouchableOpacity onPress={()=> this.handleCheckBill()}>
+                    <Image source={require('./../../assets/images/blue_button.png')} />
+                        <Text style={styles.buttonText}>{data[this.props.lang]['send']}</Text>
+                </TouchableOpacity>
+                {this.state.isLoading && (
+                    <View style={styles.activityIndicator}>
+                        <ActivityIndicator color={colors.LightBlue} />
                     </View>
-                    <Button
-                        title='Get Bill'
-                        onPress={this.handleCheckBill.bind(this)}
-                        isLoading={this.state.isLoading}
-                    />
-                    {this.state.balance && (
-                        <Text style={[styles.Balancetext]}>Your Balance is: {this.state.balance}</Text>
-                    )}
-                    {this.state.accountFailMsg && (
-                        <View>
-                            <Text style={[styles.errorMessage, {color: 'black'}]}>This account is not regestered in your profile, please add it first, click below</Text>
-                            <Button
-                            title='Add Account'
-                            onPress={this.handleAddAccount.bind(this)}
-                            isLoading={this.state.isLoading}
-                            />
-                        </View>
-                    )}
+                )} 
+                {this.state.balance && (  
+                    <View>
+                        <Image source={require('./../../assets/images/notification_pop_up.png')} />
+                        <Text style={styles.buttonText}>{data[this.props.lang]['waterBillRespMessg']} {this.state.balance} {data[this.props.lang]['balanceJD']}</Text>
+                    </View>
+                )}                   
+            </View>
+            {this.state.accountFailMsg && (
+                <View style={[styles.response]}>
+                    <Text style={styles.text}> {data[this.props.lang]['waterBillErrRespMessg']}</Text>
+                    <TouchableOpacity onPress={()=> this.handleAddAccount()}>
+                    <Image source={require('./../../assets/images/green_button.png')} />
+                        <Text style={styles.buttonText}>{data[this.props.lang]['addAccount']}</Text>
+                    </TouchableOpacity>
                 </View>
+            )}
+            </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    inputContainer: {
-      marginTop: 20
+    container: {
+        flex: 1
     },
-    greeting: {
-      fontFamily: 'Lato-Light',
-      color: '#666',
-      fontSize: 20,
-      marginTop: 5
+    quarter1: {
+        flex: 0.15,
+        backgroundColor: colors.LightBlue
     },
-    errorMessage: {
-        fontFamily: 'Lato-Regular',
-        fontSize: 12,
-        marginTop: 10,
-        color: 'transparent'
+    half2:{
+        flex: 0.65,
+        justifyContent: 'space-around',
+        alignItems: 'center'
     },
-    Balancetext: {
-        color:  '#1493ff',
-        fontFamily:  'Lato-Light',
-        fontSize: 25,
-        letterSpacing: 0.5
+    headText:{
+        color: 'white',
+        fontSize: 22,
+        fontFamily: fonts.bold
+    },
+    textInput: {
+        fontSize: 18,
+        fontFamily: fonts.TunisiaLt,
+        paddingTop: 5,
+        paddingBottom: 5,
+        borderRadius: 20,
+        backgroundColor: 'white',
+        borderColor: colors.LightBlue,
+        borderWidth:1,
+        width: 270,
+        height: 35
+    },
+    buttonText:{
+        flex:1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute', 
+        alignSelf: 'center',
+        color: 'white',
+        fontSize: 22,
+        fontFamily: fonts.TunisiaLt
+    },
+    picker: {
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: colors.LightBlue,
+        overflow: 'hidden',
+        marginBottom: 25
+    },
+    activityIndicator: {
+        transform: [{scale: 0.70}],
+        marginTop: 3.5,
+        marginLeft: 5
+    },
+    text:{
+        fontSize: 22,
+        fontFamily: fonts.bold,
+        color: 'white'
+    },
+    response:{
+        flex:0.20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.DarkBlue
     }
 });
 
