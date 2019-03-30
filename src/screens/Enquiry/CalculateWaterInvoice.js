@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import { connect } from  'react-redux';
 import CalculateWater from '../../Components/Enquiry/CalculateWater';
 import { GetOrganizations, GetUsageType, invoiceCalculation } from './../../store/actions/index';
@@ -26,18 +26,17 @@ class CalculateWaterInvoice extends Component{
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      justifyContent: 'center',
-      paddingHorizontal: 30
-    },
+      flex: 1
+    }
 })
 
 const mapStateToProps = state => {
     return {
-      data : state.enquiry.data,
-      invoice_value : state.names.invoice_value,
-      usage_type: state.names.usage_type,
-      invoiceFailMsg : state.names.invoiceFailMsg
+        lang: state.enquiry.lang,
+        data : state.enquiry.data,
+        invoice_value : state.names.invoice_value,
+        usage_type: state.names.usage_type,
+        invoiceFailMsg : state.names.invoiceFailMsg
     };
 };
   

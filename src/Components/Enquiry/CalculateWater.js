@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, TextInput,Picker, CheckBox, Text, StyleSheet} from 'react-native';
-import Input from '../Styles/Input'
-import Button from '../Styles/Button'
+import {View, TextInput,Picker, Text, StyleSheet, ActivityIndicator, Image, TouchableOpacity} from 'react-native';
+import { fonts, colors } from './../../assets/Theme';
+import * as data from './../../assets/lang.json';
 
 class CalculateWater extends React.Component {
     constructor(props){
@@ -9,15 +9,12 @@ class CalculateWater extends React.Component {
         this.state= {
             company_id: 1,
             usage_type: 1,
-            quantity : 0,
+            quantity : null,
             sewage_served: true,
             isLoading: false
         }
-        this.calculateInvoicValue = this.calculateInvoicValue.bind(this);
-        this.onChangeText = this.onChangeText.bind(this);
-        this.renderError = this.renderError.bind(this);
-        this.renderResults = this.renderResults.bind(this);
     }
+
     componentWillReceiveProps(props){
         //stop running the activity indicator when recieving results
         this.setState({
@@ -25,7 +22,7 @@ class CalculateWater extends React.Component {
         })
     }
 
-    calculateInvoicValue () {
+    calculateInvoicValue = () => {
         //start running the activity indicator when sending request
         this.setState({
             isLoading: true
@@ -38,103 +35,142 @@ class CalculateWater extends React.Component {
           [key]: value
         })
     }
-    
-    renderError(){
-        return (
-            <Text style={[styles.errorMessage, {color: 'black'}]}>Error calculating water bill, please check your values, and try again. {"\n"} {this.props.invoiceFailMsg}</Text>
-        )
-    }
-    renderResults(){
-        return (
-            <Text style={styles.resultText}>Water Value is: {this.props. invoice_value}</Text>
-        )
-    }
 
     render(){
         return (
-            <View>
-            <Text style={styles.greeting}>
-                Please fill the following
-            </Text>
-            <View style={styles.inputContainer}>
-                <Input
-                    value={this.state.quantity}
-                    placeholder="Quantity in meters"
-                    type='quantity'
-                    keyboardType='numeric'
-                    onChangeText={this.onChangeText}
-                />              
-                <Picker
-                    selectedValue={this.state.company_id}
-                    itemStyle={styles.picker}
-                    onValueChange={(company_id) => this.setState({company_id})}>
-                    <Picker.Item label='Please select an option...' value='0' color="#1493ff" />
-                        {this.props.data.map((item, index) => {
-                            return (<Picker.Item label={item.name_en} value={item.id} key={index} color="#1493ff"/>) 
-                        })}
-                </Picker>
-                <Picker
-                    selectedValue={this.state.usage_type}
-                    itemStyle={styles.picker}
-                    onValueChange={(usage_type) => this.setState({usage_type})}>
-                    <Picker.Item label='Please select an option...' value='0' color="#1493ff" />
-                        {this.props.usage_type.map((item, index) => {
-                            return (<Picker.Item label={item.name_en} value={item.id} key={index} color="#1493ff"/>) 
-                        })}
-                </Picker>  
-                <View style={{flexDirection: 'row'}}>
-                    <CheckBox 
-                    value={this.state.sewage_served}
-                    size="15"
-                    color="#1493ff"
-                    onValueChange={() => this.setState({ sewage_served: !this.state.sewage_served })}
-                    />
-                    <Text style={styles.greeting}>sewage_served</Text>
-                </View>
+            <View style={styles.container}>
+            <View style={styles.quarter1}>
+                <Text style={styles.headText}>{data[this.props.lang]['calcWateramountMsg']}</Text>
             </View>
-            <Button
-                title='Submit'
-                onPress={this.calculateInvoicValue.bind(this)}
-                isLoading={this.state.isLoading}
-            />            
-            {this.props.invoiceFailMsg !== null && (this.renderError())}
-            {this.props.invoice_value  && (this.renderResults())}
-        </View>
+            <View style={styles.half2}>
+                <TextInput
+                    value={this.state.quantity}
+                    placeholder={data[this.props.lang]['WaterMeterAmount']}
+                    onChangeText= {value => this.onChangeText('quantity', value)}
+                    style= {[styles.textInput]}
+                    keyboardType='numeric'
+                />
+                <View style={styles.picker}>
+                    <Picker
+                        selectedValue={this.state.company_id}
+                        style={{height: 35, width: 270}}
+                        onValueChange={(company_id) => this.setState({company_id})}>
+                        <Picker.Item label={data[this.props.lang]['pickerMsg']} value='0' />
+                        {this.props.data.map((item, index) => {
+                            return (<Picker.Item label={item.name_en} value={item.id}  key={index}/>) 
+                        })}
+                    </Picker>
+                </View>
+                <View style={styles.picker}>
+                    <Picker
+                        selectedValue={this.state.usage_type}
+                        style={{height: 35, width: 270}}
+                        onValueChange={(usage_type) => this.setState({usage_type})}>
+                        <Picker.Item label={data[this.props.lang]['pickerMsg']} value='0' />
+                        {this.props.usage_type.map((item, index) => {
+                            return (<Picker.Item label={item.name_en} value={item.id}  key={index}/>) 
+                        })}
+                    </Picker>
+                </View> 
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={[styles.text,{color: colors.LightBlue}, {marginRight: 10}]}>{data[this.props.lang]["sewage_served"]}</Text>
+                    { this.state.sewage_served ? (
+                        <TouchableOpacity onPress={()=> this.setState({ sewage_served: false})}>
+                            <Image source={require('./../../assets/images/check_box_on.png')}/>
+                        </TouchableOpacity>
+                    ): (
+                        <TouchableOpacity onPress={()=> this.setState({ sewage_served: true})}>
+                            <Image source={require('./../../assets/images/check_box_off.png')}/>
+                        </TouchableOpacity>
+                    )}
+                </View>
+                <TouchableOpacity onPress={()=> this.calculateInvoicValue()}>
+                    <Image source={require('./../../assets/images/blue_button.png')} />
+                        <Text style={styles.buttonText}>{data[this.props.lang]['send']}</Text>
+                </TouchableOpacity>
+                {this.state.isLoading && (
+                    <View style={styles.activityIndicator}>
+                        <ActivityIndicator color={colors.LightBlue} />
+                    </View>
+                )} 
+                {this.props.invoice_value && (  
+                    <View>
+                        <Image source={require('./../../assets/images/notification_pop_up.png')} />
+                        <Text style={styles.buttonText}>{data[this.props.lang]['calcWateramountValue']} {"\n"} {this.props.invoice_value} {data[this.props.lang]['balanceJD']}</Text>
+                    </View>
+                )}
+            </View>
+            {this.props.invoiceFailMsg && (
+                <View style={[styles.response]}>
+                    <Text style={styles.text}> {data[this.props.lang]['failDataMsg']} {this.props.invoiceFailMsg}</Text>
+                </View>
+            )}
+            </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 20,
-        alignItems: "center",
+        flex: 1
     },
-    greeting: {
-        fontFamily: 'Lato-Light',
-        color: '#666',
+    quarter1: {
+        flex: 0.15,
+        backgroundColor: colors.LightBlue
+    },
+    half2:{
+        flex: 0.65,
+        justifyContent: 'space-around',
+        alignItems: 'center'
+    },
+    headText:{
+        color: 'white',
+        fontSize: 22,
+        fontFamily: fonts.bold
+    },
+    textInput: {
+        fontSize: 18,
+        fontFamily: fonts.TunisiaLt,
+        paddingTop: 5,
+        paddingBottom: 5,
+        borderRadius: 20,
+        backgroundColor: 'white',
+        borderColor: colors.LightBlue,
+        borderWidth:1,
+        width: 270,
+        height: 35
+    },
+    buttonText:{
+        flex:1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute', 
+        alignSelf: 'center',
+        color: 'white',
         fontSize: 20,
-        marginTop: 5
-    },
-    resultText: {
-        color:  '#1493ff',
-        fontFamily:  'Lato-Light',
-        fontSize: 25,
-        letterSpacing: 0.5
+        fontFamily: fonts.TunisiaLt
     },
     picker: {
-        height: 45,
-        width: 150,
-        marginBottom: 15,
-        borderBottomWidth: 1.5,
-        fontSize: 16,
-        borderBottomColor: '#1493ff',
-        fontFamily: 'Lato-Light'
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: colors.LightBlue,
+        overflow: 'hidden'
     },
-    errorMessage: {
-        fontFamily: 'Lato-Regular',
-        fontSize: 12,
-        marginTop: 10,
-        color: 'transparent'
+    activityIndicator: {
+        transform: [{scale: 0.70}],
+        marginTop: 3.5,
+        marginLeft: 5
+    },
+    text:{
+        fontSize: 20,
+        fontFamily: fonts.bold,
+        color: 'white'
+    },
+    response:{
+        flex:0.20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.DarkBlue
     }
 });
 
