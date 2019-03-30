@@ -1,4 +1,4 @@
-import {FetchFailure, SavingUserLanguage, SavingUserID, FetchSuccessUserRegister, FetchFailureUserRegister, FetchSuccessUserLogin, FetchFailureUserLogin, FetchSuccessAddAccount, FetchFailureAddAccount, SavingTabID, FetchSuccessBalanceHistory, FetchFailureBalanceHistory, FetchSuccessRegisterConfirm, FetchFailureRegisterConfirm, FetchSuccessResendCode, FetchFailureResendCode, FetchSuccessParticipationInfo, FetchFailureParticipationInfo } from './actions';
+import {FetchFailure, SavingUserLanguage, SavingUserID, ResetUserState, FetchSuccessUserRegister, FetchFailureUserRegister, FetchSuccessUserLogin, FetchFailureUserLogin, FetchSuccessAddAccount, FetchFailureAddAccount, SavingTabID, FetchSuccessBalanceHistory, FetchFailureBalanceHistory, FetchSuccessRegisterConfirm, FetchFailureRegisterConfirm, FetchSuccessResendCode, FetchFailureResendCode, FetchSuccessParticipationInfo, FetchFailureParticipationInfo } from './actions';
 import { sha256 } from 'react-native-sha256';
 
 export const SaveUserLanguage = (lang) => {
@@ -13,6 +13,11 @@ export const SaveUserID = (id) => {
   }
 }
 
+export const ResetState = () => {
+  return dispatch => {
+    dispatch(ResetUserState());
+  }
+}
 //Register a new user (POST).
 export const UserSignsUp = (userData) => {
   // generate form data from an object
