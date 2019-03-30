@@ -55,7 +55,12 @@
         "sideMenuApplications": "Applications",
         "sideMenuSettings": "Settings",
         "sideMenuLogOut": "Log Out",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "waterBillFillMessg" : "Pleae enter your Account Number",
+        "waterBillRespMessg": "Your Balance is: ",
+        "waterBillErrRespMessg": "This account is not regestered in your profile. Please add it first!",
+        "waterBillAddAccountMsg": "Please Add an account to view Balance",
+        "balanceJD": "JD"
     }, 
     "Arabic": {
         "welcome": "!مرحبا",
@@ -113,6 +118,11 @@
         "sideMenuApplications": "الطلبات",
         "sideMenuSettings": "الإعدادت",
         "sideMenuLogOut": "خروج",
-        "cancel": "إالغاء"
+        "cancel": "إالغاء",
+        "waterBillFillMessg" : "يرجى إدخال رقم حسابك",
+        "waterBillRespMessg": "حسابك لدينا:  ",
+        "waterBillErrRespMessg": "هذا الحساب غير مسجل في حسابك, يرجى تسجيله أولا",
+        "waterBillAddAccountMsg": "يرجى إضافة حساب عداد لعرض الرصيد",
+        "balanceJD": "دينار"
     }
 }
