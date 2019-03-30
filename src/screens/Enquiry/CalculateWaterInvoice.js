@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import {View, StyleSheet} from 'react-native';
 import { connect } from  'react-redux';
 import CalculateWater from '../../Components/Enquiry/CalculateWater';
-import { GetOrganizations, GetUsageType, invoiceCalculation } from './../../store/actions/index';
+import { GetOrganizations, GetUsageType, invoiceCalculation, ResetState } from './../../store/actions/index';
 
 class CalculateWaterInvoice extends Component{
     constructor(props){
@@ -13,6 +13,11 @@ class CalculateWaterInvoice extends Component{
     componentWillMount() {
         this.props.onGetOrganizations();
         this.props.onGetUsageType();
+    }
+
+    // reset all data to avoid duplicants
+    componentWillUnmount(){
+        this.props.onResetState();
     }
 
     render(){
@@ -44,7 +49,8 @@ const mapDispatchToProps = dispatch => {
     return {
         onCalculatingInvoice : (invoiceData) => dispatch(invoiceCalculation(invoiceData)),
         onGetOrganizations : () => dispatch(GetOrganizations()),
-        onGetUsageType : () => dispatch(GetUsageType())
+        onGetUsageType : () => dispatch(GetUsageType()),
+        onResetState: () => dispatch(ResetState())
     };
 };
 export default connect(mapStateToProps,mapDispatchToProps,null, {"withRef" : true})(CalculateWaterInvoice);

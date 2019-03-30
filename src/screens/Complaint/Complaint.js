@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import AddComplaint from './../../Components/Complaint/AddComplaint';
-import { GetComplaintTypes, Complain } from './../../store/actions/index';
+import { GetComplaintTypes, Complain, ResetState } from './../../store/actions/index';
 
 class Complaint extends Component{
     constructor(props){
@@ -25,6 +25,11 @@ class Complaint extends Component{
     //load all complaint types before rendering.
     componentWillMount(){
         this.props.onGetComplaintTypes();
+    }
+
+    // reset all data to avoid duplicants
+    componentWillUnmount(){
+        this.props.onResetState();
     }
 
     render(){
@@ -53,7 +58,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onUserComplaint: (complaintData) => dispatch(Complain(complaintData)),
-        onGetComplaintTypes : () => dispatch(GetComplaintTypes())
+        onGetComplaintTypes : () => dispatch(GetComplaintTypes()),
+        onResetState: () => dispatch(ResetState())
     };
 };
   

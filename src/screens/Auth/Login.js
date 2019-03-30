@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Modal, ImageBackground, TouchableOpacity, Image, Text } from 'react-native';
 import {connect} from 'react-redux';
 import UserLogin from '../../Components/Auth/UserLogin';
-import { UserLogsIn, SaveUserID } from '../../store/actions/index';
+import { UserLogsIn, SaveUserID, ResetState } from '../../store/actions/index';
 import StartMainTabs from '../MainTabs/StartMainTabs';
 import { saveUserId, saveUserData } from '../../StorageData';
 import { fonts } from './../../assets/Theme';
@@ -24,6 +24,11 @@ class Login extends React.Component {
             this.props.onSavingUserId(props.user_id);
             saveUserData(props.userProfile); 
         }     
+    }
+
+    // reset all data to avoid duplicants
+    componentWillUnmount(){
+        this.props.onResetState();
     }
 
     render(){
@@ -88,7 +93,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onLoggingIn: (userData) => dispatch(UserLogsIn(userData)),
-        onSavingUserId: ( userID ) => dispatch(SaveUserID(userID))
+        onSavingUserId: ( userID ) => dispatch(SaveUserID(userID)),
+        onResetState: () => dispatch(ResetState())
     };
 };
   

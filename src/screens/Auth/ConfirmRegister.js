@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Modal, ImageBackground, TouchableOpacity, Image, Text } from 'react-native';
 import ConfirmSignUp from '../../Components/Auth/ConfirmSignUp';
 import { connect } from 'react-redux';
-import { UserRegisterConfirm, UserResendCode, SaveUserID } from '../../store/actions/index';
+import { UserRegisterConfirm, UserResendCode, SaveUserID, ResetState } from '../../store/actions/index';
 import StartMainTabs from '../MainTabs/StartMainTabs';
 import { saveUserId } from '../../StorageData';
 import { fonts } from './../../assets/Theme';
@@ -25,6 +25,11 @@ class ConfirmRegister extends React.Component {
             saveUserId(props.user_id);
             this.props.onSavingUserId(props.user_id);
         }
+    }
+
+    // reset all data to avoid duplicants
+    componentWillUnmount(){
+        this.props.onResetState();
     }
 
     render(){
@@ -92,7 +97,8 @@ const mapDispatchToProps = dispatch => {
     return {
         onConfirmRegisteration: (userData) => dispatch(UserRegisterConfirm(userData)),
         onResendCode: (userData) => dispatch(UserResendCode(userData)),
-        onSavingUserId: ( userID ) => dispatch(SaveUserID(userID))
+        onSavingUserId: ( userID ) => dispatch(SaveUserID(userID)),
+        onResetState: () => dispatch(ResetState())
     };
 };
 

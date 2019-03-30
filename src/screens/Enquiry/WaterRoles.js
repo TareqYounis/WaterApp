@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import WaterRole from '../../Components/Enquiry/WaterRole'
-import { GetOrganizations, GetWaterRoles } from '../../store/actions/index';
+import { GetOrganizations, GetWaterRoles, ResetState } from '../../store/actions/index';
 
 class WaterRoles extends Component{
     constructor(props){
@@ -25,6 +25,11 @@ class WaterRoles extends Component{
     //load all water companies before rendering. 
     componentWillMount() {
         this.props.onGetOrganizations();
+    }
+
+    // reset all data to avoid duplicants
+    componentWillUnmount(){
+        this.props.onResetState();
     }
     
     render(){
@@ -55,7 +60,8 @@ const mapDispatchToProps = dispatch => {
     return {
         onAddName: (name,key) => dispatch(AddName(name,key)),
         onGetOrganizations: () => dispatch(GetOrganizations()),
-        onGettingWaterRoles: ( data ) => dispatch(GetWaterRoles(data))
+        onGettingWaterRoles: ( data ) => dispatch(GetWaterRoles(data)),
+        onResetState: () => dispatch(ResetState())
     };
 };
   
