@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Modal, StyleSheet, ImageBackground, Image, TouchableOpacity, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { Navigation } from 'react-native-navigation';
-import { UserAddAccount, GetOrganizations } from './../../store/actions/index';
+import { UserAddAccount, GetOrganizations, ResetState } from './../../store/actions/index';
 import AddAccount from './../../Components/Auth/AddAccount';
 import { fonts } from './../../assets/Theme';
 import * as data from './../../assets/lang.json';
@@ -25,6 +25,11 @@ class AddUserAccount extends React.Component {
                 modalVisible: true
             })
         }
+    }
+
+    // reset all data to avoid duplicants
+    componentWillUnmount(){
+        this.props.onResetState();
     }
 
     render(){
@@ -92,7 +97,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onAddingUserAccount: (accountData) => dispatch(UserAddAccount(accountData)),
-        onGetOrganizations: () => dispatch(GetOrganizations())
+        onGetOrganizations: () => dispatch(GetOrganizations()),
+        onResetState: () => dispatch(ResetState())
     };
 };
   
