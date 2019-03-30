@@ -82,7 +82,7 @@ class WaterBill extends React.Component {
                 {this.state.balance && (  
                     <View>
                         <Image source={require('./../../assets/images/notification_pop_up.png')} />
-                        <Text style={styles.buttonText}>{data[this.props.lang]['waterBillRespMessg']} {this.state.balance} {data[this.props.lang]['balanceJD']}</Text>
+                        <Text style={styles.buttonText}>{data[this.props.lang]['waterBillRespMessg']} {"\n"} {this.state.balance} {data[this.props.lang]['balanceJD']}</Text>
                     </View>
                 )}                   
             </View>
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
         position: 'absolute', 
         alignSelf: 'center',
         color: 'white',
-        fontSize: 22,
+        fontSize: 20,
         fontFamily: fonts.TunisiaLt
     },
     picker: {
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
         marginLeft: 5
     },
     text:{
-        fontSize: 22,
+        fontSize: 20,
         fontFamily: fonts.bold,
         color: 'white'
     },

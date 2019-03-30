@@ -102,11 +102,11 @@ const styles = StyleSheet.create({
         position: 'absolute', 
         alignSelf: 'center',
         color: 'white',
-        fontSize: 22,
+        fontSize: 18,
         fontFamily: fonts.TunisiaLt
     },
     text:{
-        fontSize: 22,
+        fontSize: 18,
         fontFamily: fonts.bold,
         color: 'white'
     },
