@@ -60,7 +60,11 @@
         "waterBillRespMessg": "Your Balance is: ",
         "waterBillErrRespMessg": "This account is not regestered in your profile. Please add it first!",
         "waterBillAddAccountMsg": "Please Add an account to view Balance",
-        "balanceJD": "JD"
+        "balanceJD": "JD",
+        "calcWateramountMsg":"Calculate Water Cost",
+        "WaterMeterAmount": "Quantity in meters",
+        "calcWateramountValue": "Calculated amount Value:",
+        "sewage_served": "Sewage Served"
     }, 
     "Arabic": {
         "welcome": "!مرحبا",
@@ -123,6 +127,10 @@
         "waterBillRespMessg": "حسابك لدينا:  ",
         "waterBillErrRespMessg": "هذا الحساب غير مسجل في حسابك, يرجى تسجيله أولا",
         "waterBillAddAccountMsg": "يرجى إضافة حساب عداد لعرض الرصيد",
-        "balanceJD": "دينار"
+        "balanceJD": "دينار",
+        "sewage_served": "مخدم بالصرف الصحي",
+        "calcWateramountMsg":"احسب تكلفة المياه",
+        "WaterMeterAmount": "كمية المياه بالمتر",
+        "calcWateramountValue": "القيمة المحتسبة: "
     }
 }
