@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, Picker, StyleSheet, Linking } from 'react-native';
-import Input from '../Styles/Input'
-import Button from '../Styles/Button'
+import {View, TextInput,Picker, Text, StyleSheet, ActivityIndicator, Image, TouchableOpacity} from 'react-native';
+import { fonts, colors } from './../../assets/Theme';
+import * as data from './../../assets/lang.json';
+
 
 class AddObjection extends React.Component {
     constructor(props){
@@ -9,21 +10,15 @@ class AddObjection extends React.Component {
         this.state = {
             company_id: 1,
             isLoading: false,
-            bill_id : '',
-            account : ''
+            bill_id : null,
+            account : null,
+            sewage_served: false
         }
-        this.onChangeText = this.onChangeText.bind(this);
-        this.handleObjection = this.handleObjection.bind(this);
-        this.renderingResults = this.renderingResults.bind(this);
-        this.renderError = this.renderError.bind(this);
-        this.payNow = this.payNow.bind(this);
     }
     
-    handleObjection(){
+    handleObjection = () => {
         // convert input to string before sending to the API
         this.setState({
-            bill_id: Number(this.state.bill_id),
-            account : Number(this.state.account),
             isLoading: true
         })
         this.props.objection(this.state);
@@ -34,111 +29,144 @@ class AddObjection extends React.Component {
           [key]: value
         })
     }
+    
     componentWillReceiveProps(props){
         //stop running activity indicator in case of results back
         this.setState({
             isLoading: false
         })
     }
-    renderError (){
-        return (
-            <Text style={[styles.errorMessage,{ color: 'black'}]}>Error Objecting, please try again with correct information.{"\n"}{this.props.objFail}</Text>
-        )
-    }
-
-    renderingResults() {
-        return this.props.objectionResults.map(function(element,key){
-            return (
-                <View key={key}>
-                    <Text>{element}</Text>
-                </View>
-            )
-        })
-    }
-
-    payNow(){
-        Linking.canOpenURL('https://www.efawateercom.jo/').then(supported => {
-            if (supported) {
-              Linking.openURL('https://www.efawateercom.jo/');
-            } else {
-              alert("Don't know how to open URI: " + 'https://www.efawateercom.jo/');
-            }
-          });
-    }
 
     render(){
         return (
-            <View>
-                <Text style={styles.greeting}>
-                    Please fill the following
-                </Text>
-                <View style={styles.inputContainer}>
+            <View style={styles.container}>
+            <View style={styles.quarter1}>
+                <Text style={styles.headText}>{data[this.props.lang]['fillDataMsg']}</Text>
+            </View>
+            <View style={styles.half2}>
+                <View style={styles.picker}>
                     <Picker
                         selectedValue={this.state.company_id}
-                        itemStyle={styles.picker}
+                        style={{height: 35, width: 270}}
                         onValueChange={(company_id) => this.setState({company_id})}>
-                        <Picker.Item label='Please select an option...' value='0' color="#1493ff" />
-                            {this.props.organizations.map((item, index) => {
-                                return (<Picker.Item label={item.name_en} value={item.id} key={index} color="#1493ff"/>) 
-                            })}
+                        <Picker.Item label={data[this.props.lang]['pickerMsg']} value='0' />
+                        {this.props.data.map((item, index) => {
+                            return (<Picker.Item label={item.name_en} value={item.id}  key={index}/>) 
+                        })}
                     </Picker>
-                    <Input
-                        value={this.state.account}
-                        placeholder="Account Number"
-                        type='account'
-                        keyboardType='numeric'
-                        onChangeText={this.onChangeText}
-                    />
-                    <Input
-                        value={this.state.bill_id}
-                        placeholder="Bill ID Number"
-                        type='bill_id'
-                        keyboardType='numeric'
-                        onChangeText={this.onChangeText}
-                    />
-                </View>
-                <Button
-                    title='Object'
-                    onPress={this.handleObjection.bind(this)}
-                    isLoading={this.state.isLoading}
+                </View> 
+                <TextInput
+                    value={this.state.account}
+                    placeholder={data[this.props.lang]['waterRoleAccount#']}
+                    onChangeText= {value => this.onChangeText('account', value)}
+                    style= {[styles.textInput]}
+                    keyboardType='numeric'
                 />
-                {this.props.objFail !== null && (this.renderError())}
-                {this.props.objectionResults && (this.renderingResults())}
-                {this.props.objectionResults &&
-                    <Button
-                        title='PayNow'
-                        onPress={this.payNow.bind(this)}
-                    />
-                }
+                <TextInput
+                    value={this.state.bill_id}
+                    placeholder={data[this.props.lang]['billNumb']}
+                    onChangeText= {value => this.onChangeText('bill_id', value)}
+                    style= {[styles.textInput]}
+                    keyboardType='numeric'
+                />
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={[styles.text,{color: colors.LightBlue}, {marginRight: 10}]}>{data[this.props.lang]["sewage_served"]}</Text>
+                    { this.state.sewage_served ? (
+                        <TouchableOpacity onPress={()=> this.setState({ sewage_served: false})}>
+                            <Image source={require('./../../assets/images/check_box_on.png')}/>
+                        </TouchableOpacity>
+                    ): (
+                        <TouchableOpacity onPress={()=> this.setState({ sewage_served: true})}>
+                            <Image source={require('./../../assets/images/check_box_off.png')}/>
+                        </TouchableOpacity>
+                    )}
+                </View>
+                <TouchableOpacity onPress={()=> this.handleObjection()}>
+                    <Image source={require('./../../assets/images/blue_button.png')} />
+                        <Text style={styles.buttonText}>{data[this.props.lang]['object']}</Text>
+                </TouchableOpacity>
+                {this.state.isLoading && (
+                    <View style={styles.activityIndicator}>
+                        <ActivityIndicator color={colors.LightBlue} />
+                    </View>
+                )} 
+                {this.props.objectionResults.length > 0 && (  
+                    <View style={[styles.response]}>
+                        <Text style={styles.text}> {this.props.objectionResults[0]}</Text>
+                    </View>
+                )}
+            </View>
+            {this.props.objectionFailResults && (
+                <View style={[styles.response]}>
+                    <Text style={styles.text}> {data[this.props.lang]['failDataMsg']} {this.props.objectionFailResults}</Text>
+                </View>
+            )}
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    inputContainer: {
-      marginTop: 20
+    container: {
+        flex: 1
     },
-    greeting: {
-      fontFamily: 'Lato-Light',
-      color: '#666',
-      fontSize: 20,
-      marginTop: 5
+    quarter1: {
+        flex: 0.15,
+        backgroundColor: colors.LightBlue
+    },
+    half2:{
+        flex: 0.65,
+        justifyContent: 'space-around',
+        alignItems: 'center'
+    },
+    headText:{
+        color: 'white',
+        fontSize: 22,
+        fontFamily: fonts.bold
+    },
+    textInput: {
+        fontSize: 18,
+        fontFamily: fonts.TunisiaLt,
+        paddingTop: 5,
+        paddingBottom: 5,
+        borderRadius: 20,
+        backgroundColor: 'white',
+        borderColor: colors.LightBlue,
+        borderWidth:1,
+        width: 270,
+        height: 35
+    },
+    buttonText:{
+        flex:1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute', 
+        alignSelf: 'center',
+        color: 'white',
+        fontSize: 18,
+        fontFamily: fonts.TunisiaLt
     },
     picker: {
-        height: 45,
-        width: 150,
-        marginBottom: 15,
-        borderBottomWidth: 1.5,
-        fontSize: 16,
-        borderBottomColor: '#1493ff',
-        fontFamily: 'Lato-Light'
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: colors.LightBlue,
+        overflow: 'hidden'
     },
-    errorMessage: {
-        fontFamily: 'Lato-Regular',
-        fontSize: 14,
-        marginTop: 10,
-        color: 'transparent'
+    activityIndicator: {
+        transform: [{scale: 0.70}],
+        marginTop: 3.5,
+        marginLeft: 5
+    },
+    text:{
+        fontSize: 18,
+        fontFamily: fonts.bold,
+        color: 'white'
+    },
+    response:{
+        flex:0.20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.DarkBlue
     }
 });
 

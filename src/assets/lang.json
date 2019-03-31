@@ -64,8 +64,10 @@
         "calcWateramountMsg":"Calculate Water Cost",
         "WaterMeterAmount": "Quantity in meters",
         "calcWateramountValue": "Calculated amount Value:",
-        "sewage_served": "Sewage Served"
-    }, 
+        "sewage_served": "Sewage Served",
+        "billNumb": "Bill Number",
+        "object": "Add Objection"
+    },
     "Arabic": {
         "welcome": "!مرحبا",
         "contents": "ماء",
@@ -94,7 +96,7 @@
         "waterBill" : "فاتورتك",
         "waterCost" : "تكلفة المياه",
         "waterRoleFillMessg" : "يرجى تعبئة المعلومات لمعرفة دورك بالمياه",
-        "waterRoleAccount#" : "حسابك",
+        "waterRoleAccount#" : "رقم الحساب",
         "pickerMsg": "إختر القائمة",
         "waterRoleRespMessg": "يأتي دورك ",
         "send": "إرسال",
@@ -131,6 +133,8 @@
         "sewage_served": "مخدم بالصرف الصحي",
         "calcWateramountMsg":"احسب تكلفة المياه",
         "WaterMeterAmount": "كمية المياه بالمتر",
-        "calcWateramountValue": "القيمة المحتسبة: "
+        "calcWateramountValue": "القيمة المحتسبة: ",
+        "billNumb": "رقم الفاتورة",
+        "object": "تقديم إعتراض"
     }
 }

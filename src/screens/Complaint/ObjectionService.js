@@ -1,13 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import  AddObjection  from './../../Components/Complaint/AddObjection';
-import { GetOrganizations, Objection } from './../../store/actions/index';
+import { GetOrganizations, Objection, ResetState } from './../../store/actions/index';
 
 class ObjectionService extends React.Component {
     constructor (props){
-        super (props);
-        this.handleUserObjection = this.handleUserObjection.bind(this);
+        super (props);       
     }
 
     //load all water companies before rendering. 
@@ -15,18 +14,21 @@ class ObjectionService extends React.Component {
         this.props.onGetOrganizations();
     }
     
-    handleUserObjection ( objectionData ) {
+    handleUserObjection = ( objectionData ) => {
+        // rest old data in store before continue, and then make a request
+        this.props.onResetState();
         this.props.onUserObjection(objectionData);
     }
-
-    componentWillReceiveProps(props){
-        console.log(props.objectionResults, props.objectionFailResults)
+        
+    // reset all data to avoid duplicants
+    componentWillUnmount(){
+        this.props.onResetState();
     }
 
     render () {
         return (
             <View style={styles.container}>
-                <AddObjection organizations={this.props.data} objection= {this.handleUserObjection} objectionResults = {this.props.objectionResults} objFail ={this.props.objectionFailResults}/>
+                <AddObjection objection= {this.handleUserObjection} {...this.props}/>
             </View>
         )
     }
@@ -34,17 +36,16 @@ class ObjectionService extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      justifyContent: 'center',
-      paddingHorizontal: 40
-    },
+      flex: 1
+    }
 })
 
 const mapStateToProps = state => {
     return {
-      data : state.enquiry.data,
-      objectionResults : state.enquiry.objectionResults,
-      objectionFailResults: state.enquiry.objectionFailResults
+        lang: state.enquiry.lang,
+        data : state.enquiry.data,
+        objectionResults : state.enquiry.objectionResults,
+        objectionFailResults: state.enquiry.objectionFailResults
     }
 };
   
@@ -52,7 +53,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onGetOrganizations: () => dispatch(GetOrganizations()),
-        onUserObjection: ( objectionData ) => dispatch(Objection(objectionData))
+        onUserObjection: ( objectionData ) => dispatch(Objection(objectionData)),
+        onResetState: () => dispatch(ResetState())
     }
 };
   
