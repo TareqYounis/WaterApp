@@ -15,9 +15,14 @@ class WaterBill extends React.Component {
     }
 
     handleCheckBill = () => {
+        // rest old data in store and state before continue, and then make a request
+        this.props.onResetState();
         this.setState({
-            isLoading: true
+            isLoading: true,
+            balance: null,
+            accountFailMsg : false 
         })
+
         let index= false;
         this.props.userAccounts.forEach(element => {
             if(element['account'] === this.state.account){

@@ -23,6 +23,8 @@ class CalculateWater extends React.Component {
     }
 
     calculateInvoicValue = () => {
+        // rest old data in store before continue, and then make a request
+        this.props.onResetState();
         //start running the activity indicator when sending request
         this.setState({
             isLoading: true

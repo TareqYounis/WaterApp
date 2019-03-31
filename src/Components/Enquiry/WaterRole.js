@@ -20,6 +20,8 @@ class WaterRole extends React.Component {
     }
 
     getWaterRolesHandler = () => {
+        // rest old data in store before continue, and then make a request
+        this.props.onResetState();
         this.setState({
             isLoading : true
         })
