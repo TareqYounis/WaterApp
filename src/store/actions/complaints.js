@@ -39,9 +39,8 @@ export const Complain = ( complainData ) => {
     // check if the user is sending images, since its an array, loop and send all images
     if(key === 'image'){
       if( complainData['image'].length > 0  ){
-        for (var i = 0; i < complainData['image'].length; i++) {
-          userFormData.append('image', complainData['image'][i]);
-        }
+        // send only the first picture, bug in sending multiple pictures
+        userFormData.append('image', complainData['image'][0]);
       }else if (complainData['image'].length  === 0) {
         userFormData.append('image', "null");
       }
