@@ -40,7 +40,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>would like to use your camera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>would like to save photos to your photo gallery</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -80,7 +80,7 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>LSApplicationCategoryType</key>
-	<string></string>
+	<string/>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>
