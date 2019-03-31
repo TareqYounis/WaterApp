@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import WaterBill from '../../Components/Enquiry/WaterBill';
-import { UserParticipationInfo } from '../../store/actions/index';
+import { UserParticipationInfo, ResetState } from '../../store/actions/index';
 import { getItem } from '../../StorageData';
 import { fonts, colors } from './../../assets/Theme';
 import * as data from './../../assets/lang.json';
@@ -58,6 +58,11 @@ class WaterBills extends Component{
                 
             }
         })
+    }
+
+    // reset all data to avoid duplicants
+    componentWillUnmount(){
+        this.props.onResetState();
     }
  
     handleAddAccount = () => {
@@ -128,7 +133,8 @@ const mapStateToProps = state => {
   
 const mapDispatchToProps = dispatch => {
     return {
-        onGetParticipationInfo: (userID) => dispatch(UserParticipationInfo(userID))
+        onGetParticipationInfo: (userID) => dispatch(UserParticipationInfo(userID)),
+        onResetState: () => dispatch(ResetState())
     };
 };
     
