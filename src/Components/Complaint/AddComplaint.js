@@ -72,13 +72,12 @@ class AddComplaint extends React.Component{
     }
 
     handleComplaint = () => { 
+        //reset old store data befor sending request
+        this.props.onResetState();
         // send current date with the complaint
         var date = new Date();
         var res = date.toISOString();
-
-        this.setState({
-            complaint_type: Number(this.state.complaint_type),
-            phone: Number(this.state.phone),
+        this.setState({            
             date: res.slice(0,10),
             isLoading: true
         })
@@ -103,7 +102,7 @@ class AddComplaint extends React.Component{
                         onValueChange={(complaint_type) => this.setState({complaint_type})}>
                         <Picker.Item label={data[this.props.lang]['pickerMsgComplain']} value='0' />
                         {this.props.complaintType.map((item, index) => {
-                            return (<Picker.Item label={item.name_ar} value={item.id} key={index} />) 
+                            return (<Picker.Item label={this.props.lang === 'Arabic' ? item.name_ar : item.name_en}  value={item.id} key={index} />) 
                         })}
                     </Picker>
                 </View>
@@ -130,7 +129,7 @@ class AddComplaint extends React.Component{
                     keyboardType='numeric'
                 />
             </View>
-            <View style={{alignItems: 'flex-end'}}>
+            <View style={{alignItems: 'center'}}>
                 <View style={{flexDirection: 'row', marginBottom: 20 }}>
                     <Text style={{fontSize: 18,fontFamily: fonts.TunisiaLt, marginRight: 10, color:'gray'}}>{data[this.props.lang]['pickImage']}</Text>
                     <TouchableOpacity onPress={this.handleImagePick}>
@@ -144,7 +143,7 @@ class AddComplaint extends React.Component{
                         { this.state.image.length >0 ? (
                             this.state.image.map(function(element,key){
                                 return (
-                                    <View style={styles.imageBox}>        
+                                    <View style={styles.imageBox} key={key}>        
                                         <Image source={{uri : element['uri']}} style={{width: 100, height: 70}}/>
                                     </View>
                                 )
@@ -176,12 +175,12 @@ class AddComplaint extends React.Component{
                         <Text style={[styles.text,{paddingTop: 20},{color:'white'}]}>{data[this.props.lang]['successComplaint']}</Text>
                     </View>
                 )}
-                </View>
                 {( this.props.complaintFailMsg || this.props.error ) && this.props.complaint === null && (
                     <View style={{ alignItems: 'center' }}>
                         <Text style={{ color: 'red'}}>{data[this.props.lang]['failDataMsg']}</Text>
-                    </View>
+                    </View>                    
                 )}
+                </View>                
             </View>
         )
     }

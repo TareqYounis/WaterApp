@@ -31,17 +31,19 @@ export const Objection = ( objectionData ) => {
     }
 }
 
-// complain
-
-
+// User Complain
 export const Complain = ( complainData ) => {
   // generate form data from an object
   var userFormData = new FormData();
   for ( var key in complainData){
     // check if the user is sending images, since its an array, loop and send all images
-    if(key === 'image' && complainData['image'].length > 0 ){
-      for (var i = 0; i < complainData['image'].length; i++) {
-        userFormData.append('image', complainData['image'][i]);
+    if(key === 'image'){
+      if( complainData['image'].length > 0  ){
+        for (var i = 0; i < complainData['image'].length; i++) {
+          userFormData.append('image', complainData['image'][i]);
+        }
+      }else if (complainData['image'].length  === 0) {
+        userFormData.append('image', "null");
       }
     }else{
       userFormData.append( key , complainData[key] )
@@ -54,13 +56,13 @@ export const Complain = ( complainData ) => {
               fetch('http://miyahunaportal.arabiacell.biz/api/services/complaint',{
                 method: 'POST',
                 headers: {
-                  Authorization: 'ts=' + ts + ',response=' + hash
+                  Accept: 'multipart/form-data',
+                  Authorization: 'ts=' + ts + ',response=' + hash,
                 },
                 body: userFormData
              })
               .then((response) => response.json())
               .then((responseJson) => {
-                console.log(responseJson)
                 if(responseJson.status === false){
                   dispatch(FetchFailureComplaintService(responseJson.data || responseJson.message));
                 }else{     
@@ -68,12 +70,10 @@ export const Complain = ( complainData ) => {
                 }
               })
               .catch((error)=> {
-                console.log(error)
                 dispatch(FetchFailure(error));
               })
           })
       .catch((error)=> {
-        console.log(error)
           dispatch(FetchFailure(error));
       })
   }
