@@ -62,6 +62,7 @@ class SideDrawer extends Component {
         removeItemValue('userId');
         removeItemValue('userData');
         removeItemValue('userAccounts');
+        removeItemValue('particInfo');
         this.triggerModel();
         this.handleScreenNavigation('water-app.LoginScreen');
     } 
