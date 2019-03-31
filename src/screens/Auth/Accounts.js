@@ -2,7 +2,6 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, Picker, ActivityIndicator, Image} from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
-import { UserParticipationInfo } from '../../store/actions/index';
 import { getItem } from '../../StorageData';
 import { fonts, colors } from './../../assets/Theme';
 import * as data from './../../assets/lang.json';
@@ -194,10 +193,5 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onGetParticipationInfo: (userID) => dispatch(UserParticipationInfo(userID))
-    };
-};
   
-export default connect(mapStateToProps,mapDispatchToProps,null, {"withRef" : true})(Accounts);
+export default connect(mapStateToProps,null,null, {"withRef" : true})(Accounts);
