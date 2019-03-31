@@ -16,6 +16,7 @@ class AddComplaint extends React.Component{
             remark : "",
             phone : "",
             image : [],
+            locationAddress: "",
             isLoading: false
         }
     }
@@ -59,9 +60,9 @@ class AddComplaint extends React.Component{
     handlevalue = (callback) => {
         var locationResults = callback();
         this.setState({
-            location: locationResults
+            location: locationResults.location,
+            locationAddress: locationResults.locationAddress
         })
-        console.log(locationResults)
     }
     
     onChangeText = (key, value) => {
@@ -106,11 +107,14 @@ class AddComplaint extends React.Component{
                         })}
                     </Picker>
                 </View>
-                <TouchableOpacity onPress={() => this.handleLocation()}>
-                    <ImageBackground source={require('./../../assets/images/blue_outline.png')} style={{width: 270, height: 40}} >
-                        <Image source={require('./../../assets/images/location_icon.png')} style={{alignSelf:'flex-start', left: 15, top: 10}} />
-                        <Text style={[styles.text, {alignSelf: this.alignSelf()}]}>{data[this.props.lang]['enterLocationMsg']}</Text>
-                    </ImageBackground>
+                <TouchableOpacity onPress={() => this.handleLocation()} style={{marginTop: 15, flexDirection: 'row', width: 270, height: 35}}>
+                    <Image source={require('./../../assets/images/location_icon.png')} />
+                    <TextInput
+                        value={this.state.locationAddress}
+                        placeholder={data[this.props.lang]['enterLocationMsg']}
+                        onChangeText= {() => this.handleLocation()}
+                        style= {[styles.textInput, {width: 250}]}
+                    />
                 </TouchableOpacity>
                 <TextInput
                     value={this.state.remark}
@@ -206,7 +210,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         borderWidth: 1,
         borderColor: colors.LightBlue,
-        overflow: 'hidden',
+        // overflow: 'hidden',
         marginTop: 15
     },
     textInput: {

@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, location } from 'react-native-maps';
 import { fonts } from './../../assets/Theme';
 import * as data from './../../assets/lang.json';
 
@@ -13,7 +13,8 @@ class locationPicker extends Component{
         this.state={
             focusedRegion: {},
             markers:[],
-            location: 0
+            location: 0,
+            locationAddress: ""
         }
     }
     
@@ -29,6 +30,20 @@ class locationPicker extends Component{
                         longitudeDelta: 0.05,
                     }
                 })
+                url='https://maps.googleapis.com/maps/api/geocode/json?address='+ position.coords.latitude + ',' +position.coords.longitude + '&key=' +  'AIzaSyDK-HblVgw1s1LjtrL2MDI6K1nIdsLLqKo'
+                fetch(url)
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    if(responseJson.results[0]['formatted_address']){
+                        this.setState({
+                            locationAddress: responseJson.results[0]['formatted_address']
+                        })
+                    }else{
+                        this.setState({
+                            locationAddress: "Jordan"
+                        })
+                    }
+                });
                 this.rednerMap();
             },
             // in case couldn't load user location, view another location on map
@@ -56,7 +71,7 @@ class locationPicker extends Component{
               color: 'red',
             },
           ],
-          location: e.nativeEvent.coordinate
+          location: e.nativeEvent.coordinate.longitude + '&&' + e.nativeEvent.coordinate.latitude
         });
     }
     
@@ -84,15 +99,19 @@ class locationPicker extends Component{
         if(this.state.location === 0){
             navigator.geolocation.getCurrentPosition(
                 (position) => {
+                    this.setState({
+                        location: position.coords.latitude+ '&&' + position.coords.longitude 
+                    })
+                    const location=this.state;
                     this.props.results(function(){
-                        return position.coords;
+                        return location
                     })
                     Navigation.pop(this.props.componentId);
                 },
                 (error) => console.log(JSON.stringify(error)),
             );
         }else{
-            const location = this.state.location
+            const location = this.state;
             this.props.results(function(){
                 return location;
             }) 
