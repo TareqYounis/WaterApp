@@ -41,8 +41,6 @@ const initiaState ={
 }
 //reducer is the function that takes old state and the action and returns the new state.
 const reducer = (state = initiaState, action ) => {
-    //console.log('im looking here', action.type)
-    console.log(state)
     switch (action.type){
         case Reset_State:
         return {
