@@ -1,7 +1,5 @@
 import React from 'react';
 import { View, TextInput, StyleSheet, Text, Button, DatePicker, Picker, Platform, TouchableOpacity} from 'react-native';
-import Ionicon from 'react-native-vector-icons/Ionicons';
-import IconAnt from 'react-native-vector-icons/AntDesign';
 import { connect } from 'react-redux';
 import { GetOrganizations, GetSubscriptionType, GetVillagesGIS, GetBlooksGIS, GetSectorsGIS, GetParcelsGIS } from '../../store/actions/index';
 
@@ -180,10 +178,6 @@ class AddApplication extends React.Component {
                 {this.showSectors()}
                 {this.showParcels()}
                 <TouchableOpacity onPress={this.handleImagePick} style={styles.Item}>
-                    <Ionicon 
-                        name={Platform.OS === "android" ? "md-images" : "ios-images"} 
-                        size={30} style={styles.ItemIcon}
-                    />
                     <Text>Pick an image </Text>
                 </TouchableOpacity>
             </View>
