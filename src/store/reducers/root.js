@@ -57,6 +57,7 @@ const reducer = (state = initiaState, action ) => {
             complaintFailMsg: null,
             failReturnCounter: null,
             objectionFailResults: null,
+            objectionResults: [],
             balanceHistoryFailMsg: null,
             resendCodeMsg: null,
             registConfirmMsg: null,
