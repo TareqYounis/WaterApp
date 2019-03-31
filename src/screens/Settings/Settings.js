@@ -1,19 +1,17 @@
 import React from 'react';
-import { View, StyleSheet, Platform, Text } from 'react-native';
-import SettingsList from 'react-native-settings-list';
-import Icon from "react-native-vector-icons/AntDesign";
-import { getItem } from '../../StorageData';
+import {View, Image, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { connect } from 'react-redux';
+import { getItem, saveLangauge } from '../../StorageData';
+import { fonts, colors } from './../../assets/Theme';
+import * as data from './../../assets/lang.json';
 
 class Settings extends React.Component{
     constructor(){
         super();
         this.state = {
             switchValue: false,
-            userProfile: null,
-            language: null
-        };
-        this.renderIcon = this.renderIcon.bind(this);
-        this.onValueChange = this.onValueChange.bind(this);
+            userProfile: null
+        };        
       }
 
       componentWillMount(){
@@ -21,77 +19,155 @@ class Settings extends React.Component{
           getItem('userData')
           .then(results => {
             if(results !== 'none'){
+              console.log(results);
               this.setState({
                   userProfile: JSON.parse(results)[0]
               })
             }
           })
-
-          // get user app langage from local storage
-          getItem('language')
-          .then(results => {
-              this.setState({
-                language: results
-              })
-          })
       }
       
-      onValueChange(value){
+      onValueChange = (value) => {
         this.setState({switchValue: value});
       }
 
-      renderIcon(nameAndroid, nameIOS){
-        return(
-          <View style={{height:30,marginLeft:10,alignSelf:'center'}}>  
-            <Icon
-            name={Platform.OS === "android" ? nameAndroid : nameIOS}
-            size={30}
-            color="#aaa"
-            />
-          </View>
-        )
+      changeLang = (lang) =>{
+        saveLangauge(lang);
+        Alert.alert('Done')
       }
-      
+
+      direction = () => {
+        return this.props.lang === 'English' ? 'flex-start' : 'flex-end'
+      }
+
       render() {
         return (
-          <View style={styles.container}>
-          {this.state.userProfile && ( 
-            <View style={{flex:1, marginTop:20}}> 
-              <SettingsList>
-                <SettingsList.Header 
-                headerText= {this.state.userProfile['display_name'] + ' Profile'} 
-                headerStyle={{color:'black', fontSize: 20}} />
-                <SettingsList.Item titleInfo={this.state.userProfile['username']} hasNavArrow={false} title='User Name' icon={this.renderIcon('user','user')}/>
-                <SettingsList.Item titleInfo={this.state.userProfile['phone']} hasNavArrow={false} title='Phone #'  icon={this.renderIcon('phone','phone')}/>
-                <SettingsList.Item titleInfo={this.state.userProfile['email']} hasNavArrow={false} title='Email'  icon={this.renderIcon('mail','mail')}/>
-                <SettingsList.Item titleInfo={this.state.userProfile['role_name']} hasNavArrow={false} title='Role'  icon={this.renderIcon('solution1','solution1')}/>
-                <SettingsList.Item titleInfo={this.state.userProfile['language']} hasNavArrow={false} title='Profile Langague'  icon={this.renderIcon('zhihu','zhihu')}/>
-              </SettingsList>
-              <Text>{'\n'}</Text>
-              <SettingsList>
-                <SettingsList.Header headerText='Application Info'
-                headerStyle={{color:'black', fontSize: 20}}/>
-                <SettingsList.Item
-                    hasNavArrow={false}
-                    switchState={this.state.switchValue}
-                    switchOnValueChange={this.onValueChange}
-                    hasSwitch={true}
-                    title='Push Notifications'/>
-                <SettingsList.Item titleInfo={this.state.language} hasNavArrow={false} title='Application Langague'  icon={this.renderIcon('zhihu','zhihu')}/>
-                </SettingsList>
+          <View style={styles.container}>          
+            <View style={[styles.quarter1,{alignItems: this.direction()}]}>
+            { this.props.lang === 'Arabic' ? (
+              <View style={{flexDirection: 'row'}}>
+                { this.state.userProfile && (  
+                    <Text style={styles.headText}>{this.state.userProfile['display_name']}</Text>
+                )}
+                <Image source={require('./../../assets/images/my_account_icon.png')} />
+              </View>
+            ) : (
+              <View style={{flexDirection: 'row'}}>
+                <Image source={require('./../../assets/images/my_account_icon.png')} />
+                { this.state.userProfile && (  
+                    <Text style={styles.headText}>{this.state.userProfile['display_name']}</Text>
+                )}
+              </View>
+            )}              
+            </View>
+          { this.state.userProfile && ( 
+            <View style={[styles.half2,{alignItems: this.direction()}]}> 
+                <Text style={styles.text}>{data[this.props.lang]['userName']}</Text>
+                <View style={styles.textBox}>
+                  <Text style={{fontSize: 18, fontFamily: fonts.TunisiaLt}}>{this.state.userProfile['username']}</Text>
+                </View>
+                <Text style={styles.text}>{data[this.props.lang]['phoneNum']}</Text> 
+                <View style={styles.textBox}>
+                  <Text style={{fontSize: 18, fontFamily: fonts.TunisiaLt}}>{this.state.userProfile['phone']}</Text>
+                </View>
+                <Text style={styles.text}>{data[this.props.lang]['email']}</Text>
+                <View style={styles.textBox}>
+                  <Text style={{fontSize: 18, fontFamily: fonts.TunisiaLt}}>{this.state.userProfile['email']}</Text>
+                </View>                              
+            </View>
+          )}
+          <View style={styles.half3}>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            { this.props.lang === 'Arabic' ? ([
+              <Image key={0} source={require('./../../assets/images/notifications_off.png')} />,
+              <Text key={1} style={styles.text}>{data[this.props.lang]['activeNotifications']}</Text>
+            ]):([
+              <Text key={2} style={styles.text}>{data[this.props.lang]['activeNotifications']}</Text>,
+              <Image key={3} source={require('./../../assets/images/notifications_off.png')} />
+            ])}
+            </View>
+            { this.props.lang === 'Arabic' ? (
+              <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                  <TouchableOpacity onPress={() => this.changeLang('English')}>
+                        <Image source={require('./../../assets/images/green_button.png')} />
+                        <Text style={styles.buttonText}>English</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.changeLang('Arabic')}>
+                        <Image source={require('./../../assets/images/blue_button.png')} />
+                        <Text style={styles.buttonText}>Arabic</Text>
+                  </TouchableOpacity>
+                  <Text style={styles.text}>{data[this.props.lang]['pickLang']}</Text>
+              </View>
+            ) : (
+              <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Text style={styles.text}>{data[this.props.lang]['pickLang']}</Text>
+                <TouchableOpacity onPress={() => this.changeLang('Arabic')}>
+                      <Image source={require('./../../assets/images/blue_button.png')} />
+                      <Text style={styles.buttonText}>Arabic</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.changeLang('English')}>
+                      <Image source={require('./../../assets/images/green_button.png')} />
+                      <Text style={styles.buttonText}>English</Text>
+                </TouchableOpacity>
             </View>
             )}
           </View>
-        );
+          </View>                                
+        )
       }
 }
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor:'#f1f8ff',
-        flex:1,
-        paddingHorizontal: 20
+        flex: 1
     },
+    quarter1: {
+        flex: 0.15,
+        backgroundColor: colors.LightBlue,
+        alignItems: 'flex-start'
+    },
+    half2:{
+        flex: 0.5,
+        justifyContent: 'space-around',
+        alignItems: 'flex-end'
+    },
+    half3:{
+      flex: 0.35,
+      justifyContent: 'space-around'      
+    },
+    headText:{
+        color: 'white',
+        fontSize: 22,
+        fontFamily: fonts.bold
+    },
+    buttonText:{
+        flex:1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute', 
+        alignSelf: 'center',
+        color: 'white',
+        fontSize: 20,
+        fontFamily: fonts.TunisiaLt
+    },
+    textBox: {
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: colors.LightBlue,
+        width: 270,
+        height: 35       
+    },    
+    text:{
+      fontSize: 18,
+      color: colors.DarkBlue,
+      fontFamily: fonts.bold
+    }
 })
-    
-export default Settings;
+
+const mapStateToProps = state => {
+  return {
+      lang: state.enquiry.lang    
+  };
+};
+
+export default connect(mapStateToProps,null,null, {"withRef" : true})(Settings);
