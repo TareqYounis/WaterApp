@@ -60,17 +60,61 @@ const StartMainTabs = () => {
               bottomTabs: {
                 id: 'BottomTabsId',
                 options: {
+                  // color: 'blue',
+                  selectedIconColor: 'black',
+                  selectedTextColor: 'blue',
+                  fontFamily: fonts.TunisiaLt,
+                  fontSize: 12,
+                  tabColor: "black",
+                  selectedTabColor: "#3c6df0",
                   topBar: {
                     visible: true
-                  },
-                  layout: {
-                    direction: 'ltr',
-                  }
+                  }                  
                 },
                 children: [
                   {
                     stack: {
                       id: 'Tabs',
+                      children: [
+                        {
+                          component: {
+                            name: 'water-app.UserAccountsScreen',
+                            options: {
+                              bottomTab: {
+                                text: data[sources[5]]['tabSubsc'],
+                                icon: sources[1]
+                              },
+                              passProps: {
+                                lang: sources[5]
+                              },
+                              topBar: {
+                                background: {
+                                  color: colors.DarkBlue
+                                },
+                                visible: true,
+                                [menuButton]: [
+                                  {
+                                    icon: sources[3],
+                                    color: 'white'
+                                  }
+                                ],
+                                title: {
+                                  text: data[sources[5]]['tabSubsc'],
+                                  color: 'white',
+                                  fontFamily: fonts.TunisiaLt,
+                                  fontSize: 20,
+                                  alignment: 'center' 
+                                }
+                              },
+                            }
+                          }
+                        },
+                      ]
+                    }
+                  },
+                  {
+                    stack: {
+                      id: 'Tabs2',
                       children: [
                         {
                           component: {
@@ -97,32 +141,28 @@ const StartMainTabs = () => {
                                 }
                               },
                               bottomTab: {
-                                // badge: '2',
-                                fontSize: 12,
-                                text: 'Enquiry',
+                                text: data[sources[5]]['tabEnquiry'],
                                 icon: sources[2]
                               }
                             },
                             passProps: {
                               lang: sources[5]
                             }
-                          },
+                          }, 
                         },
                       ]
                     }
                   },
                   {
                     stack: {
-                      id: 'Tabs2',
+                      id: 'Tabs3',
                       children: [
                         {
                           component: {
                             name: 'water-app.statisticsScreen',
                             options: {
                               bottomTab: {
-                                // badge: 'New',
-                                text: 'Statistics',
-                                fontSize: 12,
+                                text: data[sources[5]]['tabStatisc'],
                                 icon: sources[0]
                               },
                               topBar: {
@@ -146,48 +186,6 @@ const StartMainTabs = () => {
                               },
                               passProps: {
                                 lang: sources[5]
-                              },
-                            }
-                          },
-                        },
-                      ]
-                    }
-                  },
-                  {
-                    stack: {
-                      id: 'Tabs3',
-                      children: [
-                        {
-                          component: {
-                            name: 'water-app.UserAccountsScreen',
-                            options: {
-                              bottomTab: {
-                                badge: '',
-                                text: 'Accounts',
-                                fontSize: 12,
-                                icon: sources[1]
-                              },
-                              passProps: {
-                                lang: sources[5]
-                              },
-                              topBar: {
-                                background: {
-                                  color: colors.DarkBlue
-                                },
-                                visible: true,
-                                [menuButton]: [
-                                  {
-                                    icon: sources[3],
-                                    color: 'white'
-                                  }
-                                ],
-                                title: {
-                                  text: data[sources[5]]['tabSubsc'],
-                                  color: 'white',
-                                  fontFamily: fonts.TunisiaLt,
-                                  fontSize: 20,
-                                  alignment: 'center' 
-                                }
                               },
                             }
                           },
