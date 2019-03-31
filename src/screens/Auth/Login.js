@@ -2,9 +2,9 @@ import React from 'react';
 import { View, StyleSheet, Modal, ImageBackground, TouchableOpacity, Image, Text } from 'react-native';
 import {connect} from 'react-redux';
 import UserLogin from '../../Components/Auth/UserLogin';
-import { UserLogsIn, SaveUserID, ResetState } from '../../store/actions/index';
+import { UserLogsIn, SaveUserID, ResetState, UserParticipationInfo } from '../../store/actions/index';
 import StartMainTabs from '../MainTabs/StartMainTabs';
-import { saveUserId, saveUserData } from '../../StorageData';
+import { saveUserId, saveUserData, saveParticipationInfo, saveUserAccounts } from '../../StorageData';
 import { fonts } from './../../assets/Theme';
 import * as data from './../../assets/lang.json';
 
@@ -17,13 +17,21 @@ class Login extends React.Component {
     }
 
     async componentWillReceiveProps(props){
-        if(props.user_id){
+        // check it user success logged in, and save his data in storage
+        if(props.user_id && props.particpationInfo.length === 0 ){
             this.setState({ modalVisible: true});
             // save userID and detailes in the device storage and in the store
             saveUserId(props.user_id);
             this.props.onSavingUserId(props.user_id);
             saveUserData(props.userProfile); 
-        }     
+            this.props.onGetParticipationInfo(props.user_id)
+        } 
+        // after success logIn, bring user accounts data and save it
+        if(props.particpationInfo.length > 0 || props.particpFailMsg){
+            const partInfo = [props.particpationInfo, props.particpFailMsg];
+            await saveParticipationInfo(partInfo);
+            await saveUserAccounts(props.userAccounts);
+        }    
     }
 
     // reset all data to avoid duplicants
@@ -85,7 +93,10 @@ const mapStateToProps = state => {
         lang: state.names.lang,
         user_id : state.names.user_id,
         loginFailMsg : state.names.loginFailMsg,
-        userProfile : state.names.userProfile 
+        userProfile : state.names.userProfile,
+        particpationInfo : state.names.particpationInfo,
+        userAccounts : state.names.userAccounts,
+        particpFailMsg : state.names.particpFailMsg 
     };
 };
   
@@ -94,7 +105,8 @@ const mapDispatchToProps = dispatch => {
     return {
         onLoggingIn: (userData) => dispatch(UserLogsIn(userData)),
         onSavingUserId: ( userID ) => dispatch(SaveUserID(userID)),
-        onResetState: () => dispatch(ResetState())
+        onResetState: () => dispatch(ResetState()),
+        onGetParticipationInfo: (userID) => dispatch(UserParticipationInfo(userID))
     };
 };
   
