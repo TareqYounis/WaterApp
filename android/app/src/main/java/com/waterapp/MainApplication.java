@@ -3,17 +3,17 @@ package com.waterapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.horcrux.svg.SvgPackage;
+import com.airbnb.android.react.maps.MapsPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
-import com.horcrux.svg.SvgPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.sha256lib.Sha256Package;
-import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.oblador.vectoricons.VectorIconsPackage;
 
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
@@ -47,14 +47,13 @@ public class MainApplication extends NavigationApplication {
         return Arrays.<ReactPackage>asList(
             // eg. new VectorIconsPackage()
             //new MainReactPackage(),
+            new VectorIconsPackage(),
+            new SvgPackage(),
             new MainReactPackage(),
             new SplashScreenReactPackage(),
-            new SvgPackage(),
             new ImagePickerPackage(),
             new Sha256Package(),
-            new VectorIconsPackage(),
             new MapsPackage()
- 
         );
     }
   
