@@ -59,7 +59,7 @@ class CalculateWater extends React.Component {
                         onValueChange={(company_id) => this.setState({company_id})}>
                         <Picker.Item label={data[this.props.lang]['pickerMsg']} value='0' />
                         {this.props.data.map((item, index) => {
-                            return (<Picker.Item label={item.name_en} value={item.id}  key={index}/>) 
+                            return (<Picker.Item label={this.props.lang === 'Arabic' ? item.name_ar : item.name_en}  value={item.id}  key={index}/>) 
                         })}
                     </Picker>
                 </View>
@@ -70,7 +70,7 @@ class CalculateWater extends React.Component {
                         onValueChange={(usage_type) => this.setState({usage_type})}>
                         <Picker.Item label={data[this.props.lang]['pickerMsg']} value='0' />
                         {this.props.usage_type.map((item, index) => {
-                            return (<Picker.Item label={item.name_en} value={item.id}  key={index}/>) 
+                            return (<Picker.Item label={this.props.lang === 'Arabic' ? item.name_ar : item.name_en}  value={item.id}  key={index}/>) 
                         })}
                     </Picker>
                 </View> 

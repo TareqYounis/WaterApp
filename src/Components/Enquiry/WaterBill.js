@@ -144,14 +144,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20,
         fontFamily: fonts.TunisiaLt
-    },
-    picker: {
-        borderRadius: 20,
-        borderWidth: 1,
-        borderColor: colors.LightBlue,
-        overflow: 'hidden',
-        marginBottom: 25
-    },
+    },    
     activityIndicator: {
         transform: [{scale: 0.70}],
         marginTop: 3.5,
