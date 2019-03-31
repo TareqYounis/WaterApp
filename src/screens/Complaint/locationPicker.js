@@ -128,10 +128,17 @@ class locationPicker extends Component{
                 )}
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
                 <View style={styles.sendBox}>
-                    <View style={{flexDirection: 'row'}}>
-                        <Text style={styles.text}>{data[this.props.lang]['shareLocation']}</Text>
-                        <Image source={require('./../../assets/images/add_location.png')} />
-                    </View>
+                    {this.props.lang === 'Arabic' ? (
+                        <View style={{flexDirection: 'row'}}>
+                            <Text style={styles.text}>{data[this.props.lang]['shareLocation']}</Text>
+                            <Image source={require('./../../assets/images/add_location.png')} />
+                        </View>
+                    ) : (
+                        <View style={{flexDirection: 'row'}}>
+                            <Image source={require('./../../assets/images/add_location.png')} />
+                            <Text style={[styles.text,{paddingRight: 0,paddingLeft: 10}]}>{data[this.props.lang]['shareLocation']}</Text>
+                        </View>
+                    )}
                     <TouchableOpacity onPress={()=> this.sendLocation()}>
                         <Image source={require('./../../assets/images/green_button.png')} />
                         <Text style={[styles.buttonText]}>{data[this.props.lang]['send']}</Text>
