@@ -10,29 +10,83 @@ class UserSignUp extends React.Component {
     constructor(props){
         super(props);
         this.state= {
+            full_name: '',
             username: '',
             email: '',
             phone: '',
             password: '',
             pass_confirm: '',
-            full_name: '',
+            passwordFail: false,
+            emailFail: false,
+            nameValidation: true,
+            userValidation: true,
+            emailValidation: true,
+            phoneValidation: true,
+            passValidation: true,
+            confirmPassValidation: true,
             isAuthenticating: false
         }
     }
     
     componentWillReceiveProps(props){
-        console.log(props);
         this.setState({
             isAuthenticating: !this.state.isAuthenticating
         })
     }
+
+    // a function to check validaty of user email input
+    // resource: https://stackoverflow.com/questions/43676695/email-validation-react-native-returning-the-result-as-invalid-for-all-the-e
+    validate = (text) => {
+        console.log(text);
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
+        if(reg.test(text) === false)
+        {
+            console.log("Email is Not Correct", this.state);
+            return false
+        }
+        else {
+            this.setState({
+                email: text
+            })
+          console.log("Email is Correct");
+          return true
+        }
+    }
     
     signingUp = () => {
-        console.log('signingup')
+        // check if user enterd all form fields
         this.setState({
-            isAuthenticating: !this.state.isAuthenticating
-        })
-        this.props.onSigningUp(this.state);
+            nameValidation : this.state.full_name === '' ? false : true,
+            userValidation: this.state.username === '' ? false : true,
+            phoneValidation : this.state.phone === '' ? false : true,
+            emailValidation: this.state.email === '' ? false : true,
+            passValidation : this.state.password === '' ? false : true,
+            confirmPassValidation : this.state.pass_confirm === '' ? false : true,
+        }) 
+      
+        //check email validaty if the user made an input
+        if( this.state.emailValidation ){
+                console.warn(this.state.emailValidation, this.validate(this.state.email))
+                this.setState({
+                    emailFail: !this.validate(this.state.email)  ? true : false
+                })
+        }
+
+        // check if user has matched password input
+        if(this.state.password !== this.state.pass_confirm){
+            this.setState({
+                passwordFail: true
+            })
+        }else{
+            this.setState({
+                passwordFail : false
+            })
+        }
+ 
+        // this.setState({
+        //     isAuthenticating: !this.state.isAuthenticating
+        // })
+        // this.props.onSigningUp(this.state);
     }
 
     onChangeText = (key, value) => {
@@ -54,64 +108,69 @@ class UserSignUp extends React.Component {
                 <Text style={styles.logoText}>{data[this.props.lang]['signInRequest']}</Text>
             </View>
                 
-            <ScrollView style={styles.half2}>
+            <View style={styles.half2}>
                 <ImageBackground source={require('./../../assets/images/background_blue.png')} style={{width: deviceWidth, height: deviceHeight}} >
                     <View style={[styles.inputs]}>
                         <TextInput
                             value={this.state.full_name}
                             onChangeText= {value => this.onChangeText('full_name', value)}
                             placeholder={data[this.props.lang]['fullName']}
-                            style= {[styles.textInput]}
+                            style= {[styles.textInput, !this.state.nameValidation ? styles.error : null]}
                         />
                         <TextInput
                             value={this.state.username}
                             onChangeText= {value => this.onChangeText('username', value)}
                             placeholder={data[this.props.lang]['userName']}
-                            style= {[styles.textInput]}
+                            style= {[styles.textInput, !this.state.userValidation ? styles.error : null]}
                         />
                         <TextInput
                             value={this.state.email}
                             onChangeText= {value => this.onChangeText('email', value)}
                             placeholder={data[this.props.lang]['email']}
-                            style= {[styles.textInput]}
+                            style= {[styles.textInput, !this.state.emailValidation || this.state.emailFail ? styles.error : null]}
                         />
                         <TextInput
                             value={this.state.phone}
                             onChangeText= {value => this.onChangeText('phone', value)}
                             placeholder={data[this.props.lang]['phoneNum']}
-                            style= {[styles.textInput]}
+                            keyboardType = 'numeric'
+                            style= {[styles.textInput, !this.state.phoneValidation ? styles.error : null]}
                         />
                         <TextInput
                             value={this.state.password}
                             onChangeText= {value => this.onChangeText('password', value)}
                             placeholder={data[this.props.lang]['passWord']}
-                            style= {[styles.textInput,{textAlign: this.textAlign()}]}
+                            style= {[styles.textInput,{textAlign: this.textAlign()}, !this.state.passValidation || this.state.passwordFail ? styles.error : null ]}
                             secureTextEntry
                         />
                         <TextInput
                             value={this.state.pass_confirm}
                             onChangeText= {value => this.onChangeText('pass_confirm', value)}
                             placeholder={data[this.props.lang]['confirmPass']}
-                            style= {[styles.textInput,{textAlign: this.textAlign()}]}
+                            style= {[styles.textInput,{textAlign: this.textAlign()}, !this.state.confirmPassValidation || this.state.passwordFail ? styles.error : null]}
                             secureTextEntry
                         />
                         <TouchableOpacity onPress={()=> this.signingUp()} style={{marginBottom: 20}}>
                             <Image source={require('./../../assets/images/dark_blue_button.png')} />
                                 <Text style={styles.buttonText}>{data[this.props.lang]['signup']}</Text>
                         </TouchableOpacity>
-                        {
-                            this.state.isAuthenticating && (
+                        { this.state.isAuthenticating && (
                             <View style={styles.activityIndicator}>
                                 <ActivityIndicator color={colors.LightBlue} />
                             </View>
-                            )
-                        }
-                        {this.props.signupFailMsg && (
+                        )}
+                        { this.props.signupFailMsg && (
                             <Text style={[styles.text, { color: 'red' }]}> {this.props.signupFailMsg}</Text>
+                        )}
+                        { this.state.passwordFail && (
+                            <Text style={[styles.text, { color: 'red' }]}> please make sure of your password</Text>
+                        )}
+                        { this.state.emailFail && (
+                            <Text style={[styles.text, { color: 'red' }]}> please make sure you enter the correct email address</Text>
                         )}
                     </View>
                 </ImageBackground>
-            </ScrollView>
+            </View>
             </View>
         )
     }
@@ -168,6 +227,10 @@ const styles = StyleSheet.create({
         transform: [{scale: 0.70}],
         marginTop: 3.5,
         marginLeft: 5
+    },
+    error: {
+        borderWidth: 3, 
+        borderColor: 'red' 
     }
 });
 
