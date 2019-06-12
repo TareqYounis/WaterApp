@@ -10,20 +10,22 @@ class UserSignUp extends React.Component {
     constructor(props){
         super(props);
         this.state= {
-            full_name: '',
-            username: '',
-            email: '',
-            phone: '',
-            password: '',
-            pass_confirm: '',
+            full_name: null,
+            username: null,
+            email: null,
+            phone: 0,
+            password: null,
+            pass_confirm: null,
             passwordFail: false,
             emailFail: false,
+            phoneFail: false,
             nameValidation: true,
             userValidation: true,
             emailValidation: true,
             phoneValidation: true,
             passValidation: true,
             confirmPassValidation: true,
+            done: false,
             isAuthenticating: false
         }
     }
@@ -37,56 +39,59 @@ class UserSignUp extends React.Component {
     // a function to check validaty of user email input
     // resource: https://stackoverflow.com/questions/43676695/email-validation-react-native-returning-the-result-as-invalid-for-all-the-e
     validate = (text) => {
-        console.log(text);
         let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
         if(reg.test(text) === false)
         {
-            console.log("Email is Not Correct", this.state);
             return false
         }
         else {
             this.setState({
                 email: text
             })
-          console.log("Email is Correct");
           return true
         }
     }
     
-    signingUp = () => {
-        // check if user enterd all form fields
-        this.setState({
-            nameValidation : this.state.full_name === '' ? false : true,
-            userValidation: this.state.username === '' ? false : true,
-            phoneValidation : this.state.phone === '' ? false : true,
-            emailValidation: this.state.email === '' ? false : true,
-            passValidation : this.state.password === '' ? false : true,
-            confirmPassValidation : this.state.pass_confirm === '' ? false : true,
-        }) 
-      
-        //check email validaty if the user made an input
-        if( this.state.emailValidation ){
-                console.warn(this.state.emailValidation, this.validate(this.state.email))
-                this.setState({
-                    emailFail: !this.validate(this.state.email)  ? true : false
-                })
-        }
-
+    formValidation = () => {
+        // check if the user enterd all form fields
+        // check email validaty after user input
+        // check if user have correct phone number length 
         // check if user has matched password input
-        if(this.state.password !== this.state.pass_confirm){
+        this.setState({
+            nameValidation : this.state.full_name === null ? false : true,
+            userValidation: this.state.username === null ? false : true,
+            phoneValidation : this.state.phone === 0 ? false : true,
+            emailValidation: this.state.email === null ? false : true,
+            passValidation : this.state.password === null ? false : true,
+            confirmPassValidation : this.state.pass_confirm === null ? false : true,
+            phoneFail: this.state.phone.toString().length < 10 ? true : false,
+            emailFail: !this.validate(this.state.email) ? true : false,
+            passwordFail: this.state.password !== this.state.pass_confirm ? true : false
+
+        }, () => {
+            // eventully, check if all fileds are filled correctly to in order to send request to submit to the server
+            if( this.state.nameValidation && this.state.phoneValidation && this.state.userValidation && this.state.emailValidation && this.state.passValidation && this.state.confirmPassValidation && !this.state.phoneFail && !this.state.passwordFail && !this.state.emailFail ){
+                this.setState({
+                    done: true
+                }, () => {  
+                    this.signingUp()
+                })
+            }else{
+                this.setState({
+                    done: false
+                })
+            }
+        }) 
+        
+    }
+    signingUp = () => {
+        // done makes sure that user have valid form data input
+        if (this.state.done) {
             this.setState({
-                passwordFail: true
+                isAuthenticating: !this.state.isAuthenticating
             })
-        }else{
-            this.setState({
-                passwordFail : false
-            })
+            this.props.onSigningUp(this.state);
         }
- 
-        // this.setState({
-        //     isAuthenticating: !this.state.isAuthenticating
-        // })
-        // this.props.onSigningUp(this.state);
     }
 
     onChangeText = (key, value) => {
@@ -129,13 +134,19 @@ class UserSignUp extends React.Component {
                             placeholder={data[this.props.lang]['email']}
                             style= {[styles.textInput, !this.state.emailValidation || this.state.emailFail ? styles.error : null]}
                         />
+                         { ( this.state.emailFail && this.state.emailValidation ) && (
+                            <Text style={[styles.text, { color: 'red' }]}> {data[this.props.lang]['emailValidationErr']}</Text>
+                        )}
                         <TextInput
                             value={this.state.phone}
                             onChangeText= {value => this.onChangeText('phone', value)}
                             placeholder={data[this.props.lang]['phoneNum']}
                             keyboardType = 'numeric'
-                            style= {[styles.textInput, !this.state.phoneValidation ? styles.error : null]}
+                            style= {[styles.textInput, !this.state.phoneValidation || this.state.phoneFail ? styles.error : null]}
                         />
+                        { ( this.state.phoneFail  && this.state.phoneValidation ) && (
+                            <Text style={[styles.text, { color: 'red' }]}> {data[this.props.lang]['phoneValidationErr']}</Text>
+                        )}
                         <TextInput
                             value={this.state.password}
                             onChangeText= {value => this.onChangeText('password', value)}
@@ -150,7 +161,10 @@ class UserSignUp extends React.Component {
                             style= {[styles.textInput,{textAlign: this.textAlign()}, !this.state.confirmPassValidation || this.state.passwordFail ? styles.error : null]}
                             secureTextEntry
                         />
-                        <TouchableOpacity onPress={()=> this.signingUp()} style={{marginBottom: 20}}>
+                        { this.state.passwordFail && (
+                            <Text style={[styles.text, { color: 'red' }]}> {data[this.props.lang]['passValidationErr']}</Text>
+                        )}
+                        <TouchableOpacity onPress={()=> this.formValidation()} style={{marginBottom: 20}}>
                             <Image source={require('./../../assets/images/dark_blue_button.png')} />
                                 <Text style={styles.buttonText}>{data[this.props.lang]['signup']}</Text>
                         </TouchableOpacity>
@@ -158,15 +172,9 @@ class UserSignUp extends React.Component {
                             <View style={styles.activityIndicator}>
                                 <ActivityIndicator color={colors.LightBlue} />
                             </View>
-                        )}
+                        )}                        
                         { this.props.signupFailMsg && (
                             <Text style={[styles.text, { color: 'red' }]}> {this.props.signupFailMsg}</Text>
-                        )}
-                        { this.state.passwordFail && (
-                            <Text style={[styles.text, { color: 'red' }]}> please make sure of your password</Text>
-                        )}
-                        { this.state.emailFail && (
-                            <Text style={[styles.text, { color: 'red' }]}> please make sure you enter the correct email address</Text>
                         )}
                     </View>
                 </ImageBackground>
