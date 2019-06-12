@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import UserSignUp from '../../Components/Auth/UserSignUp';
-import { UserSignsUp } from '../../store/actions/index';
+import { UserSignsUp, ResetState } from '../../store/actions/index';
 import { connect } from 'react-redux';
 import { Navigation } from 'react-native-navigation';
 
@@ -11,7 +11,8 @@ class SignUp extends React.Component {
     }
 
     componentWillReceiveProps(props){
-        if(props.user_id){
+        // check if user first signup step is sucess, send him to send phone code
+        if(props.signUpUser_id){
             Navigation.push(this.props.componentId,{
                 component:{
                     name: 'water-app.ConfirmRegisterScreen'
@@ -19,7 +20,7 @@ class SignUp extends React.Component {
             })
         }
     }
-    
+
     render() {
         return (
             <View style={{flex:1}}>
@@ -32,7 +33,7 @@ class SignUp extends React.Component {
 const mapStateToProps = state => {
     return {
       lang: state.names.lang,
-      user_id : state.names.user_id,
+      signUpUser_id : state.names.signUpUser_id,
       signupFailMsg : state.names.signupFailMsg 
     };
   };
@@ -40,7 +41,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onSigningUp: (userData) => dispatch(UserSignsUp(userData))
+        onSigningUp: (userData) => dispatch(UserSignsUp(userData)),
+        onResetState: () => dispatch(ResetState())
     };
 };
 
