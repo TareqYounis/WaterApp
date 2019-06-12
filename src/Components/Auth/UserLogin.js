@@ -38,10 +38,15 @@ class UserLogin extends React.Component {
         this.setState({
             isLoading: true
         })
+        // Delete all old state data and messgaes, to avoid infinte loops, before sending a new request.
+        this.props.onResetState();
+        // send a request to logIn
         this.props.onLoggingIn(this.state);
     }
 
     signingUp = () => {
+        // Delete all old state data and messgaes, to avoid having same screen view again before navigating.
+        this.props.onResetState();
         Navigation.push(this.props.componentId,{
             component:{
                 name: 'water-app.SignUpScreen'
