@@ -3,6 +3,7 @@ import { Save_Lang, Save_Id, Reset_State, Fetch_Sucess, Fetch_Failure, Fetch_Suc
 const initiaState ={
     lang: '',
     user_id: null,
+    signUpUser_id: null,
     waterRole: null,
     waterRoleFail: null,
     signupFailMsg: null,
@@ -99,7 +100,7 @@ const reducer = (state = initiaState, action ) => {
         case Fetch_Sucess_User_Register:
         return {
             ...state,
-            user_id : action.payload.data
+            signUpUser_id : action.payload.data
         };
         case Fetch_Failure_User_Register:
         return {
