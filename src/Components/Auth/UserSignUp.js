@@ -81,10 +81,12 @@ class UserSignUp extends React.Component {
                     done: false
                 })
             }
-        }) 
-        
+        })        
     }
+
     signingUp = () => {
+        // before sending request to server, delete all old state data and messgaes, to avoid duplicant messages.
+        this.props.onResetState();
         // done makes sure that user have valid form data input
         if (this.state.done) {
             this.setState({
